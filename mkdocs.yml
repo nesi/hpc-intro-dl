@@ -1,0 +1,4 @@
+site_name: Intro to HPC (Deep Learning)
+
+exclude_docs: |
+  .ipynb_checkpoints
