@@ -1,0 +1,13 @@
+# python
+__pycache__
+*.egg-info
+.idea
+
+# ipython
+.ipynb_checkpoints
+
+# virtual environment
+venv
+
+# runtime folders
+logs
