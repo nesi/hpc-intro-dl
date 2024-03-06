@@ -13,3 +13,11 @@ exclude_docs: |
 
 theme:
   name: material
+
+nav:
+  - index.md
+  - setup.md
+  - install.md
+  - submit.md
+  - monitor.md
+  - interact.md
