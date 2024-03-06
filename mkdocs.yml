@@ -1,4 +1,15 @@
 site_name: Intro to HPC (Deep Learning)
 
+site_author: NeSI
+site_dir: public
+site_url: "https://nesi.github.io/hpc-intro-dl"
+site_description: "Introduction to running deep learning code on NeSI"
+
+repo_url: https://github.com/nesi/hpc-intro-dl
+edit_uri: edit/main/docs/
+
 exclude_docs: |
   .ipynb_checkpoints
+
+theme:
+  name: material
