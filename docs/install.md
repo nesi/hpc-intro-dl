@@ -4,12 +4,6 @@
 
 TODO TF module
 
-!!! terminal
-    test
-
-    ??? output
-        test
-
 ## Python Virtual Environment
 
 TODO Python module + venv
