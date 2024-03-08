@@ -1,6 +1,6 @@
 # Interactive Access
 
-TODO srun (/!\ hgx not working from jupyter terminal)
+TODO srun (/!\\ hgx not working from jupyter terminal, switch to login node) (skip, supplemental)
 
 TODO jupyter notebook
 

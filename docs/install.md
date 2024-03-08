@@ -10,12 +10,13 @@ TODO TF module
 !!! info "See also"
     https://support.nesi.org.nz/hc/en-gb/articles/360000990436-TensorFlow-on-GPUs
 
+TODO Contact support to install software
 
 ## Python Virtual Environment
 
-TODO Python module + venv
+TODO /!\\ discourage `pip install --user`
 
-TODO /!\ discourage `pip install --user`
+TODO Python module + venv, use system packages or not
 
 ## Conda Environment
 
@@ -24,3 +25,5 @@ TODO Conda
 ## Apptainer Container
 
 TODO Apptainer
+
+TODO mention build
