@@ -193,8 +193,8 @@ You only need to do this once.
 Next, let's create a conda environment from the definition file `environment.yml`, installing TensorFlow in it:
 
 ```bash
-export PYTHONNOUSERSITE=1
 cd /nesi/project/nesi99991/hpcintrodl_20240314/$USER/content
+export PYTHONNOUSERSITE=1
 conda env create -f environment.yml -p /nesi/nobackup/nesi99991/hpcintrodl_20240314/$USER/venv
 ```
 
@@ -444,6 +444,8 @@ conda env create -f environment.yml -p /nesi/nobackup/nesi99991/hpcintrodl_20240
 
 This will take a bit of time, so it could be a good time for a 🍵 break.
 
+Note that we used the `-p` option to specify the location of our conda environment and avoid installing it in our home folder (what `-n` would normally do).
+
 !!! warning
 
     Setting the variable `PYTHONNOUSERSITE=1` is necessary to ensure that `pip` doesn't look into user's home folder for locally installed Python packages (using `pip install --user`).
@@ -508,6 +510,14 @@ python3 -c "import tensorflow; print(tensorflow.__version__)"
     In case of doubt, please check our [dedicated support page](https://support.nesi.org.nz/hc/en-gb/articles/360001580415-Miniconda3).
 
 ## Apptainer Container
+
+The last option we will explore in this section is *containers*.
+Containers provide a very lightweight way to run a complete Linux virtual machine isolated from the host environment,
+with little performance impact.
+
+*Docker* is the most well known container runtime but many others exist.
+For historical and security reasons, alternative runtimes have been developed in the HPC world, as we can't give administrator rights to users.
+On NeSI, we use *Singularity* and *Apptainer*, which are compatible with Docker containers.
 
 TODO Apptainer, maybe just mention and show an example container pre-pulled?
 

@@ -23,39 +23,25 @@ This section will walk you through the steps to start a session and checking tha
 
     All commands listed in the workshop will be entered in this terminal.
 
-## Workshop material copy
+## Workshop folder
 
-This workshop material comes with a set of example scripts and notebook.
-You should have a copy of it waiting for you in the workshop folder, let's check this.
+This workshop involves creating a few files.
+You should have a folder named with your NeSI login under `/nesi/project/nesi99991/introhpc2403/`.
 
-It is located in the folder `/nesi/project/nesi99991/hpcintrodl_20240314/$USER`, where `$USER` stands for your NeSI login.
-
-Let's move to this folder and check the content using:
+Just in case, let's make sure it exists using:
 
 ```bash
-cd /nesi/project/nesi99991/hpcintrodl_20240314/$USER/content
-ls -l .
+mkdir -p /nesi/project/nesi99991/introhpc2403/$USER
 ```
 
-??? success "output"
+And then move to this folder:
 
-    ```
-    TODO add final list here
-    ```
+```bash
+cd /nesi/project/nesi99991/introhpc2403/$USER
+```
 
-!!! info
-
-    If, by any chance, you don't have a copy of the workshop material on the system, you can create one yourself using the following commands:
-
-    ```bash
-    git clone https://github.com/nesi/hpc-intro-dl.git /nesi/project/nesi99991/hpcintrodl_20240314/$USER
-    ```
-
-    Don't forget to change directory after:
-    
-    ```bash
-    cd /nesi/project/nesi99991/hpcintrodl_20240314/$USER/content
-    ```
+In this workshop, we will use the `nano` editor to edit files.
+Note that you can also use the JupyterLab file browser and editor instead.
 
 ---
 
