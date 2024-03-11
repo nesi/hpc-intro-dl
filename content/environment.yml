@@ -7,3 +7,4 @@ dependencies:
   - pip:
     - tensorflow==2.12.0
     - tensorflow-datasets
+    - --no-cache-dir  # avoid using pip cache

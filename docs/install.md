@@ -190,12 +190,11 @@ You only need to do this once.
     Using `nobackup` storage will ensure that downloaded packages will be automatically removed after 120 days.
     This won't affect the conda environments where these packages are installed.
 
-Next, let's create a conda environment from the definition file `environment.yml`, installing TensorFlow in it:
+Next, let's create a conda environment from a given definition file `environment.yml`, which includes an installation of TensorFlow:
 
 ```bash
-cd /nesi/project/nesi99991/hpcintrodl_20240314/$USER/content
 export PYTHONNOUSERSITE=1
-conda env create -f environment.yml -p /nesi/nobackup/nesi99991/hpcintrodl_20240314/$USER/venv
+conda env create -f /nesi/project/nesi99991/introhpc2403/environment.yml -p /nesi/nobackup/nesi99991/introhpc2403/$USER/venv
 ```
 
 ??? success "output"
@@ -214,7 +213,7 @@ conda env create -f environment.yml -p /nesi/nobackup/nesi99991/hpcintrodl_20240
     Verifying transaction: done
     Executing transaction: done
     Installing pip dependencies: \ Ran pip subprocess with arguments:
-    ['/nesi/nobackup/nesi99991/hpcintrodl_20240314/riom/venv/bin/python', '-m', 'pip', 'install', '-U', '-r', '/scale_wlg_persistent/filesets/project/nesi99999/riom/hpc-intro-dl/content/condaenv.rsqilbad.requirements.txt', '--exists-action=b']
+    ['/nesi/nobackup/nesi99991/introhpc2403/riom/venv/bin/python', '-m', 'pip', 'install', '-U', '-r', '/scale_wlg_persistent/filesets/project/nesi99999/riom/hpc-intro-dl/content/condaenv.rsqilbad.requirements.txt', '--exists-action=b']
     Pip subprocess output:
     Collecting tensorflow==2.12.0 (from -r /scale_wlg_persistent/filesets/project/nesi99999/riom/hpc-intro-dl/content/condaenv.rsqilbad.requirements.txt (line 1))
       Downloading tensorflow-2.12.0-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (3.4 kB)
@@ -248,7 +247,7 @@ conda env create -f environment.yml -p /nesi/nobackup/nesi99991/hpcintrodl_20240
       Downloading packaging-24.0-py3-none-any.whl.metadata (3.2 kB)
     Collecting protobuf!=4.21.0,!=4.21.1,!=4.21.2,!=4.21.3,!=4.21.4,!=4.21.5,<5.0.0dev,>=3.20.3 (from tensorflow==2.12.0->-r /scale_wlg_persistent/filesets/project/nesi99999/riom/hpc-intro-dl/content/condaenv.rsqilbad.requirements.txt (line 1))
       Downloading protobuf-4.25.3-cp37-abi3-manylinux2014_x86_64.whl.metadata (541 bytes)
-    Requirement already satisfied: setuptools in /scale_wlg_nobackup/filesets/nobackup/nesi99991/hpcintrodl_20240314/riom/venv/lib/python3.10/site-packages (from tensorflow==2.12.0->-r /scale_wlg_persistent/filesets/project/nesi99999/riom/hpc-intro-dl/content/condaenv.rsqilbad.requirements.txt (line 1)) (69.1.1)
+    Requirement already satisfied: setuptools in /scale_wlg_nobackup/filesets/nobackup/nesi99991/introhpc2403/riom/venv/lib/python3.10/site-packages (from tensorflow==2.12.0->-r /scale_wlg_persistent/filesets/project/nesi99999/riom/hpc-intro-dl/content/condaenv.rsqilbad.requirements.txt (line 1)) (69.1.1)
     Collecting six>=1.12.0 (from tensorflow==2.12.0->-r /scale_wlg_persistent/filesets/project/nesi99999/riom/hpc-intro-dl/content/condaenv.rsqilbad.requirements.txt (line 1))
       Downloading six-1.16.0-py2.py3-none-any.whl.metadata (1.8 kB)
     Collecting tensorboard<2.13,>=2.12 (from tensorflow==2.12.0->-r /scale_wlg_persistent/filesets/project/nesi99999/riom/hpc-intro-dl/content/condaenv.rsqilbad.requirements.txt (line 1))
@@ -285,7 +284,7 @@ conda env create -f environment.yml -p /nesi/nobackup/nesi99991/hpcintrodl_20240
       Using cached tqdm-4.66.2-py3-none-any.whl.metadata (57 kB)
     Collecting array-record>=0.5.0 (from tensorflow-datasets->-r /scale_wlg_persistent/filesets/project/nesi99999/riom/hpc-intro-dl/content/condaenv.rsqilbad.requirements.txt (line 2))
       Downloading array_record-0.5.0-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (503 bytes)
-    Requirement already satisfied: wheel<1.0,>=0.23.0 in /scale_wlg_nobackup/filesets/nobackup/nesi99991/hpcintrodl_20240314/riom/venv/lib/python3.10/site-packages (from astunparse>=1.6.0->tensorflow==2.12.0->-r /scale_wlg_persistent/filesets/project/nesi99999/riom/hpc-intro-dl/content/condaenv.rsqilbad.requirements.txt (line 1)) (0.42.0)
+    Requirement already satisfied: wheel<1.0,>=0.23.0 in /scale_wlg_nobackup/filesets/nobackup/nesi99991/introhpc2403/riom/venv/lib/python3.10/site-packages (from astunparse>=1.6.0->tensorflow==2.12.0->-r /scale_wlg_persistent/filesets/project/nesi99999/riom/hpc-intro-dl/content/condaenv.rsqilbad.requirements.txt (line 1)) (0.42.0)
     Collecting fsspec (from etils[enp,epath,etree]>=0.9.0->tensorflow-datasets->-r /scale_wlg_persistent/filesets/project/nesi99999/riom/hpc-intro-dl/content/condaenv.rsqilbad.requirements.txt (line 2))
       Downloading fsspec-2024.2.0-py3-none-any.whl.metadata (6.8 kB)
     Collecting importlib_resources (from etils[enp,epath,etree]>=0.9.0->tensorflow-datasets->-r /scale_wlg_persistent/filesets/project/nesi99999/riom/hpc-intro-dl/content/condaenv.rsqilbad.requirements.txt (line 2))
@@ -435,7 +434,7 @@ conda env create -f environment.yml -p /nesi/nobackup/nesi99991/hpcintrodl_20240
     #
     # To activate this environment, use
     #
-    #     $ conda activate /nesi/nobackup/nesi99991/hpcintrodl_20240314/riom/venv
+    #     $ conda activate /nesi/nobackup/nesi99991/introhpc2403/riom/venv
     #
     # To deactivate an active environment, use
     #
@@ -454,7 +453,7 @@ Note that we used the `-p` option to specify the location of our conda environme
 At last, we have our conda environment ready, let's activate it to see if TensorFlow is properly installed:
 
 ```bash
-conda activate /nesi/nobackup/nesi99991/hpcintrodl_20240314/$USER/venv
+conda activate /nesi/nobackup/nesi99991/introhpc2403/$USER/venv
 ```
 
 ??? failure "output"
@@ -489,7 +488,7 @@ source $(conda info --base)/etc/profile.d/conda.sh
 Ok, now we can finally test our installation:
 
 ```bash
-conda activate /nesi/nobackup/nesi99991/hpcintrodl_20240314/$USER/venv
+conda activate /nesi/nobackup/nesi99991/introhpc2403/$USER/venv
 python3 -c "import tensorflow; print(tensorflow.__version__)"
 ```
 
