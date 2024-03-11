@@ -476,9 +476,9 @@ source $(conda info --base)/etc/profile.d/conda.sh
     **Do not.**
     Seriously.
     Please 🙏.
-    This will insert a small piece of code in your `~/.bashrc` file that is fine on an individual co,puter but interact poorly with the environment module system on the HPC platform.
-    
-    If you have done it, you can edit `~/.bashrc` using a terminal based editor like `nano` and remove the offending piece of code:
+    This will insert a small piece of code in your `~/.bashrc` file that is fine on an individual computer but interacts poorly with the environment module system on the HPC platform.
+
+    If you have used this command, you can edit `~/.bashrc` using a terminal based editor like `nano` and remove the offending piece of code:
     ```bash
     nano ~/.bashrc
     ```
