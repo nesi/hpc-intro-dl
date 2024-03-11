@@ -33,14 +33,30 @@ It is located in the folder `/nesi/project/nesi99991/20240314__hpc_intro_dl/$USE
 Let's move to this folder and check the content using:
 
 ```bash
-cd /nesi/project/nesi99991/20240314__hpc_intro_dl/$USER
+cd /nesi/project/nesi99991/20240314__hpc_intro_dl/$USER/content
 ls -l .
 ```
+
+??? success "output"
+
+    ```
+    TODO add final list here
+    ```
 
 !!! info
 
     If, by any chance, you don't have a copy of the workshop material on the system, you can create one yourself using the following commands:
-    
+
     ```bash
     git clone https://github.com/nesi/hpc-intro-dl.git /nesi/project/nesi99991/20240314__hpc_intro_dl/$USER
     ```
+
+    Don't forget to change directory after:
+    
+    ```bash
+    cd /nesi/project/nesi99991/20240314__hpc_intro_dl/$USER/content
+    ```
+
+---
+
+In the [next section](install.md), we will explore multiple ways to access and install deep learning toolboxes.
