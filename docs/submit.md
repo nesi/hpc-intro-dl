@@ -2,15 +2,15 @@
 
 TODO query gpu with sbatch
 
-TODO nvidia smi check as dummy job
-
-TODO load CUDA/cuDNN (pytorch install all?)
-
 TODO do not specify CUDA_VISIBLE_DEVICES
 
-TODO TF: XLA compiler
+TODO nvidia smi check as dummy job
 
-TODO PyTorch: no cudnn? no cuda?
+TODO when to load CUDA/cuDNN, which versions?
+- env module vs. conda vs. container
+- PyTorch: no cudnn? no cuda?
+
+TODO TF: XLA compiler
 
 TODO check the logs about GPU usage
 
