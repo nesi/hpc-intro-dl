@@ -28,12 +28,12 @@ This section will walk you through the steps to start a session and checking tha
 This workshop material comes with a set of example scripts and notebook.
 You should have a copy of it waiting for you in the workshop folder, let's check this.
 
-It is located in the folder `/nesi/project/nesi99991/20240314__hpc_intro_dl/$USER`, where `$USER` stands for your NeSI login.
+It is located in the folder `/nesi/project/nesi99991/hpcintrodl_20240314/$USER`, where `$USER` stands for your NeSI login.
 
 Let's move to this folder and check the content using:
 
 ```bash
-cd /nesi/project/nesi99991/20240314__hpc_intro_dl/$USER/content
+cd /nesi/project/nesi99991/hpcintrodl_20240314/$USER/content
 ls -l .
 ```
 
@@ -48,13 +48,13 @@ ls -l .
     If, by any chance, you don't have a copy of the workshop material on the system, you can create one yourself using the following commands:
 
     ```bash
-    git clone https://github.com/nesi/hpc-intro-dl.git /nesi/project/nesi99991/20240314__hpc_intro_dl/$USER
+    git clone https://github.com/nesi/hpc-intro-dl.git /nesi/project/nesi99991/hpcintrodl_20240314/$USER
     ```
 
     Don't forget to change directory after:
     
     ```bash
-    cd /nesi/project/nesi99991/20240314__hpc_intro_dl/$USER/content
+    cd /nesi/project/nesi99991/hpcintrodl_20240314/$USER/content
     ```
 
 ---
