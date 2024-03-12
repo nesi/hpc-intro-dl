@@ -338,10 +338,12 @@ cp gpujob.sl train_model_conda.sl
 nano train_model_conda.sl
 ```
 
-??? example "train_model_env.sl"
+Don't forget to increase the memory to 8GB.
+
+??? example "train_model_conda.sl"
 
     ```python linenums="1"
-    --8<-- "train_model_conda_v1.sl"
+    --8<-- "train_model_conda.sl"
     ```
 
 Let's run this script:
@@ -353,19 +355,22 @@ sbatch train_model_conda.sl
 ??? success "output"
 
     ```
-    Submitted batch job 44348905
+    Submitted batch job 44349122
     ```
 
-And examinate the log file content once completed (replace `44348905` with your job ID):
+Check the job state using `squeue --me`.
+It seems to be slower than the version using the environment module 🤔.
+
+Let's examinate the log file content (replace `44349122` with your job ID):
 
 ```bash
-cat slurm-44348905.out
+cat slurm-44349122.out
 ```
 
-??? failure "output"
+??? success "output"
 
     ```
-    Tue Mar 12 18:12:15 2024       
+    Tue Mar 12 18:59:59 2024       
     +-----------------------------------------------------------------------------+
     | NVIDIA-SMI 525.85.12    Driver Version: 525.85.12    CUDA Version: 12.0     |
     |-------------------------------+----------------------+----------------------+
@@ -390,35 +395,63 @@ cat slurm-44348905.out
       (Use "module --force purge" to unload all):
 
       1) XALT/minimal   2) slurm   3) NeSI
-    2024-03-12 18:12:28.166629: I tensorflow/tsl/cuda/cudart_stub.cc:28] Could not find cuda drivers on your machine, GPU will not be used.
-    2024-03-12 18:12:29.294777: I tensorflow/tsl/cuda/cudart_stub.cc:28] Could not find cuda drivers on your machine, GPU will not be used.
-    2024-03-12 18:12:29.295172: I tensorflow/core/platform/cpu_feature_guard.cc:182] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+    2024-03-12 19:00:01.818851: I tensorflow/tsl/cuda/cudart_stub.cc:28] Could not find cuda drivers on your machine, GPU will not be used.
+    2024-03-12 19:00:01.855127: I tensorflow/tsl/cuda/cudart_stub.cc:28] Could not find cuda drivers on your machine, GPU will not be used.
+    2024-03-12 19:00:01.855498: I tensorflow/core/platform/cpu_feature_guard.cc:182] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
     To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
-    2024-03-12 18:12:42.251491: W tensorflow/compiler/tf2tensorrt/utils/py_utils.cc:38] TF-TRT Warning: Could not find TensorRT
-    /var/spool/slurm/job44348905/slurm_script: line 26: 2341949 Killed                  python train_model.py "${SLURM_JOB_ID}_${SLURM_JOB_NAME}"
-    slurmstepd: error: Detected 1 oom_kill event in StepId=44348905.batch. Some of the step tasks have been OOM Killed.
+    2024-03-12 19:00:02.591725: W tensorflow/compiler/tf2tensorrt/utils/py_utils.cc:38] TF-TRT Warning: Could not find TensorRT
+    2024-03-12 19:00:04.115146: W tensorflow/core/common_runtime/gpu/gpu_device.cc:1956] Cannot dlopen some GPU libraries. Please make sure the missing libraries mentioned above are installed properly if you would like to use GPU. Follow the guide at https://www.tensorflow.org/install/gpu for how to download and setup the required libraries for your platform.
+    Skipping registering GPU devices...
+    Model: "sequential"
+    _________________________________________________________________
+     Layer (type)                Output Shape              Param #   
+    =================================================================
+     conv2d (Conv2D)             (None, 30, 30, 32)        896       
+
+     max_pooling2d (MaxPooling2D  (None, 15, 15, 32)       0         
+     )                                                               
+
+     conv2d_1 (Conv2D)           (None, 13, 13, 64)        18496     
+
+     max_pooling2d_1 (MaxPooling  (None, 6, 6, 64)         0         
+     2D)                                                             
+
+     conv2d_2 (Conv2D)           (None, 4, 4, 64)          36928     
+
+     flatten (Flatten)           (None, 1024)              0         
+
+     dense (Dense)               (None, 64)                65600     
+
+     dense_1 (Dense)             (None, 10)                650       
+
+    =================================================================
+    Total params: 122,570
+    Trainable params: 122,570
+    Non-trainable params: 0
+    _________________________________________________________________
+    None
+    Epoch 1/5
+    1563/1563 [==============================] - 37s 23ms/step - loss: 1.5266 - accuracy: 0.4439 - val_loss: 1.3006 - val_accuracy: 0.5370
+    Epoch 2/5
+    1563/1563 [==============================] - 35s 22ms/step - loss: 1.1699 - accuracy: 0.5855 - val_loss: 1.0767 - val_accuracy: 0.6192
+    Epoch 3/5
+    1563/1563 [==============================] - 35s 22ms/step - loss: 1.0244 - accuracy: 0.6394 - val_loss: 0.9981 - val_accuracy: 0.6482
+    Epoch 4/5
+    1563/1563 [==============================] - 35s 22ms/step - loss: 0.9237 - accuracy: 0.6775 - val_loss: 0.9513 - val_accuracy: 0.6672
+    Epoch 5/5
+    1563/1563 [==============================] - 35s 22ms/step - loss: 0.8549 - accuracy: 0.7008 - val_loss: 0.9288 - val_accuracy: 0.6801
+    313/313 - 2s - loss: 0.9288 - accuracy: 0.6801 - 2s/epoch - 6ms/step
+    WARNING:absl:Found untraced functions such as _jit_compiled_convolution_op, _jit_compiled_convolution_op, _jit_compiled_convolution_op, _update_step_xla while saving (showing 4 of 4). These functions will not be directly callable after loading.
+    test accuracy: 0.6801000237464905
     ```
 
-Whoops 😅, it seemed that it failed.
-Let's have a closer look at the log file 🔎.
-
-First, it looks like our job crashed because of an OOM error.
+Let's have a closer look at the messages 🔎.
 
 ```
-slurmstepd: error: Detected 1 oom_kill event in StepId=44348905.batch. Some of the step tasks have been OOM Killed.
+2024-03-12 19:00:01.855127: I tensorflow/tsl/cuda/cudart_stub.cc:28] Could not find cuda drivers on your machine, GPU will not be used.
 ```
 
-OOM means "out-of-memory".
-It happens when the Python script tries to use more memory than what it was allowed too by Slurm.
-
-We could conclude that it is the issue... but it worked with the environment module, isn't it?
-Let's dig a bit more into the messages:
-
-```
-2024-03-12 18:12:29.294777: I tensorflow/tsl/cuda/cudart_stub.cc:28] Could not find cuda drivers on your machine, GPU will not be used.
-```
-
-That's the real issue!
+Oh, that's not good!
 TensorFlow could not find CUDA and therefore failed to use the GPU.
 
 To fix it, we need to load the CUDA (and cuDNN) module and tell TensorFlow where to find it.
@@ -429,13 +462,13 @@ module load cuDNN/8.6.0.163-CUDA-11.8.0
 export XLA_FLAGS=--xla_gpu_cuda_data_dir=$CUDA_PATH
 ```
 
-??? example "train_model_env.sl (fixed)"
+??? example "train_model_conda.sl (fixed)"
 
     ```python linenums="1"
-    --8<-- "train_model_conda_v2.sl"
+    --8<-- "train_model_conda_fixed.sl"
     ```
 
-TODO blabla
+We can now resubmit the job:
 
 ```bash
 sbatch train_model_conda.sl 
@@ -444,18 +477,128 @@ sbatch train_model_conda.sl
 ??? output "success"
 
     ```
-    Submitted batch job 44349059
+    Submitted batch job 44349128
     ```
 
-TODO cat
+And examine the log file to confirm that now the GPU is used by TensorFlow (replace `44349128` with your job ID):
+
+```bash
+cat slurm-44349128.out
+```
+
+??? success "output"
+
+    ```
+    Tue Mar 12 19:07:00 2024       
+    +-----------------------------------------------------------------------------+
+    | NVIDIA-SMI 525.85.12    Driver Version: 525.85.12    CUDA Version: 12.0     |
+    |-------------------------------+----------------------+----------------------+
+    | GPU  Name        Persistence-M| Bus-Id        Disp.A | Volatile Uncorr. ECC |
+    | Fan  Temp  Perf  Pwr:Usage/Cap|         Memory-Usage | GPU-Util  Compute M. |
+    |                               |                      |               MIG M. |
+    |===============================+======================+======================|
+    |   0  NVIDIA A100-SXM...  On   | 00000000:46:00.0 Off |                    0 |
+    | N/A   30C    P0    63W / 400W |      0MiB / 81920MiB |      0%      Default |
+    |                               |                      |             Disabled |
+    +-------------------------------+----------------------+----------------------+
+
+    +-----------------------------------------------------------------------------+
+    | Processes:                                                                  |
+    |  GPU   GI   CI        PID   Type   Process name                  GPU Memory |
+    |        ID   ID                                                   Usage      |
+    |=============================================================================|
+    |  No running processes found                                                 |
+    +-----------------------------------------------------------------------------+
+    CUDA_VISIBLE_DEVICES=0
+    The following modules were not unloaded:
+      (Use "module --force purge" to unload all):
+
+      1) XALT/minimal   2) slurm   3) NeSI
+    2024-03-12 19:07:02.339469: I tensorflow/core/platform/cpu_feature_guard.cc:182] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+    To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+    2024-03-12 19:07:03.048716: W tensorflow/compiler/tf2tensorrt/utils/py_utils.cc:38] TF-TRT Warning: Could not find TensorRT
+    2024-03-12 19:07:07.037005: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1635] Created device /job:localhost/replica:0/task:0/device:GPU:0 with 78915 MB memory:  -> device: 0, name: NVIDIA A100-SXM4-80GB, pci bus id: 0000:46:00.0, compute capability: 8.0
+    Model: "sequential"
+    _________________________________________________________________
+     Layer (type)                Output Shape              Param #   
+    =================================================================
+     conv2d (Conv2D)             (None, 30, 30, 32)        896       
+
+     max_pooling2d (MaxPooling2D  (None, 15, 15, 32)       0         
+     )                                                               
+
+     conv2d_1 (Conv2D)           (None, 13, 13, 64)        18496     
+
+     max_pooling2d_1 (MaxPooling  (None, 6, 6, 64)         0         
+     2D)                                                             
+
+     conv2d_2 (Conv2D)           (None, 4, 4, 64)          36928     
+
+     flatten (Flatten)           (None, 1024)              0         
+
+     dense (Dense)               (None, 64)                65600     
+
+     dense_1 (Dense)             (None, 10)                650       
+
+    =================================================================
+    Total params: 122,570
+    Trainable params: 122,570
+    Non-trainable params: 0
+    _________________________________________________________________
+    None
+    Epoch 1/5
+    2024-03-12 19:07:10.016715: I tensorflow/compiler/xla/stream_executor/cuda/cuda_dnn.cc:424] Loaded cuDNN version 8600
+    2024-03-12 19:07:10.526440: I tensorflow/compiler/xla/stream_executor/cuda/cuda_blas.cc:637] TensorFloat-32 will be used for the matrix multiplication. This will only be logged once.
+    2024-03-12 19:07:10.778501: I tensorflow/compiler/xla/service/service.cc:169] XLA service 0x555575f88670 initialized for platform CUDA (this does not guarantee that XLA will be used). Devices:
+    2024-03-12 19:07:10.778540: I tensorflow/compiler/xla/service/service.cc:177]   StreamExecutor device (0): NVIDIA A100-SXM4-80GB, Compute Capability 8.0
+    2024-03-12 19:07:10.783568: I tensorflow/compiler/mlir/tensorflow/utils/dump_mlir_util.cc:269] disabling MLIR crash reproducer, set env var `MLIR_CRASH_REPRODUCER_DIRECTORY` to enable.
+    2024-03-12 19:07:10.916067: I ./tensorflow/compiler/jit/device_compiler.h:180] Compiled cluster using XLA!  This line is logged at most once for the lifetime of the process.
+    1563/1563 [==============================] - 8s 3ms/step - loss: 1.5133 - accuracy: 0.4475 - val_loss: 1.2346 - val_accuracy: 0.5525
+    Epoch 2/5
+    1563/1563 [==============================] - 4s 2ms/step - loss: 1.1527 - accuracy: 0.5927 - val_loss: 1.0675 - val_accuracy: 0.6208
+    Epoch 3/5
+    1563/1563 [==============================] - 4s 2ms/step - loss: 0.9922 - accuracy: 0.6524 - val_loss: 1.0370 - val_accuracy: 0.6448
+    Epoch 4/5
+    1563/1563 [==============================] - 4s 2ms/step - loss: 0.8910 - accuracy: 0.6887 - val_loss: 0.9684 - val_accuracy: 0.6682
+    Epoch 5/5
+    1563/1563 [==============================] - 4s 3ms/step - loss: 0.8165 - accuracy: 0.7137 - val_loss: 0.9052 - val_accuracy: 0.6897
+    313/313 - 0s - loss: 0.9052 - accuracy: 0.6897 - 361ms/epoch - 1ms/step
+    WARNING:absl:Found untraced functions such as _jit_compiled_convolution_op, _jit_compiled_convolution_op, _jit_compiled_convolution_op while saving (showing 3 of 3). These functions will not be directly callable after loading.
+    test accuracy: 0.6897000074386597
+    ```
+
+Success! Now TensorFlow uses the GPU:
+
+```
+2024-03-12 19:07:10.778540: I tensorflow/compiler/xla/service/service.cc:177]   StreamExecutor device (0): NVIDIA A100-SXM4-80GB, Compute Capability 8.0
+```
+
+and each epoch takes 4s instead of 35s:
+
+```
+Epoch 4/5
+1563/1563 [==============================] - 4s 2ms/step - loss: 0.8910 - accuracy: 0.6887 - val_loss: 0.9684 - val_accuracy: 0.6682
+```
 
 !!! warning
 
-    TODO when to load CUDA/cuDNN, which versions?
+    Depending on the version of TensorFlow installed, you will need to load different version of CUDA and cuDNN.
+    Check the [TensorFlow compatibility matrix](https://www.tensorflow.org/install/source?hl=fr#gpu) to find which version you need.
     
+    If the corresponding environment modules do not exist on NeSI, please contact your friendly NeSI support team at <support@nesi.org.nz> to request it to be installed.
+
 !!! warning
 
-    TODO PyTorch: no cudnn? no cuda?
+    For other packages, like PyTorch or Jax, you *may* need to load CUDA and/or cuDNN.
+    It depends if the CUDA (and cuDNN) toolkit gets installed by `conda` or `pip` as dependency, or not.
+
+    You can check this by looking at the list of packages installed in your conda environment using `conda export`.
+    Here is an example with the conda environment created for this workshop:
+    
+    ```bash
+    module load Miniconda3/23.10.0-1
+    conda env export -p /nesi/nobackup/nesi99991/introhpc2403/$USER/venv
+    ```
 
 ### Apptainer container
 
