@@ -34,7 +34,7 @@ Which one should you use?
 
     - Per-project limit of 6 GPUs being used at a time.
     - Per-project limit of 360 GPU-hours being allocated to running jobs.
-      For example, you can use 8 GPUs at a time if your jobs run for a day, but only two GPUs if your jobs run for a week.
+      For example, you can use 6 GPUs at a time if your jobs run for 2 days, but only two GPUs if your jobs run for a week.
     - No more than 64 CPUs per GPU job, to ensure that GPUs are not left idle due to lack of free CPUs.
     - Per-user limit of one A100-1g.5gb GPU job.
 
