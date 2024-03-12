@@ -157,9 +157,3 @@ TODO TF: XLA compiler
 TODO check the logs about GPU usage
 
 TODO apptainer --nv
-
-## References
-
-- https://support.nesi.org.nz/hc/en-gb/articles/4963040656783-Available-GPUs-on-NeSI
-- https://support.nesi.org.nz/hc/en-gb/articles/360001471955-GPU-use-on-NeSI
-- https://support.nesi.org.nz/hc/en-gb/articles/360000204076-Mahuika-Slurm-Partitions
