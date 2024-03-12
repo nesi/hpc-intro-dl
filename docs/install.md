@@ -551,13 +551,21 @@ There are multiple ways to interact with a container.
 Here we will execute a command in the container using the `apptainer exec` command:
 
 ```bash
-apptainer exec /nesi/project/nesi99991/introhpc2403/tensorflow-24.02.sif python3 -c "import tensorflow"
+apptainer exec /nesi/project/nesi99991/introhpc2403/tensorflow-24.02.sif \
+    python3 -c "import tensorflow; print(tensorflow.__version__)"
 ```
 
 ??? success "output"
 
     ```
-    TODO
+    13:4: not a valid test operator: (
+    13:4: not a valid test operator: 
+    2024-03-12 02:00:43.405327: E external/local_xla/xla/stream_executor/cuda/cuda_dnn.cc:9373] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+    2024-03-12 02:00:43.407144: E external/local_xla/xla/stream_executor/cuda/cuda_fft.cc:607] Unable to register cuFFT factory: Attempting to register factory for plugin cuFFT when one has already been registered
+    2024-03-12 02:00:43.572380: E external/local_xla/xla/stream_executor/cuda/cuda_blas.cc:1534] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+    2024-03-12 02:00:43.847914: I tensorflow/core/platform/cpu_feature_guard.cc:183] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+    To enable the following instructions: SSE3 SSE4.1 SSE4.2 AVX, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+    2.15.0
     ```
 
 !!! info "See also"

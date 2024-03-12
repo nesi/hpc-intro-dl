@@ -1,5 +1,9 @@
 # Submit Batch Jobs
 
+TODO present NeSI GPU
+
+TODO mention limits on GPUs
+
 TODO query gpu with sbatch
 
 TODO do not specify CUDA_VISIBLE_DEVICES
