@@ -312,11 +312,150 @@ It looks like that everything went well 🥳!
 
 ### Conda environment
 
-TODO when to load CUDA/cuDNN, which versions?
-- env module vs. conda vs. container
-- PyTorch: no cudnn? no cuda?
+Let's redo the same thing, but this time using the TensorFlow package installed in our conda environment.
 
-TODO TF: XLA compiler
+To do so, we will need to modify load the `Miniconda3` module and activate the environment before executing the script:
+
+```
+# load required environment modules
+module purge
+module load Miniconda3/22.11.1-1
+
+# activate the conda environment
+source $(conda info --base)/etc/profile.d/conda.sh
+export PYTHONNOUSERSITE=1
+conda deactivate
+conda activate /nesi/nobackup/nesi99991/introhpc2403/$USER/venv
+
+# execute the script
+python train_model.py "${SLURM_JOB_ID}_${SLURM_JOB_NAME}"
+```
+
+Let's copy our `gpujob.sl` script and adapt it:
+
+```bash
+cp gpujob.sl train_model_conda.sl
+nano train_model_conda.sl
+```
+
+??? example "train_model_env.sl"
+
+    ```python linenums="1"
+    --8<-- "train_model_conda_v1.sl"
+    ```
+
+Let's run this script:
+
+```bash
+sbatch train_model_conda.sl
+```
+
+??? success "output"
+
+    ```
+    Submitted batch job 44348905
+    ```
+
+And examinate the log file content once completed (replace `44348905` with your job ID):
+
+```bash
+cat slurm-44348905.out
+```
+
+??? failure "output"
+
+    ```
+    Tue Mar 12 18:12:15 2024       
+    +-----------------------------------------------------------------------------+
+    | NVIDIA-SMI 525.85.12    Driver Version: 525.85.12    CUDA Version: 12.0     |
+    |-------------------------------+----------------------+----------------------+
+    | GPU  Name        Persistence-M| Bus-Id        Disp.A | Volatile Uncorr. ECC |
+    | Fan  Temp  Perf  Pwr:Usage/Cap|         Memory-Usage | GPU-Util  Compute M. |
+    |                               |                      |               MIG M. |
+    |===============================+======================+======================|
+    |   0  NVIDIA A100-SXM...  On   | 00000000:46:00.0 Off |                    0 |
+    | N/A   30C    P0    63W / 400W |      0MiB / 81920MiB |      0%      Default |
+    |                               |                      |             Disabled |
+    +-------------------------------+----------------------+----------------------+
+
+    +-----------------------------------------------------------------------------+
+    | Processes:                                                                  |
+    |  GPU   GI   CI        PID   Type   Process name                  GPU Memory |
+    |        ID   ID                                                   Usage      |
+    |=============================================================================|
+    |  No running processes found                                                 |
+    +-----------------------------------------------------------------------------+
+    CUDA_VISIBLE_DEVICES=0
+    The following modules were not unloaded:
+      (Use "module --force purge" to unload all):
+
+      1) XALT/minimal   2) slurm   3) NeSI
+    2024-03-12 18:12:28.166629: I tensorflow/tsl/cuda/cudart_stub.cc:28] Could not find cuda drivers on your machine, GPU will not be used.
+    2024-03-12 18:12:29.294777: I tensorflow/tsl/cuda/cudart_stub.cc:28] Could not find cuda drivers on your machine, GPU will not be used.
+    2024-03-12 18:12:29.295172: I tensorflow/core/platform/cpu_feature_guard.cc:182] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+    To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+    2024-03-12 18:12:42.251491: W tensorflow/compiler/tf2tensorrt/utils/py_utils.cc:38] TF-TRT Warning: Could not find TensorRT
+    /var/spool/slurm/job44348905/slurm_script: line 26: 2341949 Killed                  python train_model.py "${SLURM_JOB_ID}_${SLURM_JOB_NAME}"
+    slurmstepd: error: Detected 1 oom_kill event in StepId=44348905.batch. Some of the step tasks have been OOM Killed.
+    ```
+
+Whoops 😅, it seemed that it failed.
+Let's have a closer look at the log file 🔎.
+
+First, it looks like our job crashed because of an OOM error.
+
+```
+slurmstepd: error: Detected 1 oom_kill event in StepId=44348905.batch. Some of the step tasks have been OOM Killed.
+```
+
+OOM means "out-of-memory".
+It happens when the Python script tries to use more memory than what it was allowed too by Slurm.
+
+We could conclude that it is the issue... but it worked with the environment module, isn't it?
+Let's dig a bit more into the messages:
+
+```
+2024-03-12 18:12:29.294777: I tensorflow/tsl/cuda/cudart_stub.cc:28] Could not find cuda drivers on your machine, GPU will not be used.
+```
+
+That's the real issue!
+TensorFlow could not find CUDA and therefore failed to use the GPU.
+
+To fix it, we need to load the CUDA (and cuDNN) module and tell TensorFlow where to find it.
+Edit the `train_model_conda.sl` script to insert these lines before running `train_model.py`:
+
+```bash
+module load cuDNN/8.6.0.163-CUDA-11.8.0
+export XLA_FLAGS=--xla_gpu_cuda_data_dir=$CUDA_PATH
+```
+
+??? example "train_model_env.sl (fixed)"
+
+    ```python linenums="1"
+    --8<-- "train_model_conda_v2.sl"
+    ```
+
+TODO blabla
+
+```bash
+sbatch train_model_conda.sl 
+```
+
+??? output "success"
+
+    ```
+    Submitted batch job 44349059
+    ```
+
+TODO cat
+
+!!! warning
+
+    TODO when to load CUDA/cuDNN, which versions?
+    
+!!! warning
+
+    TODO PyTorch: no cudnn? no cuda?
 
 ### Apptainer container
 
