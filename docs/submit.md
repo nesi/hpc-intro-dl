@@ -604,7 +604,30 @@ Epoch 4/5
 
 Finally, let's try with the container approach.
 
-TODO explanation --nv and note about CUDA toolkit in container
+To run our python script using the container, we need to:
+
+- load the corresponding environment module
+  ```bash
+  module purge
+  module load Apptainer/1.2.2
+  ```
+- use the `apptainer exec` command to execute the local script using the interpreter and packages *inside* the container
+  ```bash
+  apptainer exec --nv /nesi/project/nesi99991/introhpc2403/tensorflow-24.02.sif \
+    python train_model.py "${SLURM_JOB_ID}_${SLURM_JOB_NAME}"
+  ```
+
+!!! info
+
+    - The `--nv` option is needed to expose the GPU inside the container.
+    - Containers are expected to have their own copy of the CUDA toolkit inside, therefore we don't need to the load the CUDA (or cuDNN) environment module.
+
+Let's create another job submission script (and don't forget to increase memory to 8GB):
+
+```bash
+cp gpujob.sl train_model_apptainer.sl
+nano train_model_apptainer.sl
+```
 
 ??? example "train_model_apptainer.sl"
 
@@ -612,7 +635,7 @@ TODO explanation --nv and note about CUDA toolkit in container
     --8<-- "train_model_apptainer.sl"
     ```
 
-TODO sbatch and logs
+Let's submit the job:
 
 ```bash
 sbatch train_model_apptainer.sl
@@ -623,6 +646,8 @@ sbatch train_model_apptainer.sl
     ```
     Submitted batch job 44349268
     ```
+
+And look at the log file once the job has completed (replace `44349268` with your job ID):
 
 ```bash
 cat slurm-44349268.out
@@ -712,3 +737,15 @@ cat slurm-44349268.out
     313/313 - 0s - loss: 0.9007 - accuracy: 0.6905 - 403ms/epoch - 1ms/step
     test accuracy: 0.690500020980835
     ```
+
+Good news, it seems to have worked well 😎, finding the GPU and using it (4s per epoch):
+
+```
+2024-03-12 19:33:28.760801: I external/local_xla/xla/service/service.cc:176]   StreamExecutor device (0): NVIDIA A100-SXM4-80GB, Compute Capability 8.0
+...
+1563/1563 [==============================] - 4s 3ms/step - loss: 0.9263 - accuracy: 0.6742 - val_loss: 0.9380 - val_accuracy: 0.6695
+```
+
+---
+
+In the [next section](monitor.md), we will have a look at how to monitor the jobs and the model training process.
