@@ -30,6 +30,14 @@ Which one should you use?
 - otherwise use the PCIe or HGX A100,
 - and if you need large memory and/or multiple GPUs, use the HGX A100s.
 
+??? info "Limits on GPU Jobs"
+
+    - Per-project limit of 6 GPUs being used at a time.
+    - Per-project limit of 360 GPU-hours being allocated to running jobs.
+      For example, you can use 8 GPUs at a time if your jobs run for a day, but only two GPUs if your jobs run for a week.
+    - No more than 64 CPUs per GPU job, to ensure that GPUs are not left idle due to lack of free CPUs.
+    - Per-user limit of one A100-1g.5gb GPU job.
+
 ## Slurm job submission
 
 When preparing our Slurm job script, we need to make sure we tell Slurm that we need a GPU, using
@@ -46,15 +54,14 @@ GPU type | Slurm option
 ---------|-------------
 Mahuika P100 | <pre><code>#SBATCH --gpus-per-node=P100:1</code></pre>
 Māui Ancil. P100 | <pre><code>#SBATCH --partition=nesi_gpu<br>#SBATCH --gpus-per-node=1</code></pre>
-A100-1g.5gb | TODO
-PCIe A100 (40GB) | TODO
-HGX A100 (80GB) | TODO
+A100-1g.5gb | <pre><code>#SBATCH --gpus-per-node=A100-1g.5gb:1</code></pre>
+PCIe A100 (40GB) | <pre><code>#SBATCH --gpus-per-node=A100:1</code></pre>
+HGX A100 (80GB) | <pre><code>#SBATCH --partition=hgx<br>#SBATCH --gpus-per-node=A100:1</code></pre>
+Any A100 🚀 | <pre><code>#SBATCH --partition=hgx,gpu<br>#SBATCH --gpus-per-node=A100:1</code></pre>
 
-For today's exercises, we will use a big one, an HGX A100 GPU.
+For today's exercises, we will use a big one 🤯, an HGX A100 GPU.
 
-TODO query gpu with sbatch
-
-TODO nvidia smi check as dummy job
+Let's start with a very simple batch job, printing simple information about the requested GPU:
 
 ```bash title="gpujob.sl" linenums="1"
 #!/usr/bin/env bash
@@ -72,16 +79,70 @@ nvidia-smi
 echo "CUDA_VISIBLE_DEVICES=${CUDA_VISIBLE_DEVICES}"
 ```
 
-TODO do not specify CUDA_VISIBLE_DEVICES
+Create the file `gpujob.sl` in your workshop folder, for example using the nano editor:
 
-## Limits on GPU Jobs
+```bash
+cd /nesi/project/nesi99991/introhpc2403/$USER
+nano gpujob.sl
+```
 
-- per-project limit of 6 GPUs being used at a time.
-- There is also a per-project limit of 360 GPU-hours being allocated to running jobs. This reduces the number of GPUs available for longer jobs, so for example you can use 8 GPUs at a time if your jobs run for a day, but only two GPUs if your jobs run for a week. The intention is to guarantee that all users can get short debugging jobs on to a GPU in a reasonably timely manner.
-- Each GPU job can use no more than 64 CPUs. This is to ensure that GPUs are not left idle just because their node has no remaining free CPUs.
-There is a limit of one A100-1g.5gb GPU job per user.
+Then let's submit the job using `sbatch`:
 
-## TensorFlow model training example
+```bash
+sbatch gpujob.sl
+```
+
+??? success "output"
+
+    ```
+    Submitted batch job 44344744
+    ```
+
+You can check the state of all your jobs using `squeue --me`.
+Once completed, chech the content of the Slurm log file (replace `44344744` with your job ID):
+
+```
+cat slurm-44344744.out
+```
+
+??? success "output"
+
+    ```
+    Tue Mar 12 09:38:23 2024
+    +-----------------------------------------------------------------------------+
+    | NVIDIA-SMI 525.85.12    Driver Version: 525.85.12    CUDA Version: 12.0     |
+    |-------------------------------+----------------------+----------------------+
+    | GPU  Name        Persistence-M| Bus-Id        Disp.A | Volatile Uncorr. ECC |
+    | Fan  Temp  Perf  Pwr:Usage/Cap|         Memory-Usage | GPU-Util  Compute M. |
+    |                               |                      |               MIG M. |
+    |===============================+======================+======================|
+    |   0  NVIDIA A100-SXM...  On   | 00000000:C7:00.0 Off |                    0 |
+    | N/A   35C    P0    62W / 400W |      0MiB / 81920MiB |      0%      Default |
+    |                               |                      |             Disabled |
+    +-------------------------------+----------------------+----------------------+
+
+    +-----------------------------------------------------------------------------+
+    | Processes:                                                                  |
+    |  GPU   GI   CI        PID   Type   Process name                  GPU Memory |
+    |        ID   ID                                                   Usage      |
+    |=============================================================================|
+    |  No running processes found                                                 |
+    +-----------------------------------------------------------------------------+
+    CUDA_VISIBLE_DEVICES=0
+    ```
+
+Note that `nvidia-smi` and `CUDA_VISIBLE_DEVICES` both report one GPU.
+
+!!! question "Exercise"
+
+    1. Try to request 2 HGX A100 and compare the output of the log file.
+    2. Remove the `--partition` and `--gpus-per-node` options and compare the results.
+
+!!! warning
+
+    As we have just seen, Slurm set the environment variable `CUDA_VISIBLE_DEVICES` for you, so you don't need to do it.
+
+## TensorFlow example
 
 TODO
 
