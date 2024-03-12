@@ -173,7 +173,7 @@ nano train_model_env.sl
 
 ??? example "train_model_env.sl"
 
-    ```python linenums="1"
+    ```bash linenums="1"
     --8<-- "train_model_env.sl"
     ```
 
@@ -342,7 +342,7 @@ Don't forget to increase the memory to 8GB.
 
 ??? example "train_model_conda.sl"
 
-    ```python linenums="1"
+    ```bash linenums="1"
     --8<-- "train_model_conda.sl"
     ```
 
@@ -464,7 +464,7 @@ export XLA_FLAGS=--xla_gpu_cuda_data_dir=$CUDA_PATH
 
 ??? example "train_model_conda.sl (fixed)"
 
-    ```python linenums="1"
+    ```bash linenums="1"
     --8<-- "train_model_conda_fixed.sl"
     ```
 
@@ -602,4 +602,113 @@ Epoch 4/5
 
 ### Apptainer container
 
-TODO apptainer --nv
+Finally, let's try with the container approach.
+
+TODO explanation --nv and note about CUDA toolkit in container
+
+??? example "train_model_apptainer.sl"
+
+    ```bash linenums="1"
+    --8<-- "train_model_apptainer.sl"
+    ```
+
+TODO sbatch and logs
+
+```bash
+sbatch train_model_apptainer.sl
+```
+
+??? success "output"
+
+    ```
+    Submitted batch job 44349268
+    ```
+
+```bash
+cat slurm-44349268.out
+```
+
+??? success "output"
+
+    ```
+    Tue Mar 12 19:33:00 2024       
+    +-----------------------------------------------------------------------------+
+    | NVIDIA-SMI 525.85.12    Driver Version: 525.85.12    CUDA Version: 12.0     |
+    |-------------------------------+----------------------+----------------------+
+    | GPU  Name        Persistence-M| Bus-Id        Disp.A | Volatile Uncorr. ECC |
+    | Fan  Temp  Perf  Pwr:Usage/Cap|         Memory-Usage | GPU-Util  Compute M. |
+    |                               |                      |               MIG M. |
+    |===============================+======================+======================|
+    |   0  NVIDIA A100-SXM...  On   | 00000000:46:00.0 Off |                    0 |
+    | N/A   30C    P0    63W / 400W |      0MiB / 81920MiB |      0%      Default |
+    |                               |                      |             Disabled |
+    +-------------------------------+----------------------+----------------------+
+
+    +-----------------------------------------------------------------------------+
+    | Processes:                                                                  |
+    |  GPU   GI   CI        PID   Type   Process name                  GPU Memory |
+    |        ID   ID                                                   Usage      |
+    |=============================================================================|
+    |  No running processes found                                                 |
+    +-----------------------------------------------------------------------------+
+    CUDA_VISIBLE_DEVICES=0
+    The following modules were not unloaded:
+      (Use "module --force purge" to unload all):
+
+      1) XALT/minimal   2) slurm   3) NeSI
+    WARNING: SINGULARITY_TMPDIR and APPTAINER_TMPDIR have different values, using the latter
+    13:4: not a valid test operator: (
+    13:4: not a valid test operator: 525.85.12
+    2024-03-12 19:33:13.535779: E external/local_xla/xla/stream_executor/cuda/cuda_dnn.cc:9373] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+    2024-03-12 19:33:13.535849: E external/local_xla/xla/stream_executor/cuda/cuda_fft.cc:607] Unable to register cuFFT factory: Attempting to register factory for plugin cuFFT when one has already been registered
+    2024-03-12 19:33:13.686115: E external/local_xla/xla/stream_executor/cuda/cuda_blas.cc:1534] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+    2024-03-12 19:33:13.823985: I tensorflow/core/platform/cpu_feature_guard.cc:183] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+    To enable the following instructions: SSE3 SSE4.1 SSE4.2 AVX, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+    2024-03-12 19:33:22.353297: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1926] Created device /job:localhost/replica:0/task:0/device:GPU:0 with 78867 MB memory:  -> device: 0, name: NVIDIA A100-SXM4-80GB, pci bus id: 0000:46:00.0, compute capability: 8.0
+    Model: "sequential"
+    _________________________________________________________________
+     Layer (type)                Output Shape              Param #   
+    =================================================================
+     conv2d (Conv2D)             (None, 30, 30, 32)        896       
+
+     max_pooling2d (MaxPooling2  (None, 15, 15, 32)        0         
+     D)                                                              
+
+     conv2d_1 (Conv2D)           (None, 13, 13, 64)        18496     
+
+     max_pooling2d_1 (MaxPoolin  (None, 6, 6, 64)          0         
+     g2D)                                                            
+
+     conv2d_2 (Conv2D)           (None, 4, 4, 64)          36928     
+
+     flatten (Flatten)           (None, 1024)              0         
+
+     dense (Dense)               (None, 64)                65600     
+
+     dense_1 (Dense)             (None, 10)                650       
+
+    =================================================================
+    Total params: 122570 (478.79 KB)
+    Trainable params: 122570 (478.79 KB)
+    Non-trainable params: 0 (0.00 Byte)
+    _________________________________________________________________
+    None
+    Epoch 1/5
+    2024-03-12 19:33:25.035720: I external/local_xla/xla/stream_executor/cuda/cuda_dnn.cc:467] Loaded cuDNN version 90000
+    2024-03-12 19:33:28.759273: I external/local_xla/xla/service/service.cc:168] XLA service 0x55555bf92310 initialized for platform CUDA (this does not guarantee that XLA will be used). Devices:
+    2024-03-12 19:33:28.760801: I external/local_xla/xla/service/service.cc:176]   StreamExecutor device (0): NVIDIA A100-SXM4-80GB, Compute Capability 8.0
+    2024-03-12 19:33:28.764827: I tensorflow/compiler/mlir/tensorflow/utils/dump_mlir_util.cc:269] disabling MLIR crash reproducer, set env var `MLIR_CRASH_REPRODUCER_DIRECTORY` to enable.
+    WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+    I0000 00:00:1710272008.857828 2346162 device_compiler.h:186] Compiled cluster using XLA!  This line is logged at most once for the lifetime of the process.
+    1563/1563 [==============================] - 12s 3ms/step - loss: 1.5514 - accuracy: 0.4331 - val_loss: 1.2823 - val_accuracy: 0.5290
+    Epoch 2/5
+    1563/1563 [==============================] - 4s 3ms/step - loss: 1.1781 - accuracy: 0.5816 - val_loss: 1.1526 - val_accuracy: 0.5874
+    Epoch 3/5
+    1563/1563 [==============================] - 4s 3ms/step - loss: 1.0207 - accuracy: 0.6384 - val_loss: 1.0523 - val_accuracy: 0.6281
+    Epoch 4/5
+    1563/1563 [==============================] - 4s 3ms/step - loss: 0.9263 - accuracy: 0.6742 - val_loss: 0.9380 - val_accuracy: 0.6695
+    Epoch 5/5
+    1563/1563 [==============================] - 4s 3ms/step - loss: 0.8484 - accuracy: 0.7035 - val_loss: 0.9007 - val_accuracy: 0.6905
+    313/313 - 0s - loss: 0.9007 - accuracy: 0.6905 - 403ms/epoch - 1ms/step
+    test accuracy: 0.690500020980835
+    ```
