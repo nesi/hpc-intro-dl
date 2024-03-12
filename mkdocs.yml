@@ -38,6 +38,9 @@ markdown_extensions:
   - pymdownx.mark
   - pymdownx.smartsymbols
   - pymdownx.superfences
+  - pymdownx.snippets:
+      base_path: "content"
+      check_paths: True
   - pymdownx.tabbed:
       alternate_style: true
   - pymdownx.tilde
