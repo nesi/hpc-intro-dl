@@ -529,13 +529,43 @@ On NeSI, we use *Singularity* and *Apptainer*, which are compatible with Docker 
 
 First, we need to load the corresponding environment module:
 
-```
+```bash
 module purge
 module load Apptainer/1.2.2
 ```
 
-Next, we will fetch a PyTorch container from NVIDIA NGC
+Next, we will fetch a TensorFlow container from [NVIDIA NGC Catalog](https://catalog.ngc.nvidia.com/containers).
+Here is how one would convert the Docker container as an Apptainer container while downloading it:
 
-TODO Apptainer, maybe just mention and show an example container pre-pulled?
+```bash
+apptainer pull tensorflow-24.02.sif docker://nvcr.io/nvidia/tensorflow:24.02-tf2-py3
+```
 
-TODO mention build
+!!! warning
+
+    Please do not run this `apptainer pull` command, it will create a 7GB file and take quite a lot of time.
+
+    We have already pulled the container for you as `/nesi/project/nesi99991/introhpc2403/tensorflow-24.02.sif`.
+
+There are multiple ways to interact with a container.
+Here we will execute a command in the container using the `apptainer exec` command:
+
+```bash
+apptainer exec /nesi/project/nesi99991/introhpc2403/tensorflow-24.02.sif python3 -c "import tensorflow"
+```
+
+??? success "output"
+
+    ```
+    TODO
+    ```
+
+!!! info "See also"
+
+    Here we looked very briefly at containers.
+    If you want to know more about this topic, please check our [support page about Singularity](https://support.nesi.org.nz/hc/en-gb/articles/360001107916-Singularity), which is also applicable to Apptainer.
+    We also have a specific page on [how to build a container on NeSI](https://support.nesi.org.nz/hc/en-gb/articles/6008779241999-Build-an-Apptainer-container-on-a-Milan-compute-node), which is a more advanced topic.
+
+---
+
+In the [next section](submit.md), we will see how to submit jobs to train a deep learning model using a GPU.
