@@ -1,6 +1,6 @@
 # Monitoring
 
-In this section, we will explore multiple ways to monitor hte activity of a job while it is running.
+In this section, we will explore multiple ways to monitor the activity of a job while it is running.
 
 ## Live log file monitoring
 
