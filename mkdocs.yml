@@ -21,9 +21,6 @@ theme:
 extra_css:
   - custom.css
 
- 
-
-
 markdown_extensions:
   - abbr
   - admonition
