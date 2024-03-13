@@ -188,4 +188,38 @@ To enable live update in the web interface, click on the cogwheel icon (top righ
 
 ## GPU usage
 
-TODO nvidia smi csv, see https://github.com/nesi/nvidia-smi-viaslurm/blob/main/docs/index.md
+Another aspect which is import to monitor is how well the GPU is used while running the training code.
+This can help diagnose simple errors (e.g. the code is not running on the GPU) as weel as tune some hyperparameters (e.g. increase the batch size).
+
+Here, we will rely on `nvidia-smi` to collect information in a .csv file, while our job is running.
+
+Edit one of your job submission scripts, for example:
+
+```bash
+nano train_model_env.sl
+```
+
+and insert the following lines at the beginning instead of `nvidia-smi`:
+
+```bash
+# monitor GPU usage
+STATS_INTERVAL=5
+STATS_FILE="${SLURM_JOB_ID}_${SLURM_JOB_NAME}_gpustats.csv"
+nvidia-smi --query-gpu=timestamp,uuid,utilization.gpu,utilization.memory,memory.used,memory.total --format=csv,nounits -l "$STATS_INTERVAL" -f "$STATS_FILE" &
+sleep 20
+```
+
+where
+
+- `STATS_INTERVAL` is the time interval, in seconds, between each measure,
+- `STATS_FILE` is the output .csv file.
+
+??? example "train_model_env.sl (monitored)"
+
+    ```bash title="gpujob.sl" linenums="1"
+    --8<-- "train_model_env_monitor.sl"
+    ```
+
+TODO nvidia smi csv, see https://nesi.github.io/nvidia-smi-viaslurm/
+TODO see https://github.com/netdata/netdata/issues/10362
+TODO see https://nvidia.custhelp.com/app/answers/detail/a_id/3751/~/useful-nvidia-smi-queries
