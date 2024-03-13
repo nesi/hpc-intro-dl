@@ -10,8 +10,7 @@ The following topics will be covered:
 
 - [Installation](install.md): use preinstalled deep learning packages or install it yourself,
 - [Batch jobs](submit.md): submit a batch job using a GPU and make sure to use it,
-- [Monitoring](monitor.md): track progression of model training and GPU usage,
-- [Interactive access](interact.md): live interaction with GPU on the platform.
+- [Monitoring](monitor.md): track progression of model training and GPU usage.
 
 During this workshop, we will be using the [Jupyter-on-NeSI](https://jupyter.nesi.org.nz) service.
 Let's now head to the [Workshop Setup](setup.md) section to get started on the platform.
