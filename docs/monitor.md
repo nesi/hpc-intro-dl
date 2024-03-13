@@ -199,27 +199,69 @@ Edit one of your job submission scripts, for example:
 nano train_model_env.sl
 ```
 
-and insert the following lines at the beginning instead of `nvidia-smi`:
+and insert the following command at the beginning instead of `nvidia-smi`:
 
 ```bash
 # monitor GPU usage
-STATS_INTERVAL=5
-STATS_FILE="${SLURM_JOB_ID}_${SLURM_JOB_NAME}_gpustats.csv"
-nvidia-smi --query-gpu=timestamp,uuid,utilization.gpu,utilization.memory,memory.used,memory.total --format=csv,nounits -l "$STATS_INTERVAL" -f "$STATS_FILE" &
-sleep 20
+nvidia-smi --query-gpu=timestamp,utilization.gpu,utilization.memory,memory.used,memory.total \
+    --format=csv,nounits -l 5 > "gpustats-${SLURM_JOB_ID}.csv" &
 ```
-
-where
-
-- `STATS_INTERVAL` is the time interval, in seconds, between each measure,
-- `STATS_FILE` is the output .csv file.
 
 ??? example "train_model_env.sl (monitored)"
 
-    ```bash title="gpujob.sl" linenums="1"
+    ```bash linenums="1"
     --8<-- "train_model_env_monitor.sl"
     ```
 
-TODO nvidia smi csv, see https://nesi.github.io/nvidia-smi-viaslurm/
-TODO see https://github.com/netdata/netdata/issues/10362
-TODO see https://nvidia.custhelp.com/app/answers/detail/a_id/3751/~/useful-nvidia-smi-queries
+This will make  `nvidia-smi` output every 5 seconds (`-l 5`) a series of measures to a .csv file.
+
+!!! info "See also"
+
+    More details about available metrics and their meaning is available in [Nvidia documentation](https://nvidia.custhelp.com/app/answers/detail/a_id/3751/~/useful-nvidia-smi-queries).
+
+Then, let's submit a job:
+
+```bash
+sbatch train_model_env.sl
+```
+
+??? success "output"
+
+    ```
+    Submitted batch job 44409149
+    ```
+
+And, once the job finished, look at the generated .csv (replace `44409149` with your job ID):
+
+```bash
+cat gpustats-44409149.csv
+```
+
+??? success "output"
+
+    ```
+    timestamp, utilization.gpu [%], utilization.memory [%], memory.used [MiB], memory.total [MiB]
+    2024/03/13 07:04:28.836, 0, 0, 0, 81920
+    2024/03/13 07:04:33.838, 0, 0, 445, 81920
+    2024/03/13 07:04:38.839, 28, 0, 80257, 81920
+    2024/03/13 07:04:43.843, 32, 0, 80257, 81920
+    2024/03/13 07:04:48.844, 30, 0, 80257, 81920
+    2024/03/13 07:04:53.846, 26, 0, 80257, 81920
+    2024/03/13 07:04:58.849, 0, 0, 80257, 81920
+    ```
+
+This is a nice pile of number, wouldn't be nicer to turn it into a plot 😉?
+
+Let's do this using a little bit of Python.
+Open a new *Console*[^1] in JupyterLab and use the following commands (replace the file path with your .csv file):
+
+[^1]: In the *File* menu, under *New*, click on *Console* and then select the kernel `Python 3.10.5 (gimkl-2022a)`.
+
+```python
+import pandas as pd
+statsfile = "/nesi/project/nesi99991/introhpc2403/riom/gpustats-44409149.csv"
+dset = pd.read_csv(statsfile, parse_dates=True, index_col="timestamp")
+dset.plot(subplots=True, figsize=(8, 7), grid=True)
+```
+
+![](imgs/gpustats-44409149.png)

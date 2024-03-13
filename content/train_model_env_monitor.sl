@@ -7,11 +7,8 @@
 #SBATCH --gpus-per-node=A100:1
 
 # monitor GPU usage
-STATS_INTERVAL=5
-STATS_FILE="${SLURM_JOB_ID}_${SLURM_JOB_NAME}_gpustats.csv"
-nvidia-smi --query-gpu=timestamp,uuid,utilization.gpu,utilization.memory,memory.used,memory.total \
-    --format=csv,nounits -l "$STATS_INTERVAL" -f "$STATS_FILE" &
-sleep 20
+nvidia-smi --query-gpu=timestamp,utilization.gpu,utilization.memory,memory.used,memory.total \
+    --format=csv,nounits -l 5 > "gpustats-${SLURM_JOB_ID}.csv" &
 
 # check the value of the CUDA_VISIBLE_DEVICES variable
 echo "CUDA_VISIBLE_DEVICES=${CUDA_VISIBLE_DEVICES}"

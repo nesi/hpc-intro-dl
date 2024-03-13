@@ -7,3 +7,5 @@ TODO jupyter notebook
 TODO nesi-add-kernel
 
 TODO papermill
+
+TODO link to webinar and docs?
