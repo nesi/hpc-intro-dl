@@ -269,7 +269,7 @@ Open a new *Console*[^1] in JupyterLab and use the following commands (replace t
 import pandas as pd
 statsfile = "/nesi/project/nesi99991/introhpc2403/riom/gpustats-44409149.csv"
 dset = pd.read_csv(statsfile, parse_dates=True, index_col="timestamp")
-dset.plot(subplots=True, figsize=(8, 7), grid=True)
+dset.plot(subplots=True, figsize=(10, 9), grid=True)
 ```
 
 ![](imgs/gpustats-44409149.png)
