@@ -15,9 +15,14 @@ theme:
   name: material
   logo: imgs/nesi_logo.png
   favicon: imgs/nesi_logo.png
+  features:
+    - content.code.copy
 
 extra_css:
   - custom.css
+
+ 
+
 
 markdown_extensions:
   - abbr
