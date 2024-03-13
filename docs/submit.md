@@ -52,12 +52,12 @@ Depending on the GPU type, we *may* also need to specify a partition using `--pa
 
 GPU type | Slurm option
 ---------|-------------
-Mahuika P100 | <pre><code>#SBATCH --gpus-per-node=P100:1</code></pre>
-Māui Ancil. P100 | <pre><code>#SBATCH --partition=nesi_gpu<br>#SBATCH --gpus-per-node=1</code></pre>
-A100-1g.5gb | <pre><code>#SBATCH --gpus-per-node=A100-1g.5gb:1</code></pre>
-PCIe A100 (40GB) | <pre><code>#SBATCH --gpus-per-node=A100:1</code></pre>
-HGX A100 (80GB) | <pre><code>#SBATCH --partition=hgx<br>#SBATCH --gpus-per-node=A100:1</code></pre>
-Any A100 🚀 | <pre><code>#SBATCH --partition=hgx,gpu<br>#SBATCH --gpus-per-node=A100:1</code></pre>
+Mahuika P100 | <pre><code>#SBATCH \-\-gpus-per-node=P100:1</code></pre>
+Māui Ancil. P100 | <pre><code>#SBATCH \-\-partition=nesi_gpu<br>#SBATCH \-\-gpus-per-node=1</code></pre>
+A100-1g.5gb | <pre><code>#SBATCH \-\-gpus-per-node=A100-1g.5gb:1</code></pre>
+PCIe A100 (40GB) | <pre><code>#SBATCH \-\-gpus-per-node=A100:1</code></pre>
+HGX A100 (80GB) | <pre><code>#SBATCH \-\-partition=hgx<br>#SBATCH \-\-gpus-per-node=A100:1</code></pre>
+Any A100 🚀 | <pre><code>#SBATCH \-\-partition=hgx,gpu<br>#SBATCH \-\-gpus-per-node=A100:1</code></pre>
 
 For today's exercises, we will use a big one 🤯, an HGX A100 GPU.
 
