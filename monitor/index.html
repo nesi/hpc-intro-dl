@@ -1,0 +1,765 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Introduction to running deep learning code on NeSI">
+      
+      
+        <meta name="author" content="NeSI">
+      
+      
+        <link rel="canonical" href="https://nesi.github.io/hpc-intro-dl/monitor/">
+      
+      
+        <link rel="prev" href="../submit/">
+      
+      
+        <link rel="next" href="../references/">
+      
+      
+      <link rel="icon" href="../imgs/nesi_logo.png">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.13">
+    
+    
+      
+        <title>Monitoring - Intro to HPC (Deep Learning)</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.7e359304.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../custom.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#monitoring" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Intro to HPC (Deep Learning)" class="md-header__button md-logo" aria-label="Intro to HPC (Deep Learning)" data-md-component="logo">
+      
+  <img src="../imgs/nesi_logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Intro to HPC (Deep Learning)
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Monitoring
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var media,input,key,value,palette=__md_get("__palette");if(palette&&palette.color){"(prefers-color-scheme)"===palette.color.media&&(media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']"),palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent"));for([key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/nesi/hpc-intro-dl" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    nesi/hpc-intro-dl
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Intro to HPC (Deep Learning)" class="md-nav__button md-logo" aria-label="Intro to HPC (Deep Learning)" data-md-component="logo">
+      
+  <img src="../imgs/nesi_logo.png" alt="logo">
+
+    </a>
+    Intro to HPC (Deep Learning)
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/nesi/hpc-intro-dl" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    nesi/hpc-intro-dl
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Introduction
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../setup/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Workshop Setup
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../install/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Software Installation
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../submit/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Submit Batch Jobs
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Monitoring
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Monitoring
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#live-log-file-monitoring" class="md-nav__link">
+    <span class="md-ellipsis">
+      Live log file monitoring
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tensorboard" class="md-nav__link">
+    <span class="md-ellipsis">
+      Tensorboard
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#gpu-usage" class="md-nav__link">
+    <span class="md-ellipsis">
+      GPU usage
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../references/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    References
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#live-log-file-monitoring" class="md-nav__link">
+    <span class="md-ellipsis">
+      Live log file monitoring
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tensorboard" class="md-nav__link">
+    <span class="md-ellipsis">
+      Tensorboard
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#gpu-usage" class="md-nav__link">
+    <span class="md-ellipsis">
+      GPU usage
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+  
+
+
+<h1 id="monitoring">Monitoring<a class="headerlink" href="#monitoring" title="Permanent link">&para;</a></h1>
+<p>In this section, we will explore multiple ways to monitor the activity of a job while it is running.</p>
+<h2 id="live-log-file-monitoring">Live log file monitoring<a class="headerlink" href="#live-log-file-monitoring" title="Permanent link">&para;</a></h2>
+<p>So far, we looked at the content of the log file at the end using the <code>cat</code> command.
+Wouldn&rsquo;t it be great if we could see in &ldquo;real time&rdquo; the content of this file?</p>
+<p>To achieve this, we will use the <code>tail</code> command with a little twist 🪄.</p>
+<p>The <code>tail</code> command prints by default the last lines of a file.
+Let&rsquo;s try this on one of our log files, for example (replace <code>44349268</code> with any of your jobs ID):</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>tail<span class="w"> </span>slurm-44349268.out
+</code></pre></div>
+<details class="success">
+<summary>output</summary>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>Epoch 2/5
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>1563/1563 [==============================] - 4s 3ms/step - loss: 1.1781 - accuracy: 0.5816 - val_loss: 1.1526 - val_accuracy: 0.5874
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>Epoch 3/5
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>1563/1563 [==============================] - 4s 3ms/step - loss: 1.0207 - accuracy: 0.6384 - val_loss: 1.0523 - val_accuracy: 0.6281
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>Epoch 4/5
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>1563/1563 [==============================] - 4s 3ms/step - loss: 0.9263 - accuracy: 0.6742 - val_loss: 0.9380 - val_accuracy: 0.6695
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>Epoch 5/5
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>1563/1563 [==============================] - 4s 3ms/step - loss: 0.8484 - accuracy: 0.7035 - val_loss: 0.9007 - val_accuracy: 0.6905
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>313/313 - 0s - loss: 0.9007 - accuracy: 0.6905 - 403ms/epoch - 1ms/step
+<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>test accuracy: 0.690500020980835
+</code></pre></div>
+</details>
+<p>But using the <code>-f</code> option, the <code>tail</code> command will keep watching the file and print updates to the file as they happen.</p>
+<p>Let&rsquo;s run a new job to illustrate this, using one of our job scripts from the <a href="../submit/">previous section</a>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>sbatch<span class="w"> </span>train_model_env.sl
+</code></pre></div>
+<details class="success">
+<summary>output</summary>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>Submitted batch job 44392266
+</code></pre></div>
+</details>
+<p>Double check that your job is running with <code>squeue --me</code>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>squeue<span class="w"> </span>--me
+</code></pre></div>
+<details class="success">
+<summary>output</summary>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>JOBID         USER     ACCOUNT   NAME        CPUS MIN_MEM PARTITI START_TIME     TIME_LEFT STATE    NODELIST(REASON)    
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>44348624      riom     nesi99999 spawner-jupy   2      4G interac 2024-03-12T1     1:58:27 RUNNING  wbn001              
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>44392266      riom     nesi99991 train_model_   2      8G hgx     2024-03-12T2        9:56 RUNNING  wmg003
+</code></pre></div>
+</details>
+<p>And then open the log file using <code>tail -f</code> (replace <code>44392266</code> with your job ID):</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>tail -f slurm-44392266.out
+</code></pre></div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>The <code>tail -f</code> command will not end, even once the job has finished.
+To get the command line prompt back, you need to interrupt it using <span class="keys"><kbd class="key-control">Ctrl</kbd><span>+</span><kbd class="key-c">C</kbd></span>.</p>
+</div>
+<h2 id="tensorboard">Tensorboard<a class="headerlink" href="#tensorboard" title="Permanent link">&para;</a></h2>
+<p><a href="https://www.tensorflow.org/tensorboard">TensorBoard</a> is a powerful visualisation tool that let&rsquo;s you track  and display various metrics while a model is being trained.
+It&rsquo;s a web application, meaning that its interface is accessible via your web browser.</p>
+<p>To use it, you need to make sure that your code save logs in the right format.
+In our example script <code>training_model.py</code>, this is handled by the TensorBoard callback:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="n">tensorboard_callback</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">callbacks</span><span class="o">.</span><span class="n">TensorBoard</span><span class="p">(</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>    <span class="n">log_dir</span><span class="o">=</span><span class="n">output_folder</span> <span class="o">/</span> <span class="s2">&quot;logs&quot;</span><span class="p">,</span> <span class="n">histogram_freq</span><span class="o">=</span><span class="mi">1</span>
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="p">)</span>
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="n">history</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span>
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>    <span class="n">train_images</span><span class="p">,</span>
+<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a>    <span class="n">train_labels</span><span class="p">,</span>
+<a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a>    <span class="n">epochs</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+<a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a>    <span class="n">validation_data</span><span class="o">=</span><span class="p">(</span><span class="n">test_images</span><span class="p">,</span> <span class="n">test_labels</span><span class="p">),</span>
+<a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a>    <span class="n">callbacks</span><span class="o">=</span><span class="p">[</span><span class="n">tensorboard_callback</span><span class="p">]</span>
+<a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a><span class="p">)</span>
+</code></pre></div>
+<p>Here, we decided to save the TensorBoard logs in a sub-folder <code>logs</code> of the job result folder.</p>
+<p>Before running it on a live job, let&rsquo;s use it to look at the metrics from a previous job (replace <code>44393779_train_model_env.sl</code> with one of your results folder):</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>module<span class="w"> </span>purge
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>module<span class="w"> </span>load<span class="w"> </span>TensorFlow/2.13.0-gimkl-2022a-Python-3.11.3
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>tensorboard<span class="w"> </span>--logdir<span class="w"> </span>44393779_train_model_env.sl/logs/
+</code></pre></div>
+<details class="success">
+<summary>output</summary>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>2024-03-13 00:04:50.888636: I tensorflow/core/platform/cpu_feature_guard.cc:182] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>2024-03-13 00:04:53.655259: E tensorflow/compiler/xla/stream_executor/cuda/cuda_driver.cc:268] failed call to cuInit: CUDA_ERROR_UNKNOWN: unknown error
+<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>Serving TensorBoard on localhost; to expose to the network, use a proxy or pass --bind_all
+<a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a>TensorBoard 2.13.0 at http://localhost:6006/ (Press CTRL+C to quit)
+</code></pre></div>
+</details>
+<p>Now TensorBoard is running <em>locally</em> in your session, on port 6006 (default value).
+But you are using a <em>remote</em> session, so opening http://localhost:6006/ in your browser won&rsquo;t work 😢.</p>
+<p>Fortunately, JupyterLab &ndash; the interface you are currently using to access the platform &ndash; can proxy web applications if you access it via a special proxy url:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>https://jupyter.nesi.org.nz/user-redirect/proxy/PORTNUMBER/
+</code></pre></div>
+<p>for an application running on port <code>PORTNUMBER</code>.</p>
+<p>In our case, this would be <a href="https://jupyter.nesi.org.nz/user-redirect/proxy/6006/" target="_blank">https://jupyter.nesi.org.nz/user-redirect/proxy/6006/</a>.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>The final slash <code>/</code> character in the url is important.
+If you forget it, you will see a white empty page.</p>
+</div>
+<div class="admonition failure">
+<p class="admonition-title">Failure</p>
+<p>If someone else is already running an application on port 6006 on the same node as you, TensorBoard will crashe with the following message:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>Address already in use
+<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>Port 6006 is in use by another program. Either identify and stop that program, or start the server with a different port.
+</code></pre></div>
+<p>To avoid this issue, select another port using the <code>--port</code> option, for example using port 25601 (replace <code>44393779_train_model_env.sl</code> with one of your results folder):</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>tensorboard<span class="w"> </span>--logdir<span class="w"> </span>44393779_train_model_env.sl/logs/<span class="w"> </span>--port<span class="w"> </span><span class="m">25601</span>
+</code></pre></div>
+<p>and change the proxy url accordingly.</p>
+</div>
+<p>Like <code>tail -f</code>, the <code>tensorboard</code> command does not end by itself.
+Press <span class="keys"><kbd class="key-control">Ctrl</kbd><span>+</span><kbd class="key-c">C</kbd></span> to interrupt it and get the command line prompt back.</p>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p>To illustrate how to use TensorBoard in live mode, we need to increase the runtime of our Slurm jobs.</p>
+<p>Edit your copy of <code>train_model.py</code> to increase the number of epochs from 5 to 30.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>nano<span class="w"> </span>/nesi/project/nesi99991/introhpc2403/<span class="nv">$USER</span>/train_model.py
+</code></pre></div>
+</div>
+<p>Interestingly, TensorBoard can be used while a job is running and writing information in its corresponding <code>logs</code> folder.</p>
+<p>Let&rsquo;s give it a try! Submit a new training job:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>sbatch<span class="w"> </span>train_model_env.sl
+</code></pre></div>
+<details class="success">
+<summary>output</summary>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>Submitted batch job 44394400
+</code></pre></div>
+</details>
+<p>Then, as soon as the output folder is created, start the <code>tensorboard</code> command (replace <code>44394400_train_model_env.sl</code> with your job result folder):</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>tensorboard --logdir 44394400_train_model_env.sl/logs/
+</code></pre></div>
+<p>and open the proxy url <a href="https://jupyter.nesi.org.nz/user-redirect/proxy/6006/" target="_blank">https://jupyter.nesi.org.nz/user-redirect/proxy/6006/</a>.</p>
+<p>To enable live update in the web interface, click on the cogwheel icon (top right) and then tick the option <strong>Reload Data</strong>.</p>
+<p><img alt="" src="../imgs/tensorboard.png" /></p>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p>Make sure to edit your copy of <code>train_model.py</code> to decrease the number of epochs back to 5.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>nano<span class="w"> </span>/nesi/project/nesi99991/introhpc2403/<span class="nv">$USER</span>/train_model.py
+</code></pre></div>
+</div>
+<h2 id="gpu-usage">GPU usage<a class="headerlink" href="#gpu-usage" title="Permanent link">&para;</a></h2>
+<p>Another aspect which is import to monitor is how well the GPU is used while running the training code.
+This can help diagnose simple errors (e.g. the code is not running on the GPU) as weel as tune some hyperparameters (e.g. increase the batch size).</p>
+<p>Here, we will rely on <code>nvidia-smi</code> to collect information in a .csv file, while our job is running.</p>
+<p>Edit one of your job submission scripts, for example:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>nano<span class="w"> </span>train_model_env.sl
+</code></pre></div>
+<p>and insert the following command at the beginning instead of <code>nvidia-smi</code>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a><span class="c1"># monitor GPU usage</span>
+<a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a>nvidia-smi<span class="w"> </span>--query-gpu<span class="o">=</span>timestamp,utilization.gpu,utilization.memory,memory.used,memory.total<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a><span class="w">    </span>--format<span class="o">=</span>csv,nounits<span class="w"> </span>-l<span class="w"> </span><span class="m">5</span><span class="w"> </span>&gt;<span class="w"> </span><span class="s2">&quot;gpustats-</span><span class="si">${</span><span class="nv">SLURM_JOB_ID</span><span class="si">}</span><span class="s2">.csv&quot;</span><span class="w"> </span><span class="p">&amp;</span>
+</code></pre></div>
+<details class="example">
+<summary>train_model_env.sl (monitored)</summary>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-20-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-20-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-20-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-20-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-20-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-20-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-20-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-20-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-20-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-20-10">10</a></span>
+<span class="normal"><a href="#__codelineno-20-11">11</a></span>
+<span class="normal"><a href="#__codelineno-20-12">12</a></span>
+<span class="normal"><a href="#__codelineno-20-13">13</a></span>
+<span class="normal"><a href="#__codelineno-20-14">14</a></span>
+<span class="normal"><a href="#__codelineno-20-15">15</a></span>
+<span class="normal"><a href="#__codelineno-20-16">16</a></span>
+<span class="normal"><a href="#__codelineno-20-17">17</a></span>
+<span class="normal"><a href="#__codelineno-20-18">18</a></span>
+<span class="normal"><a href="#__codelineno-20-19">19</a></span>
+<span class="normal"><a href="#__codelineno-20-20">20</a></span>
+<span class="normal"><a href="#__codelineno-20-21">21</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-20-1" name="__codelineno-20-1"></a><span class="ch">#!/usr/bin/env bash</span>
+<a id="__codelineno-20-2" name="__codelineno-20-2"></a><span class="c1">#SBATCH --account=nesi99991</span>
+<a id="__codelineno-20-3" name="__codelineno-20-3"></a><span class="c1">#SBATCH --time=00:10:00</span>
+<a id="__codelineno-20-4" name="__codelineno-20-4"></a><span class="c1">#SBATCH --cpus-per-task=2</span>
+<a id="__codelineno-20-5" name="__codelineno-20-5"></a><span class="c1">#SBATCH --mem=8GB</span>
+<a id="__codelineno-20-6" name="__codelineno-20-6"></a><span class="c1">#SBATCH --partition=hgx</span>
+<a id="__codelineno-20-7" name="__codelineno-20-7"></a><span class="c1">#SBATCH --gpus-per-node=A100:1</span>
+<a id="__codelineno-20-8" name="__codelineno-20-8"></a>
+<a id="__codelineno-20-9" name="__codelineno-20-9"></a><span class="c1"># monitor GPU usage</span>
+<a id="__codelineno-20-10" name="__codelineno-20-10"></a>nvidia-smi<span class="w"> </span>--query-gpu<span class="o">=</span>timestamp,utilization.gpu,utilization.memory,memory.used,memory.total<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-20-11" name="__codelineno-20-11"></a><span class="w">    </span>--format<span class="o">=</span>csv,nounits<span class="w"> </span>-l<span class="w"> </span><span class="m">5</span><span class="w"> </span>&gt;<span class="w"> </span><span class="s2">&quot;gpustats-</span><span class="si">${</span><span class="nv">SLURM_JOB_ID</span><span class="si">}</span><span class="s2">.csv&quot;</span><span class="w"> </span><span class="p">&amp;</span>
+<a id="__codelineno-20-12" name="__codelineno-20-12"></a>
+<a id="__codelineno-20-13" name="__codelineno-20-13"></a><span class="c1"># check the value of the CUDA_VISIBLE_DEVICES variable</span>
+<a id="__codelineno-20-14" name="__codelineno-20-14"></a><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;CUDA_VISIBLE_DEVICES=</span><span class="si">${</span><span class="nv">CUDA_VISIBLE_DEVICES</span><span class="si">}</span><span class="s2">&quot;</span>
+<a id="__codelineno-20-15" name="__codelineno-20-15"></a>
+<a id="__codelineno-20-16" name="__codelineno-20-16"></a><span class="c1"># load required environment modules</span>
+<a id="__codelineno-20-17" name="__codelineno-20-17"></a>module<span class="w"> </span>purge
+<a id="__codelineno-20-18" name="__codelineno-20-18"></a>module<span class="w"> </span>load<span class="w"> </span>TensorFlow/2.13.0-gimkl-2022a-Python-3.11.3
+<a id="__codelineno-20-19" name="__codelineno-20-19"></a>
+<a id="__codelineno-20-20" name="__codelineno-20-20"></a><span class="c1"># execute the script</span>
+<a id="__codelineno-20-21" name="__codelineno-20-21"></a>python<span class="w"> </span>train_model.py<span class="w"> </span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">SLURM_JOB_ID</span><span class="si">}</span><span class="s2">_</span><span class="si">${</span><span class="nv">SLURM_JOB_NAME</span><span class="si">}</span><span class="s2">&quot;</span>
+</code></pre></div></td></tr></table></div>
+</details>
+<p>This will make  <code>nvidia-smi</code> output every 5 seconds (<code>-l 5</code>) a series of measures to a .csv file.</p>
+<div class="admonition info">
+<p class="admonition-title">See also</p>
+<p>More details about available metrics and their meaning is available in <a href="https://nvidia.custhelp.com/app/answers/detail/a_id/3751/~/useful-nvidia-smi-queries">Nvidia documentation</a>.</p>
+</div>
+<p>Then, let&rsquo;s submit a job:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>sbatch<span class="w"> </span>train_model_env.sl
+</code></pre></div>
+<details class="success">
+<summary>output</summary>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a>Submitted batch job 44409149
+</code></pre></div>
+</details>
+<p>And, once the job finished, look at the generated .csv (replace <code>44409149</code> with your job ID):</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>cat<span class="w"> </span>gpustats-44409149.csv
+</code></pre></div>
+<details class="success">
+<summary>output</summary>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a>timestamp, utilization.gpu [%], utilization.memory [%], memory.used [MiB], memory.total [MiB]
+<a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a>2024/03/13 07:04:28.836, 0, 0, 0, 81920
+<a id="__codelineno-24-3" name="__codelineno-24-3" href="#__codelineno-24-3"></a>2024/03/13 07:04:33.838, 0, 0, 445, 81920
+<a id="__codelineno-24-4" name="__codelineno-24-4" href="#__codelineno-24-4"></a>2024/03/13 07:04:38.839, 28, 0, 80257, 81920
+<a id="__codelineno-24-5" name="__codelineno-24-5" href="#__codelineno-24-5"></a>2024/03/13 07:04:43.843, 32, 0, 80257, 81920
+<a id="__codelineno-24-6" name="__codelineno-24-6" href="#__codelineno-24-6"></a>2024/03/13 07:04:48.844, 30, 0, 80257, 81920
+<a id="__codelineno-24-7" name="__codelineno-24-7" href="#__codelineno-24-7"></a>2024/03/13 07:04:53.846, 26, 0, 80257, 81920
+<a id="__codelineno-24-8" name="__codelineno-24-8" href="#__codelineno-24-8"></a>2024/03/13 07:04:58.849, 0, 0, 80257, 81920
+</code></pre></div>
+</details>
+<p>This is a nice pile of number, wouldn&rsquo;t be nicer to turn it into a plot 😉?</p>
+<p>Let&rsquo;s do this using a little bit of Python code.
+Open a new <em>Console</em><sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup> in JupyterLab and use the following commands (replace the file path with your .csv file):</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a><span class="n">statsfile</span> <span class="o">=</span> <span class="s2">&quot;/nesi/project/nesi99991/introhpc2403/riom/gpustats-44409149.csv&quot;</span>
+<a id="__codelineno-25-3" name="__codelineno-25-3" href="#__codelineno-25-3"></a><span class="n">dset</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">statsfile</span><span class="p">,</span> <span class="n">parse_dates</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="s2">&quot;timestamp&quot;</span><span class="p">)</span>
+<a id="__codelineno-25-4" name="__codelineno-25-4" href="#__codelineno-25-4"></a><span class="n">dset</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">subplots</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">9</span><span class="p">),</span> <span class="n">grid</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</code></pre></div>
+<p><img alt="" src="../imgs/gpustats-44409149.png" /></p>
+<div class="footnote">
+<hr />
+<ol>
+<li id="fn:1">
+<p>In the <em>File</em> menu, under <em>New</em>, click on <em>Console</em> and then select the kernel <code>Python 3.10.5 (gimkl-2022a)</code>.&#160;<a class="footnote-backref" href="#fnref:1" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+</li>
+</ol>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "..", "features": ["content.code.copy"], "search": "../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.c8d2eff1.min.js"></script>
+      
+    
+  </body>
+</html>

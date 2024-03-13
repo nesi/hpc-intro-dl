@@ -1,0 +1,1600 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Introduction to running deep learning code on NeSI">
+      
+      
+        <meta name="author" content="NeSI">
+      
+      
+        <link rel="canonical" href="https://nesi.github.io/hpc-intro-dl/submit/">
+      
+      
+        <link rel="prev" href="../install/">
+      
+      
+        <link rel="next" href="../monitor/">
+      
+      
+      <link rel="icon" href="../imgs/nesi_logo.png">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.13">
+    
+    
+      
+        <title>Submit Batch Jobs - Intro to HPC (Deep Learning)</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.7e359304.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../custom.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#submit-batch-jobs" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Intro to HPC (Deep Learning)" class="md-header__button md-logo" aria-label="Intro to HPC (Deep Learning)" data-md-component="logo">
+      
+  <img src="../imgs/nesi_logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Intro to HPC (Deep Learning)
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Submit Batch Jobs
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var media,input,key,value,palette=__md_get("__palette");if(palette&&palette.color){"(prefers-color-scheme)"===palette.color.media&&(media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']"),palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent"));for([key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/nesi/hpc-intro-dl" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    nesi/hpc-intro-dl
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Intro to HPC (Deep Learning)" class="md-nav__button md-logo" aria-label="Intro to HPC (Deep Learning)" data-md-component="logo">
+      
+  <img src="../imgs/nesi_logo.png" alt="logo">
+
+    </a>
+    Intro to HPC (Deep Learning)
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/nesi/hpc-intro-dl" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    nesi/hpc-intro-dl
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Introduction
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../setup/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Workshop Setup
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../install/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Software Installation
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Submit Batch Jobs
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Submit Batch Jobs
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#available-gpus" class="md-nav__link">
+    <span class="md-ellipsis">
+      Available GPUs
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#slurm-job-submission" class="md-nav__link">
+    <span class="md-ellipsis">
+      Slurm job submission
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tensorflow-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      TensorFlow example
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="TensorFlow example">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#environment-module" class="md-nav__link">
+    <span class="md-ellipsis">
+      Environment module
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#conda-environment" class="md-nav__link">
+    <span class="md-ellipsis">
+      Conda environment
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#apptainer-container" class="md-nav__link">
+    <span class="md-ellipsis">
+      Apptainer container
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../monitor/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Monitoring
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../references/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    References
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#available-gpus" class="md-nav__link">
+    <span class="md-ellipsis">
+      Available GPUs
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#slurm-job-submission" class="md-nav__link">
+    <span class="md-ellipsis">
+      Slurm job submission
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tensorflow-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      TensorFlow example
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="TensorFlow example">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#environment-module" class="md-nav__link">
+    <span class="md-ellipsis">
+      Environment module
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#conda-environment" class="md-nav__link">
+    <span class="md-ellipsis">
+      Conda environment
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#apptainer-container" class="md-nav__link">
+    <span class="md-ellipsis">
+      Apptainer container
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+  
+
+
+<h1 id="submit-batch-jobs">Submit Batch Jobs<a class="headerlink" href="#submit-batch-jobs" title="Permanent link">&para;</a></h1>
+<p>This section details how to request access to a GPU (graphics processing unit) on NeSI for batch jobs.
+We will also see how to make sure that the installed deep learning packages properly find and use them.</p>
+<h2 id="available-gpus">Available GPUs<a class="headerlink" href="#available-gpus" title="Permanent link">&para;</a></h2>
+<p><img alt="" src="../imgs/a100.jpg" /></p>
+<p>GPU are dedicated piece of hardware filled with specialised compute units to handle massively parallel computations<sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup>.
+The massively parallel architecture of deep learning models make them well-suited to run on GPUs, drastically decreasing their training time.</p>
+<p>NeSI HPC platform gives access to different types of GPUs.
+Here is a little tour of the available capacity as of March 2024:</p>
+<table>
+<thead>
+<tr>
+<th>GPU type</th>
+<th>Location</th>
+<th>Access type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>9 NVIDIA Tesla P100 PCIe 12GB cards (1 node with 1 GPU, 4 nodes with 2 GPUs)</td>
+<td>Mahuika</td>
+<td>Slurm and Jupyter</td>
+</tr>
+<tr>
+<td>5 NVIDIA Tesla P100 PCIe 12GB cards (5 nodes with 1 GPU)</td>
+<td>Māui Ancil.</td>
+<td>Slurm</td>
+</tr>
+<tr>
+<td>7 A100-1g.5gb instances (1 NVIDIA A100 PCIe 40GB card divided into 7 MIG GPU slices with 5GB memory each)</td>
+<td>Mahuika</td>
+<td>Slurm and Jupyter</td>
+</tr>
+<tr>
+<td>7 NVIDIA A100 PCIe 40GB cards (4 nodes with 1 GPU, 2 nodes with 2 GPUs)</td>
+<td>Mahuika</td>
+<td>Slurm</td>
+</tr>
+<tr>
+<td>4 NVIDIA HGX A100 boards (4 GPUs per board with 80GB memory each, 16 A100 GPUs in total)</td>
+<td>Mahuika</td>
+<td>Slurm</td>
+</tr>
+</tbody>
+</table>
+<p>Which one should you use?</p>
+<ul>
+<li>for small experimentations, start with a A100-1g.5gb or a P100,</li>
+<li>if you need to run legacy code (e.g. TensorFlow 1.x) try a P100,</li>
+<li>otherwise use the PCIe or HGX A100,</li>
+<li>and if you need large memory and/or multiple GPUs, use the HGX A100s.</li>
+</ul>
+<details class="info">
+<summary>Limits on GPU Jobs</summary>
+<ul>
+<li>Per-project limit of 6 GPUs being used at a time.</li>
+<li>Per-project limit of 360 GPU-hours being allocated to running jobs.
+  For example, you can use 6 GPUs at a time if your jobs run for 2 days, but only two GPUs if your jobs run for a week.</li>
+<li>No more than 64 CPUs per GPU job, to ensure that GPUs are not left idle due to lack of free CPUs.</li>
+<li>Per-user limit of one A100-1g.5gb GPU job.</li>
+</ul>
+</details>
+<h2 id="slurm-job-submission">Slurm job submission<a class="headerlink" href="#slurm-job-submission" title="Permanent link">&para;</a></h2>
+<p>When preparing our Slurm job script, we need to make sure we tell Slurm that we need a GPU, using
+the <code>--gpus-per-node</code> option.
+In a job submission script, the syntax is the following:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1">#SBATCH --gpus-per-node=&lt;gpu_type&gt;:&lt;gpu_number&gt;</span>
+</code></pre></div>
+<p>Depending on the GPU type, we <em>may</em> also need to specify a partition using <code>--partition</code>.</p>
+<table>
+<thead>
+<tr>
+<th>GPU type</th>
+<th>Slurm option</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Mahuika P100</td>
+<td><pre><code>#SBATCH --gpus-per-node=P100:1</code></pre></td>
+</tr>
+<tr>
+<td>Māui Ancil. P100</td>
+<td><pre><code>#SBATCH --partition=nesi_gpu<br>#SBATCH --gpus-per-node=1</code></pre></td>
+</tr>
+<tr>
+<td>A100-1g.5gb</td>
+<td><pre><code>#SBATCH --gpus-per-node=A100-1g.5gb:1</code></pre></td>
+</tr>
+<tr>
+<td>PCIe A100 (40GB)</td>
+<td><pre><code>#SBATCH --gpus-per-node=A100:1</code></pre></td>
+</tr>
+<tr>
+<td>HGX A100 (80GB)</td>
+<td><pre><code>#SBATCH --partition=hgx<br>#SBATCH --gpus-per-node=A100:1</code></pre></td>
+</tr>
+<tr>
+<td>Any A100 🚀</td>
+<td><pre><code>#SBATCH --partition=hgx,gpu<br>#SBATCH --gpus-per-node=A100:1</code></pre></td>
+</tr>
+</tbody>
+</table>
+<p>For today&rsquo;s exercises, we will use a big one 🤯, an HGX A100 GPU.</p>
+<p>Let&rsquo;s start with a very simple batch job, printing simple information about the requested GPU:</p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">gpujob.sl</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-1-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-1-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-1-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-1-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-1-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-1-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-1-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-1-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-1-10">10</a></span>
+<span class="normal"><a href="#__codelineno-1-11">11</a></span>
+<span class="normal"><a href="#__codelineno-1-12">12</a></span>
+<span class="normal"><a href="#__codelineno-1-13">13</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1"></a><span class="ch">#!/usr/bin/env bash</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2"></a><span class="c1">#SBATCH --account=nesi99991</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3"></a><span class="c1">#SBATCH --time=00:10:00</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4"></a><span class="c1">#SBATCH --cpus-per-task=2</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5"></a><span class="c1">#SBATCH --mem=1GB</span>
+<a id="__codelineno-1-6" name="__codelineno-1-6"></a><span class="c1">#SBATCH --partition=hgx</span>
+<a id="__codelineno-1-7" name="__codelineno-1-7"></a><span class="c1">#SBATCH --gpus-per-node=A100:1</span>
+<a id="__codelineno-1-8" name="__codelineno-1-8"></a>
+<a id="__codelineno-1-9" name="__codelineno-1-9"></a><span class="c1"># display information about the available GPUs</span>
+<a id="__codelineno-1-10" name="__codelineno-1-10"></a>nvidia-smi
+<a id="__codelineno-1-11" name="__codelineno-1-11"></a>
+<a id="__codelineno-1-12" name="__codelineno-1-12"></a><span class="c1"># check the value of the CUDA_VISIBLE_DEVICES variable</span>
+<a id="__codelineno-1-13" name="__codelineno-1-13"></a><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;CUDA_VISIBLE_DEVICES=</span><span class="si">${</span><span class="nv">CUDA_VISIBLE_DEVICES</span><span class="si">}</span><span class="s2">&quot;</span>
+</code></pre></div></td></tr></table></div>
+<p>Create the file <code>gpujob.sl</code> in your workshop folder, for example using the nano editor:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="nb">cd</span><span class="w"> </span>/nesi/project/nesi99991/introhpc2403/<span class="nv">$USER</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>nano<span class="w"> </span>gpujob.sl
+</code></pre></div>
+<p>Then let&rsquo;s submit the job using <code>sbatch</code>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>sbatch<span class="w"> </span>gpujob.sl
+</code></pre></div>
+<details class="success">
+<summary>output</summary>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>Submitted batch job 44344744
+</code></pre></div>
+</details>
+<p>You can check the state of all your jobs using <code>squeue --me</code>.
+Once completed, chech the content of the Slurm log file (replace <code>44344744</code> with your job ID):</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>cat slurm-44344744.out
+</code></pre></div>
+<details class="success">
+<summary>output</summary>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>Tue Mar 12 09:38:23 2024
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>+-----------------------------------------------------------------------------+
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>| NVIDIA-SMI 525.85.12    Driver Version: 525.85.12    CUDA Version: 12.0     |
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>|-------------------------------+----------------------+----------------------+
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>| GPU  Name        Persistence-M| Bus-Id        Disp.A | Volatile Uncorr. ECC |
+<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>| Fan  Temp  Perf  Pwr:Usage/Cap|         Memory-Usage | GPU-Util  Compute M. |
+<a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a>|                               |                      |               MIG M. |
+<a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a>|===============================+======================+======================|
+<a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a>|   0  NVIDIA A100-SXM...  On   | 00000000:C7:00.0 Off |                    0 |
+<a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a>| N/A   35C    P0    62W / 400W |      0MiB / 81920MiB |      0%      Default |
+<a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a>|                               |                      |             Disabled |
+<a id="__codelineno-6-12" name="__codelineno-6-12" href="#__codelineno-6-12"></a>+-------------------------------+----------------------+----------------------+
+<a id="__codelineno-6-13" name="__codelineno-6-13" href="#__codelineno-6-13"></a>
+<a id="__codelineno-6-14" name="__codelineno-6-14" href="#__codelineno-6-14"></a>+-----------------------------------------------------------------------------+
+<a id="__codelineno-6-15" name="__codelineno-6-15" href="#__codelineno-6-15"></a>| Processes:                                                                  |
+<a id="__codelineno-6-16" name="__codelineno-6-16" href="#__codelineno-6-16"></a>|  GPU   GI   CI        PID   Type   Process name                  GPU Memory |
+<a id="__codelineno-6-17" name="__codelineno-6-17" href="#__codelineno-6-17"></a>|        ID   ID                                                   Usage      |
+<a id="__codelineno-6-18" name="__codelineno-6-18" href="#__codelineno-6-18"></a>|=============================================================================|
+<a id="__codelineno-6-19" name="__codelineno-6-19" href="#__codelineno-6-19"></a>|  No running processes found                                                 |
+<a id="__codelineno-6-20" name="__codelineno-6-20" href="#__codelineno-6-20"></a>+-----------------------------------------------------------------------------+
+<a id="__codelineno-6-21" name="__codelineno-6-21" href="#__codelineno-6-21"></a>CUDA_VISIBLE_DEVICES=0
+</code></pre></div>
+</details>
+<p>Note that <code>nvidia-smi</code> and <code>CUDA_VISIBLE_DEVICES</code> both report one GPU.</p>
+<div class="admonition question">
+<p class="admonition-title">Exercise</p>
+<ol>
+<li>Try to request 2 HGX A100 and compare the output of the log file.</li>
+<li>Remove the <code>--partition</code> and <code>--gpus-per-node</code> options and compare the results.</li>
+</ol>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>As we have just seen, Slurm set the environment variable <code>CUDA_VISIBLE_DEVICES</code> for you, so you don&rsquo;t need to do it.</p>
+</div>
+<h2 id="tensorflow-example">TensorFlow example<a class="headerlink" href="#tensorflow-example" title="Permanent link">&para;</a></h2>
+<p>Let&rsquo;s continue with a more realistic example.
+We will use the following script to train a small CNN (convolutional neural network) to classify images from the CIFAR-10 dataset using TensorFlow.</p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">train_model.py</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-7-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-7-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-7-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-7-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-7-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-7-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-7-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-7-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-7-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-7-10">10</a></span>
+<span class="normal"><a href="#__codelineno-7-11">11</a></span>
+<span class="normal"><a href="#__codelineno-7-12">12</a></span>
+<span class="normal"><a href="#__codelineno-7-13">13</a></span>
+<span class="normal"><a href="#__codelineno-7-14">14</a></span>
+<span class="normal"><a href="#__codelineno-7-15">15</a></span>
+<span class="normal"><a href="#__codelineno-7-16">16</a></span>
+<span class="normal"><a href="#__codelineno-7-17">17</a></span>
+<span class="normal"><a href="#__codelineno-7-18">18</a></span>
+<span class="normal"><a href="#__codelineno-7-19">19</a></span>
+<span class="normal"><a href="#__codelineno-7-20">20</a></span>
+<span class="normal"><a href="#__codelineno-7-21">21</a></span>
+<span class="normal"><a href="#__codelineno-7-22">22</a></span>
+<span class="normal"><a href="#__codelineno-7-23">23</a></span>
+<span class="normal"><a href="#__codelineno-7-24">24</a></span>
+<span class="normal"><a href="#__codelineno-7-25">25</a></span>
+<span class="normal"><a href="#__codelineno-7-26">26</a></span>
+<span class="normal"><a href="#__codelineno-7-27">27</a></span>
+<span class="normal"><a href="#__codelineno-7-28">28</a></span>
+<span class="normal"><a href="#__codelineno-7-29">29</a></span>
+<span class="normal"><a href="#__codelineno-7-30">30</a></span>
+<span class="normal"><a href="#__codelineno-7-31">31</a></span>
+<span class="normal"><a href="#__codelineno-7-32">32</a></span>
+<span class="normal"><a href="#__codelineno-7-33">33</a></span>
+<span class="normal"><a href="#__codelineno-7-34">34</a></span>
+<span class="normal"><a href="#__codelineno-7-35">35</a></span>
+<span class="normal"><a href="#__codelineno-7-36">36</a></span>
+<span class="normal"><a href="#__codelineno-7-37">37</a></span>
+<span class="normal"><a href="#__codelineno-7-38">38</a></span>
+<span class="normal"><a href="#__codelineno-7-39">39</a></span>
+<span class="normal"><a href="#__codelineno-7-40">40</a></span>
+<span class="normal"><a href="#__codelineno-7-41">41</a></span>
+<span class="normal"><a href="#__codelineno-7-42">42</a></span>
+<span class="normal"><a href="#__codelineno-7-43">43</a></span>
+<span class="normal"><a href="#__codelineno-7-44">44</a></span>
+<span class="normal"><a href="#__codelineno-7-45">45</a></span>
+<span class="normal"><a href="#__codelineno-7-46">46</a></span>
+<span class="normal"><a href="#__codelineno-7-47">47</a></span>
+<span class="normal"><a href="#__codelineno-7-48">48</a></span>
+<span class="normal"><a href="#__codelineno-7-49">49</a></span>
+<span class="normal"><a href="#__codelineno-7-50">50</a></span>
+<span class="normal"><a href="#__codelineno-7-51">51</a></span>
+<span class="normal"><a href="#__codelineno-7-52">52</a></span>
+<span class="normal"><a href="#__codelineno-7-53">53</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1"></a><span class="kn">import</span> <span class="nn">sys</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2"></a><span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+<a id="__codelineno-7-3" name="__codelineno-7-3"></a>
+<a id="__codelineno-7-4" name="__codelineno-7-4"></a><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
+<a id="__codelineno-7-5" name="__codelineno-7-5"></a><span class="kn">from</span> <span class="nn">tensorflow.keras</span> <span class="kn">import</span> <span class="n">datasets</span><span class="p">,</span> <span class="n">layers</span><span class="p">,</span> <span class="n">models</span>
+<a id="__codelineno-7-6" name="__codelineno-7-6"></a>
+<a id="__codelineno-7-7" name="__codelineno-7-7"></a><span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">:</span>
+<a id="__codelineno-7-8" name="__codelineno-7-8"></a>    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;missing output folder parameter&quot;</span><span class="p">)</span>
+<a id="__codelineno-7-9" name="__codelineno-7-9"></a>
+<a id="__codelineno-7-10" name="__codelineno-7-10"></a><span class="n">output_folder</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<a id="__codelineno-7-11" name="__codelineno-7-11"></a><span class="n">output_folder</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<a id="__codelineno-7-12" name="__codelineno-7-12"></a>
+<a id="__codelineno-7-13" name="__codelineno-7-13"></a><span class="c1"># load training data</span>
+<a id="__codelineno-7-14" name="__codelineno-7-14"></a><span class="p">(</span><span class="n">train_images</span><span class="p">,</span> <span class="n">train_labels</span><span class="p">),</span> <span class="p">(</span><span class="n">test_images</span><span class="p">,</span> <span class="n">test_labels</span><span class="p">)</span> <span class="o">=</span> <span class="n">datasets</span><span class="o">.</span><span class="n">cifar10</span><span class="o">.</span><span class="n">load_data</span><span class="p">()</span>
+<a id="__codelineno-7-15" name="__codelineno-7-15"></a><span class="n">train_images</span><span class="p">,</span> <span class="n">test_images</span> <span class="o">=</span> <span class="n">train_images</span> <span class="o">/</span> <span class="mf">255.0</span><span class="p">,</span> <span class="n">test_images</span> <span class="o">/</span> <span class="mf">255.0</span>
+<a id="__codelineno-7-16" name="__codelineno-7-16"></a><span class="n">input_shape</span> <span class="o">=</span> <span class="n">train_images</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+<a id="__codelineno-7-17" name="__codelineno-7-17"></a>
+<a id="__codelineno-7-18" name="__codelineno-7-18"></a><span class="c1"># create  and compile a CNN model</span>
+<a id="__codelineno-7-19" name="__codelineno-7-19"></a><span class="n">model</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">Sequential</span><span class="p">()</span>
+<a id="__codelineno-7-20" name="__codelineno-7-20"></a><span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">layers</span><span class="o">.</span><span class="n">Conv2D</span><span class="p">(</span><span class="mi">32</span><span class="p">,</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">activation</span><span class="o">=</span><span class="s2">&quot;relu&quot;</span><span class="p">,</span> <span class="n">input_shape</span><span class="o">=</span><span class="n">input_shape</span><span class="p">))</span>
+<a id="__codelineno-7-21" name="__codelineno-7-21"></a><span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">layers</span><span class="o">.</span><span class="n">MaxPooling2D</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)))</span>
+<a id="__codelineno-7-22" name="__codelineno-7-22"></a><span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">layers</span><span class="o">.</span><span class="n">Conv2D</span><span class="p">(</span><span class="mi">64</span><span class="p">,</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">activation</span><span class="o">=</span><span class="s2">&quot;relu&quot;</span><span class="p">))</span>
+<a id="__codelineno-7-23" name="__codelineno-7-23"></a><span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">layers</span><span class="o">.</span><span class="n">MaxPooling2D</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)))</span>
+<a id="__codelineno-7-24" name="__codelineno-7-24"></a><span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">layers</span><span class="o">.</span><span class="n">Conv2D</span><span class="p">(</span><span class="mi">64</span><span class="p">,</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">activation</span><span class="o">=</span><span class="s2">&quot;relu&quot;</span><span class="p">))</span>
+<a id="__codelineno-7-25" name="__codelineno-7-25"></a><span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">layers</span><span class="o">.</span><span class="n">Flatten</span><span class="p">())</span>
+<a id="__codelineno-7-26" name="__codelineno-7-26"></a><span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">layers</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span><span class="mi">64</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s2">&quot;relu&quot;</span><span class="p">))</span>
+<a id="__codelineno-7-27" name="__codelineno-7-27"></a><span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">layers</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span>
+<a id="__codelineno-7-28" name="__codelineno-7-28"></a>
+<a id="__codelineno-7-29" name="__codelineno-7-29"></a><span class="nb">print</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">summary</span><span class="p">())</span>
+<a id="__codelineno-7-30" name="__codelineno-7-30"></a>
+<a id="__codelineno-7-31" name="__codelineno-7-31"></a><span class="n">model</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span>
+<a id="__codelineno-7-32" name="__codelineno-7-32"></a>    <span class="n">optimizer</span><span class="o">=</span><span class="s2">&quot;adam&quot;</span><span class="p">,</span>
+<a id="__codelineno-7-33" name="__codelineno-7-33"></a>    <span class="n">loss</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">losses</span><span class="o">.</span><span class="n">SparseCategoricalCrossentropy</span><span class="p">(</span><span class="n">from_logits</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
+<a id="__codelineno-7-34" name="__codelineno-7-34"></a>    <span class="n">metrics</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;accuracy&quot;</span><span class="p">],</span>
+<a id="__codelineno-7-35" name="__codelineno-7-35"></a><span class="p">)</span>
+<a id="__codelineno-7-36" name="__codelineno-7-36"></a>
+<a id="__codelineno-7-37" name="__codelineno-7-37"></a><span class="c1"># train and evaluate the model</span>
+<a id="__codelineno-7-38" name="__codelineno-7-38"></a><span class="n">tensorboard_callback</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">callbacks</span><span class="o">.</span><span class="n">TensorBoard</span><span class="p">(</span>
+<a id="__codelineno-7-39" name="__codelineno-7-39"></a>    <span class="n">log_dir</span><span class="o">=</span><span class="n">output_folder</span> <span class="o">/</span> <span class="s2">&quot;logs&quot;</span><span class="p">,</span> <span class="n">histogram_freq</span><span class="o">=</span><span class="mi">1</span>
+<a id="__codelineno-7-40" name="__codelineno-7-40"></a><span class="p">)</span>
+<a id="__codelineno-7-41" name="__codelineno-7-41"></a><span class="n">history</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span>
+<a id="__codelineno-7-42" name="__codelineno-7-42"></a>    <span class="n">train_images</span><span class="p">,</span>
+<a id="__codelineno-7-43" name="__codelineno-7-43"></a>    <span class="n">train_labels</span><span class="p">,</span>
+<a id="__codelineno-7-44" name="__codelineno-7-44"></a>    <span class="n">epochs</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+<a id="__codelineno-7-45" name="__codelineno-7-45"></a>    <span class="n">validation_data</span><span class="o">=</span><span class="p">(</span><span class="n">test_images</span><span class="p">,</span> <span class="n">test_labels</span><span class="p">),</span>
+<a id="__codelineno-7-46" name="__codelineno-7-46"></a>    <span class="n">callbacks</span><span class="o">=</span><span class="p">[</span><span class="n">tensorboard_callback</span><span class="p">]</span>
+<a id="__codelineno-7-47" name="__codelineno-7-47"></a><span class="p">)</span>
+<a id="__codelineno-7-48" name="__codelineno-7-48"></a>
+<a id="__codelineno-7-49" name="__codelineno-7-49"></a><span class="n">test_loss</span><span class="p">,</span> <span class="n">test_acc</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">test_images</span><span class="p">,</span> <span class="n">test_labels</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<a id="__codelineno-7-50" name="__codelineno-7-50"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;test accuracy: </span><span class="si">{</span><span class="n">test_acc</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<a id="__codelineno-7-51" name="__codelineno-7-51"></a>
+<a id="__codelineno-7-52" name="__codelineno-7-52"></a><span class="c1"># save final model</span>
+<a id="__codelineno-7-53" name="__codelineno-7-53"></a><span class="n">model</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">output_folder</span> <span class="o">/</span> <span class="s2">&quot;trained_model_cifar10&quot;</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+<p>This file is available in the workshop folder, let&rsquo;s make a copy of it 🙂:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="nb">cd</span><span class="w"> </span>/nesi/project/nesi99991/introhpc2403/<span class="nv">$USER</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>cp<span class="w"> </span>/nesi/project/nesi99991/introhpc2403/train_model.py<span class="w"> </span>./
+</code></pre></div>
+<p>Let&rsquo;s now explore how to submit a Slurm job to execute it.
+The job script will vary depending on the method we use to access TensorFlow.</p>
+<h3 id="environment-module">Environment module<a class="headerlink" href="#environment-module" title="Permanent link">&para;</a></h3>
+<p>First, let&rsquo;s try with tne TensorFlow environment module.</p>
+<p>Let&rsquo;s adapt our <code>gpujob.sl</code> script to load the environment module and run the script, inserting the following instructions at the end:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="c1"># load required environment modules</span>
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>module<span class="w"> </span>purge
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>module<span class="w"> </span>load<span class="w"> </span>TensorFlow/2.13.0-gimkl-2022a-Python-3.11.3
+<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>
+<a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a><span class="c1"># execute the script</span>
+<a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a>python<span class="w"> </span>train_model.py<span class="w"> </span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">SLURM_JOB_ID</span><span class="si">}</span><span class="s2">_</span><span class="si">${</span><span class="nv">SLURM_JOB_NAME</span><span class="si">}</span><span class="s2">&quot;</span>
+</code></pre></div>
+<p>We also need to increase the memory to 8GB too.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>cp<span class="w"> </span>gpujob.sl<span class="w"> </span>train_model_env.sl
+<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>nano<span class="w"> </span>train_model_env.sl
+</code></pre></div>
+<details class="example">
+<summary>train_model_env.sl</summary>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-11-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-11-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-11-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-11-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-11-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-11-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-11-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-11-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-11-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-11-10">10</a></span>
+<span class="normal"><a href="#__codelineno-11-11">11</a></span>
+<span class="normal"><a href="#__codelineno-11-12">12</a></span>
+<span class="normal"><a href="#__codelineno-11-13">13</a></span>
+<span class="normal"><a href="#__codelineno-11-14">14</a></span>
+<span class="normal"><a href="#__codelineno-11-15">15</a></span>
+<span class="normal"><a href="#__codelineno-11-16">16</a></span>
+<span class="normal"><a href="#__codelineno-11-17">17</a></span>
+<span class="normal"><a href="#__codelineno-11-18">18</a></span>
+<span class="normal"><a href="#__codelineno-11-19">19</a></span>
+<span class="normal"><a href="#__codelineno-11-20">20</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1"></a><span class="ch">#!/usr/bin/env bash</span>
+<a id="__codelineno-11-2" name="__codelineno-11-2"></a><span class="c1">#SBATCH --account=nesi99991</span>
+<a id="__codelineno-11-3" name="__codelineno-11-3"></a><span class="c1">#SBATCH --time=00:10:00</span>
+<a id="__codelineno-11-4" name="__codelineno-11-4"></a><span class="c1">#SBATCH --cpus-per-task=2</span>
+<a id="__codelineno-11-5" name="__codelineno-11-5"></a><span class="c1">#SBATCH --mem=8GB</span>
+<a id="__codelineno-11-6" name="__codelineno-11-6"></a><span class="c1">#SBATCH --partition=hgx</span>
+<a id="__codelineno-11-7" name="__codelineno-11-7"></a><span class="c1">#SBATCH --gpus-per-node=A100:1</span>
+<a id="__codelineno-11-8" name="__codelineno-11-8"></a>
+<a id="__codelineno-11-9" name="__codelineno-11-9"></a><span class="c1"># display information about the available GPUs</span>
+<a id="__codelineno-11-10" name="__codelineno-11-10"></a>nvidia-smi
+<a id="__codelineno-11-11" name="__codelineno-11-11"></a>
+<a id="__codelineno-11-12" name="__codelineno-11-12"></a><span class="c1"># check the value of the CUDA_VISIBLE_DEVICES variable</span>
+<a id="__codelineno-11-13" name="__codelineno-11-13"></a><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;CUDA_VISIBLE_DEVICES=</span><span class="si">${</span><span class="nv">CUDA_VISIBLE_DEVICES</span><span class="si">}</span><span class="s2">&quot;</span>
+<a id="__codelineno-11-14" name="__codelineno-11-14"></a>
+<a id="__codelineno-11-15" name="__codelineno-11-15"></a><span class="c1"># load required environment modules</span>
+<a id="__codelineno-11-16" name="__codelineno-11-16"></a>module<span class="w"> </span>purge
+<a id="__codelineno-11-17" name="__codelineno-11-17"></a>module<span class="w"> </span>load<span class="w"> </span>TensorFlow/2.13.0-gimkl-2022a-Python-3.11.3
+<a id="__codelineno-11-18" name="__codelineno-11-18"></a>
+<a id="__codelineno-11-19" name="__codelineno-11-19"></a><span class="c1"># execute the script</span>
+<a id="__codelineno-11-20" name="__codelineno-11-20"></a>python<span class="w"> </span>train_model.py<span class="w"> </span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">SLURM_JOB_ID</span><span class="si">}</span><span class="s2">_</span><span class="si">${</span><span class="nv">SLURM_JOB_NAME</span><span class="si">}</span><span class="s2">&quot;</span>
+</code></pre></div></td></tr></table></div>
+</details>
+<p>Let&rsquo;s submit this script as a job:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>sbatch<span class="w"> </span>train_model_env.sl
+</code></pre></div>
+<details class="success">
+<summary>output</summary>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>Submitted batch job 44348778
+</code></pre></div>
+</details>
+<p>Once completed, a new result folder should have appeared, with the logs and model checkpoint for this run (replace <code>44348778</code> with your job ID):</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>find<span class="w"> </span>44348778_train_model_env.sl/
+</code></pre></div>
+<details class="success">
+<summary>output</summary>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>44348778_train_model_env.sl/
+<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>44348778_train_model_env.sl/logs
+<a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a>44348778_train_model_env.sl/logs/train
+<a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a>44348778_train_model_env.sl/logs/train/events.out.tfevents.1710266108.wmg001.2340955.0.v2
+<a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a>44348778_train_model_env.sl/logs/validation
+<a id="__codelineno-15-6" name="__codelineno-15-6" href="#__codelineno-15-6"></a>44348778_train_model_env.sl/logs/validation/events.out.tfevents.1710266115.wmg001.2340955.1.v2
+<a id="__codelineno-15-7" name="__codelineno-15-7" href="#__codelineno-15-7"></a>44348778_train_model_env.sl/trained_model_cifar10
+<a id="__codelineno-15-8" name="__codelineno-15-8" href="#__codelineno-15-8"></a>44348778_train_model_env.sl/trained_model_cifar10/saved_model.pb
+<a id="__codelineno-15-9" name="__codelineno-15-9" href="#__codelineno-15-9"></a>44348778_train_model_env.sl/trained_model_cifar10/fingerprint.pb
+<a id="__codelineno-15-10" name="__codelineno-15-10" href="#__codelineno-15-10"></a>44348778_train_model_env.sl/trained_model_cifar10/keras_metadata.pb
+<a id="__codelineno-15-11" name="__codelineno-15-11" href="#__codelineno-15-11"></a>44348778_train_model_env.sl/trained_model_cifar10/assets
+<a id="__codelineno-15-12" name="__codelineno-15-12" href="#__codelineno-15-12"></a>44348778_train_model_env.sl/trained_model_cifar10/variables
+<a id="__codelineno-15-13" name="__codelineno-15-13" href="#__codelineno-15-13"></a>44348778_train_model_env.sl/trained_model_cifar10/variables/variables.index
+<a id="__codelineno-15-14" name="__codelineno-15-14" href="#__codelineno-15-14"></a>44348778_train_model_env.sl/trained_model_cifar10/variables/variables.data-00000-of-00001
+</code></pre></div>
+</details>
+<p>Let&rsquo;s now examine the log file to see how the training went (replace <code>44348778</code> with your job ID):</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>cat<span class="w"> </span>slurm-44348778.out
+</code></pre></div>
+<details class="success">
+<summary>output</summary>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>Tue Mar 12 17:55:02 2024       
+<a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>+-----------------------------------------------------------------------------+
+<a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a>| NVIDIA-SMI 525.85.12    Driver Version: 525.85.12    CUDA Version: 12.0     |
+<a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a>|-------------------------------+----------------------+----------------------+
+<a id="__codelineno-17-5" name="__codelineno-17-5" href="#__codelineno-17-5"></a>| GPU  Name        Persistence-M| Bus-Id        Disp.A | Volatile Uncorr. ECC |
+<a id="__codelineno-17-6" name="__codelineno-17-6" href="#__codelineno-17-6"></a>| Fan  Temp  Perf  Pwr:Usage/Cap|         Memory-Usage | GPU-Util  Compute M. |
+<a id="__codelineno-17-7" name="__codelineno-17-7" href="#__codelineno-17-7"></a>|                               |                      |               MIG M. |
+<a id="__codelineno-17-8" name="__codelineno-17-8" href="#__codelineno-17-8"></a>|===============================+======================+======================|
+<a id="__codelineno-17-9" name="__codelineno-17-9" href="#__codelineno-17-9"></a>|   0  NVIDIA A100-SXM...  On   | 00000000:46:00.0 Off |                    0 |
+<a id="__codelineno-17-10" name="__codelineno-17-10" href="#__codelineno-17-10"></a>| N/A   30C    P0    63W / 400W |      0MiB / 81920MiB |      0%      Default |
+<a id="__codelineno-17-11" name="__codelineno-17-11" href="#__codelineno-17-11"></a>|                               |                      |             Disabled |
+<a id="__codelineno-17-12" name="__codelineno-17-12" href="#__codelineno-17-12"></a>+-------------------------------+----------------------+----------------------+
+<a id="__codelineno-17-13" name="__codelineno-17-13" href="#__codelineno-17-13"></a>
+<a id="__codelineno-17-14" name="__codelineno-17-14" href="#__codelineno-17-14"></a>+-----------------------------------------------------------------------------+
+<a id="__codelineno-17-15" name="__codelineno-17-15" href="#__codelineno-17-15"></a>| Processes:                                                                  |
+<a id="__codelineno-17-16" name="__codelineno-17-16" href="#__codelineno-17-16"></a>|  GPU   GI   CI        PID   Type   Process name                  GPU Memory |
+<a id="__codelineno-17-17" name="__codelineno-17-17" href="#__codelineno-17-17"></a>|        ID   ID                                                   Usage      |
+<a id="__codelineno-17-18" name="__codelineno-17-18" href="#__codelineno-17-18"></a>|=============================================================================|
+<a id="__codelineno-17-19" name="__codelineno-17-19" href="#__codelineno-17-19"></a>|  No running processes found                                                 |
+<a id="__codelineno-17-20" name="__codelineno-17-20" href="#__codelineno-17-20"></a>+-----------------------------------------------------------------------------+
+<a id="__codelineno-17-21" name="__codelineno-17-21" href="#__codelineno-17-21"></a>CUDA_VISIBLE_DEVICES=0
+<a id="__codelineno-17-22" name="__codelineno-17-22" href="#__codelineno-17-22"></a>The following modules were not unloaded:
+<a id="__codelineno-17-23" name="__codelineno-17-23" href="#__codelineno-17-23"></a>  (Use &quot;module --force purge&quot; to unload all):
+<a id="__codelineno-17-24" name="__codelineno-17-24" href="#__codelineno-17-24"></a>
+<a id="__codelineno-17-25" name="__codelineno-17-25" href="#__codelineno-17-25"></a>  1) XALT/minimal   2) slurm   3) NeSI
+<a id="__codelineno-17-26" name="__codelineno-17-26" href="#__codelineno-17-26"></a>2024-03-12 17:55:04.385113: I tensorflow/core/platform/cpu_feature_guard.cc:182] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+<a id="__codelineno-17-27" name="__codelineno-17-27" href="#__codelineno-17-27"></a>To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+<a id="__codelineno-17-28" name="__codelineno-17-28" href="#__codelineno-17-28"></a>2024-03-12 17:55:07.601961: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1639] Created device /job:localhost/replica:0/task:0/device:GPU:0 with 78945 MB memory:  -&gt; device: 0, name: NVIDIA A100-SXM4-80GB, pci bus id: 0000:46:00.0, compute capability: 8.0
+<a id="__codelineno-17-29" name="__codelineno-17-29" href="#__codelineno-17-29"></a>Model: &quot;sequential&quot;
+<a id="__codelineno-17-30" name="__codelineno-17-30" href="#__codelineno-17-30"></a>_________________________________________________________________
+<a id="__codelineno-17-31" name="__codelineno-17-31" href="#__codelineno-17-31"></a> Layer (type)                Output Shape              Param #   
+<a id="__codelineno-17-32" name="__codelineno-17-32" href="#__codelineno-17-32"></a>=================================================================
+<a id="__codelineno-17-33" name="__codelineno-17-33" href="#__codelineno-17-33"></a> conv2d (Conv2D)             (None, 30, 30, 32)        896       
+<a id="__codelineno-17-34" name="__codelineno-17-34" href="#__codelineno-17-34"></a>
+<a id="__codelineno-17-35" name="__codelineno-17-35" href="#__codelineno-17-35"></a> max_pooling2d (MaxPooling2  (None, 15, 15, 32)        0         
+<a id="__codelineno-17-36" name="__codelineno-17-36" href="#__codelineno-17-36"></a> D)                                                              
+<a id="__codelineno-17-37" name="__codelineno-17-37" href="#__codelineno-17-37"></a>
+<a id="__codelineno-17-38" name="__codelineno-17-38" href="#__codelineno-17-38"></a> conv2d_1 (Conv2D)           (None, 13, 13, 64)        18496     
+<a id="__codelineno-17-39" name="__codelineno-17-39" href="#__codelineno-17-39"></a>
+<a id="__codelineno-17-40" name="__codelineno-17-40" href="#__codelineno-17-40"></a> max_pooling2d_1 (MaxPoolin  (None, 6, 6, 64)          0         
+<a id="__codelineno-17-41" name="__codelineno-17-41" href="#__codelineno-17-41"></a> g2D)                                                            
+<a id="__codelineno-17-42" name="__codelineno-17-42" href="#__codelineno-17-42"></a>
+<a id="__codelineno-17-43" name="__codelineno-17-43" href="#__codelineno-17-43"></a> conv2d_2 (Conv2D)           (None, 4, 4, 64)          36928     
+<a id="__codelineno-17-44" name="__codelineno-17-44" href="#__codelineno-17-44"></a>
+<a id="__codelineno-17-45" name="__codelineno-17-45" href="#__codelineno-17-45"></a> flatten (Flatten)           (None, 1024)              0         
+<a id="__codelineno-17-46" name="__codelineno-17-46" href="#__codelineno-17-46"></a>
+<a id="__codelineno-17-47" name="__codelineno-17-47" href="#__codelineno-17-47"></a> dense (Dense)               (None, 64)                65600     
+<a id="__codelineno-17-48" name="__codelineno-17-48" href="#__codelineno-17-48"></a>
+<a id="__codelineno-17-49" name="__codelineno-17-49" href="#__codelineno-17-49"></a> dense_1 (Dense)             (None, 10)                650       
+<a id="__codelineno-17-50" name="__codelineno-17-50" href="#__codelineno-17-50"></a>
+<a id="__codelineno-17-51" name="__codelineno-17-51" href="#__codelineno-17-51"></a>=================================================================
+<a id="__codelineno-17-52" name="__codelineno-17-52" href="#__codelineno-17-52"></a>Total params: 122570 (478.79 KB)
+<a id="__codelineno-17-53" name="__codelineno-17-53" href="#__codelineno-17-53"></a>Trainable params: 122570 (478.79 KB)
+<a id="__codelineno-17-54" name="__codelineno-17-54" href="#__codelineno-17-54"></a>Non-trainable params: 0 (0.00 Byte)
+<a id="__codelineno-17-55" name="__codelineno-17-55" href="#__codelineno-17-55"></a>_________________________________________________________________
+<a id="__codelineno-17-56" name="__codelineno-17-56" href="#__codelineno-17-56"></a>None
+<a id="__codelineno-17-57" name="__codelineno-17-57" href="#__codelineno-17-57"></a>Epoch 1/5
+<a id="__codelineno-17-58" name="__codelineno-17-58" href="#__codelineno-17-58"></a>2024-03-12 17:55:10.015697: I tensorflow/compiler/xla/stream_executor/cuda/cuda_dnn.cc:432] Loaded cuDNN version 8600
+<a id="__codelineno-17-59" name="__codelineno-17-59" href="#__codelineno-17-59"></a>2024-03-12 17:55:10.528644: I tensorflow/compiler/xla/stream_executor/cuda/cuda_blas.cc:606] TensorFloat-32 will be used for the matrix multiplication. This will only be logged once.
+<a id="__codelineno-17-60" name="__codelineno-17-60" href="#__codelineno-17-60"></a>2024-03-12 17:55:10.530676: I tensorflow/compiler/xla/service/service.cc:168] XLA service 0x153ead5d2f20 initialized for platform CUDA (this does not guarantee that XLA will be used). Devices:
+<a id="__codelineno-17-61" name="__codelineno-17-61" href="#__codelineno-17-61"></a>2024-03-12 17:55:10.530705: I tensorflow/compiler/xla/service/service.cc:176]   StreamExecutor device (0): NVIDIA A100-SXM4-80GB, Compute Capability 8.0
+<a id="__codelineno-17-62" name="__codelineno-17-62" href="#__codelineno-17-62"></a>2024-03-12 17:55:10.534564: I tensorflow/compiler/mlir/tensorflow/utils/dump_mlir_util.cc:255] disabling MLIR crash reproducer, set env var `MLIR_CRASH_REPRODUCER_DIRECTORY` to enable.
+<a id="__codelineno-17-63" name="__codelineno-17-63" href="#__codelineno-17-63"></a>2024-03-12 17:55:10.637117: I ./tensorflow/compiler/jit/device_compiler.h:186] Compiled cluster using XLA!  This line is logged at most once for the lifetime of the process.
+<a id="__codelineno-17-64" name="__codelineno-17-64" href="#__codelineno-17-64"></a>1563/1563 [==============================] - 7s 3ms/step - loss: 1.5294 - accuracy: 0.4401 - val_loss: 1.2523 - val_accuracy: 0.5466
+<a id="__codelineno-17-65" name="__codelineno-17-65" href="#__codelineno-17-65"></a>Epoch 2/5
+<a id="__codelineno-17-66" name="__codelineno-17-66" href="#__codelineno-17-66"></a>1563/1563 [==============================] - 4s 2ms/step - loss: 1.1661 - accuracy: 0.5858 - val_loss: 1.2037 - val_accuracy: 0.5744
+<a id="__codelineno-17-67" name="__codelineno-17-67" href="#__codelineno-17-67"></a>Epoch 3/5
+<a id="__codelineno-17-68" name="__codelineno-17-68" href="#__codelineno-17-68"></a>1563/1563 [==============================] - 4s 2ms/step - loss: 1.0246 - accuracy: 0.6401 - val_loss: 1.0090 - val_accuracy: 0.6460
+<a id="__codelineno-17-69" name="__codelineno-17-69" href="#__codelineno-17-69"></a>Epoch 4/5
+<a id="__codelineno-17-70" name="__codelineno-17-70" href="#__codelineno-17-70"></a>1563/1563 [==============================] - 4s 2ms/step - loss: 0.9348 - accuracy: 0.6713 - val_loss: 0.9410 - val_accuracy: 0.6689
+<a id="__codelineno-17-71" name="__codelineno-17-71" href="#__codelineno-17-71"></a>Epoch 5/5
+<a id="__codelineno-17-72" name="__codelineno-17-72" href="#__codelineno-17-72"></a>1563/1563 [==============================] - 4s 2ms/step - loss: 0.8608 - accuracy: 0.6988 - val_loss: 0.9287 - val_accuracy: 0.6745
+<a id="__codelineno-17-73" name="__codelineno-17-73" href="#__codelineno-17-73"></a>313/313 - 0s - loss: 0.9287 - accuracy: 0.6745 - 352ms/epoch - 1ms/step
+<a id="__codelineno-17-74" name="__codelineno-17-74" href="#__codelineno-17-74"></a>test accuracy: 0.6744999885559082
+</code></pre></div>
+</details>
+<p>It looks like that everything went well 🥳!</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>TensorFlow is usually quite verbose, it is always good to check if it has detected the GPU and is using it.
+Here, the following line of the log file informs us that it is the case:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>2024-03-12 17:55:10.530705: I tensorflow/compiler/xla/service/service.cc:176]   StreamExecutor device (0): NVIDIA A100-SXM4-80GB, Compute Capability 8.0
+</code></pre></div>
+</div>
+<h3 id="conda-environment">Conda environment<a class="headerlink" href="#conda-environment" title="Permanent link">&para;</a></h3>
+<p>Let&rsquo;s redo the same thing, but this time using the TensorFlow package installed in our conda environment.</p>
+<p>To do so, we will need to modify load the <code>Miniconda3</code> module and activate the environment before executing the script:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a># load required environment modules
+<a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a>module purge
+<a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a>module load Miniconda3/22.11.1-1
+<a id="__codelineno-19-4" name="__codelineno-19-4" href="#__codelineno-19-4"></a>
+<a id="__codelineno-19-5" name="__codelineno-19-5" href="#__codelineno-19-5"></a># activate the conda environment
+<a id="__codelineno-19-6" name="__codelineno-19-6" href="#__codelineno-19-6"></a>source $(conda info --base)/etc/profile.d/conda.sh
+<a id="__codelineno-19-7" name="__codelineno-19-7" href="#__codelineno-19-7"></a>export PYTHONNOUSERSITE=1
+<a id="__codelineno-19-8" name="__codelineno-19-8" href="#__codelineno-19-8"></a>conda deactivate
+<a id="__codelineno-19-9" name="__codelineno-19-9" href="#__codelineno-19-9"></a>conda activate /nesi/nobackup/nesi99991/introhpc2403/$USER/venv
+<a id="__codelineno-19-10" name="__codelineno-19-10" href="#__codelineno-19-10"></a>
+<a id="__codelineno-19-11" name="__codelineno-19-11" href="#__codelineno-19-11"></a># execute the script
+<a id="__codelineno-19-12" name="__codelineno-19-12" href="#__codelineno-19-12"></a>python train_model.py &quot;${SLURM_JOB_ID}_${SLURM_JOB_NAME}&quot;
+</code></pre></div>
+<p>Let&rsquo;s copy our <code>gpujob.sl</code> script and adapt it:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>cp<span class="w"> </span>gpujob.sl<span class="w"> </span>train_model_conda.sl
+<a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a>nano<span class="w"> </span>train_model_conda.sl
+</code></pre></div>
+<p>Don&rsquo;t forget to increase the memory to 8GB.</p>
+<details class="example">
+<summary>train_model_conda.sl</summary>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-21-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-21-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-21-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-21-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-21-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-21-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-21-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-21-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-21-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-21-10">10</a></span>
+<span class="normal"><a href="#__codelineno-21-11">11</a></span>
+<span class="normal"><a href="#__codelineno-21-12">12</a></span>
+<span class="normal"><a href="#__codelineno-21-13">13</a></span>
+<span class="normal"><a href="#__codelineno-21-14">14</a></span>
+<span class="normal"><a href="#__codelineno-21-15">15</a></span>
+<span class="normal"><a href="#__codelineno-21-16">16</a></span>
+<span class="normal"><a href="#__codelineno-21-17">17</a></span>
+<span class="normal"><a href="#__codelineno-21-18">18</a></span>
+<span class="normal"><a href="#__codelineno-21-19">19</a></span>
+<span class="normal"><a href="#__codelineno-21-20">20</a></span>
+<span class="normal"><a href="#__codelineno-21-21">21</a></span>
+<span class="normal"><a href="#__codelineno-21-22">22</a></span>
+<span class="normal"><a href="#__codelineno-21-23">23</a></span>
+<span class="normal"><a href="#__codelineno-21-24">24</a></span>
+<span class="normal"><a href="#__codelineno-21-25">25</a></span>
+<span class="normal"><a href="#__codelineno-21-26">26</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-21-1" name="__codelineno-21-1"></a><span class="ch">#!/usr/bin/env bash</span>
+<a id="__codelineno-21-2" name="__codelineno-21-2"></a><span class="c1">#SBATCH --account=nesi99991</span>
+<a id="__codelineno-21-3" name="__codelineno-21-3"></a><span class="c1">#SBATCH --time=00:10:00</span>
+<a id="__codelineno-21-4" name="__codelineno-21-4"></a><span class="c1">#SBATCH --cpus-per-task=2</span>
+<a id="__codelineno-21-5" name="__codelineno-21-5"></a><span class="c1">#SBATCH --mem=8GB</span>
+<a id="__codelineno-21-6" name="__codelineno-21-6"></a><span class="c1">#SBATCH --partition=hgx</span>
+<a id="__codelineno-21-7" name="__codelineno-21-7"></a><span class="c1">#SBATCH --gpus-per-node=A100:1</span>
+<a id="__codelineno-21-8" name="__codelineno-21-8"></a>
+<a id="__codelineno-21-9" name="__codelineno-21-9"></a><span class="c1"># display information about the available GPUs</span>
+<a id="__codelineno-21-10" name="__codelineno-21-10"></a>nvidia-smi
+<a id="__codelineno-21-11" name="__codelineno-21-11"></a>
+<a id="__codelineno-21-12" name="__codelineno-21-12"></a><span class="c1"># check the value of the CUDA_VISIBLE_DEVICES variable</span>
+<a id="__codelineno-21-13" name="__codelineno-21-13"></a><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;CUDA_VISIBLE_DEVICES=</span><span class="si">${</span><span class="nv">CUDA_VISIBLE_DEVICES</span><span class="si">}</span><span class="s2">&quot;</span>
+<a id="__codelineno-21-14" name="__codelineno-21-14"></a>
+<a id="__codelineno-21-15" name="__codelineno-21-15"></a><span class="c1"># load required environment modules</span>
+<a id="__codelineno-21-16" name="__codelineno-21-16"></a>module<span class="w"> </span>purge
+<a id="__codelineno-21-17" name="__codelineno-21-17"></a>module<span class="w"> </span>load<span class="w"> </span>Miniconda3/22.11.1-1
+<a id="__codelineno-21-18" name="__codelineno-21-18"></a>
+<a id="__codelineno-21-19" name="__codelineno-21-19"></a><span class="c1"># activate the conda environment</span>
+<a id="__codelineno-21-20" name="__codelineno-21-20"></a><span class="nb">source</span><span class="w"> </span><span class="k">$(</span>conda<span class="w"> </span>info<span class="w"> </span>--base<span class="k">)</span>/etc/profile.d/conda.sh
+<a id="__codelineno-21-21" name="__codelineno-21-21"></a><span class="nb">export</span><span class="w"> </span><span class="nv">PYTHONNOUSERSITE</span><span class="o">=</span><span class="m">1</span>
+<a id="__codelineno-21-22" name="__codelineno-21-22"></a>conda<span class="w"> </span>deactivate
+<a id="__codelineno-21-23" name="__codelineno-21-23"></a>conda<span class="w"> </span>activate<span class="w"> </span>/nesi/nobackup/nesi99991/introhpc2403/<span class="nv">$USER</span>/venv
+<a id="__codelineno-21-24" name="__codelineno-21-24"></a>
+<a id="__codelineno-21-25" name="__codelineno-21-25"></a><span class="c1"># execute the script</span>
+<a id="__codelineno-21-26" name="__codelineno-21-26"></a>python<span class="w"> </span>train_model.py<span class="w"> </span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">SLURM_JOB_ID</span><span class="si">}</span><span class="s2">_</span><span class="si">${</span><span class="nv">SLURM_JOB_NAME</span><span class="si">}</span><span class="s2">&quot;</span>
+</code></pre></div></td></tr></table></div>
+</details>
+<p>Let&rsquo;s run this script:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a>sbatch<span class="w"> </span>train_model_conda.sl
+</code></pre></div>
+<details class="success">
+<summary>output</summary>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>Submitted batch job 44349122
+</code></pre></div>
+</details>
+<p>Check the job state using <code>squeue --me</code>.
+It seems to be slower than the version using the environment module 🤔.</p>
+<p>Let&rsquo;s examinate the log file content (replace <code>44349122</code> with your job ID):</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a>cat<span class="w"> </span>slurm-44349122.out
+</code></pre></div>
+<details class="success">
+<summary>output</summary>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a>Tue Mar 12 18:59:59 2024       
+<a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a>+-----------------------------------------------------------------------------+
+<a id="__codelineno-25-3" name="__codelineno-25-3" href="#__codelineno-25-3"></a>| NVIDIA-SMI 525.85.12    Driver Version: 525.85.12    CUDA Version: 12.0     |
+<a id="__codelineno-25-4" name="__codelineno-25-4" href="#__codelineno-25-4"></a>|-------------------------------+----------------------+----------------------+
+<a id="__codelineno-25-5" name="__codelineno-25-5" href="#__codelineno-25-5"></a>| GPU  Name        Persistence-M| Bus-Id        Disp.A | Volatile Uncorr. ECC |
+<a id="__codelineno-25-6" name="__codelineno-25-6" href="#__codelineno-25-6"></a>| Fan  Temp  Perf  Pwr:Usage/Cap|         Memory-Usage | GPU-Util  Compute M. |
+<a id="__codelineno-25-7" name="__codelineno-25-7" href="#__codelineno-25-7"></a>|                               |                      |               MIG M. |
+<a id="__codelineno-25-8" name="__codelineno-25-8" href="#__codelineno-25-8"></a>|===============================+======================+======================|
+<a id="__codelineno-25-9" name="__codelineno-25-9" href="#__codelineno-25-9"></a>|   0  NVIDIA A100-SXM...  On   | 00000000:46:00.0 Off |                    0 |
+<a id="__codelineno-25-10" name="__codelineno-25-10" href="#__codelineno-25-10"></a>| N/A   30C    P0    63W / 400W |      0MiB / 81920MiB |      0%      Default |
+<a id="__codelineno-25-11" name="__codelineno-25-11" href="#__codelineno-25-11"></a>|                               |                      |             Disabled |
+<a id="__codelineno-25-12" name="__codelineno-25-12" href="#__codelineno-25-12"></a>+-------------------------------+----------------------+----------------------+
+<a id="__codelineno-25-13" name="__codelineno-25-13" href="#__codelineno-25-13"></a>
+<a id="__codelineno-25-14" name="__codelineno-25-14" href="#__codelineno-25-14"></a>+-----------------------------------------------------------------------------+
+<a id="__codelineno-25-15" name="__codelineno-25-15" href="#__codelineno-25-15"></a>| Processes:                                                                  |
+<a id="__codelineno-25-16" name="__codelineno-25-16" href="#__codelineno-25-16"></a>|  GPU   GI   CI        PID   Type   Process name                  GPU Memory |
+<a id="__codelineno-25-17" name="__codelineno-25-17" href="#__codelineno-25-17"></a>|        ID   ID                                                   Usage      |
+<a id="__codelineno-25-18" name="__codelineno-25-18" href="#__codelineno-25-18"></a>|=============================================================================|
+<a id="__codelineno-25-19" name="__codelineno-25-19" href="#__codelineno-25-19"></a>|  No running processes found                                                 |
+<a id="__codelineno-25-20" name="__codelineno-25-20" href="#__codelineno-25-20"></a>+-----------------------------------------------------------------------------+
+<a id="__codelineno-25-21" name="__codelineno-25-21" href="#__codelineno-25-21"></a>CUDA_VISIBLE_DEVICES=0
+<a id="__codelineno-25-22" name="__codelineno-25-22" href="#__codelineno-25-22"></a>The following modules were not unloaded:
+<a id="__codelineno-25-23" name="__codelineno-25-23" href="#__codelineno-25-23"></a>  (Use &quot;module --force purge&quot; to unload all):
+<a id="__codelineno-25-24" name="__codelineno-25-24" href="#__codelineno-25-24"></a>
+<a id="__codelineno-25-25" name="__codelineno-25-25" href="#__codelineno-25-25"></a>  1) XALT/minimal   2) slurm   3) NeSI
+<a id="__codelineno-25-26" name="__codelineno-25-26" href="#__codelineno-25-26"></a>2024-03-12 19:00:01.818851: I tensorflow/tsl/cuda/cudart_stub.cc:28] Could not find cuda drivers on your machine, GPU will not be used.
+<a id="__codelineno-25-27" name="__codelineno-25-27" href="#__codelineno-25-27"></a>2024-03-12 19:00:01.855127: I tensorflow/tsl/cuda/cudart_stub.cc:28] Could not find cuda drivers on your machine, GPU will not be used.
+<a id="__codelineno-25-28" name="__codelineno-25-28" href="#__codelineno-25-28"></a>2024-03-12 19:00:01.855498: I tensorflow/core/platform/cpu_feature_guard.cc:182] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+<a id="__codelineno-25-29" name="__codelineno-25-29" href="#__codelineno-25-29"></a>To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+<a id="__codelineno-25-30" name="__codelineno-25-30" href="#__codelineno-25-30"></a>2024-03-12 19:00:02.591725: W tensorflow/compiler/tf2tensorrt/utils/py_utils.cc:38] TF-TRT Warning: Could not find TensorRT
+<a id="__codelineno-25-31" name="__codelineno-25-31" href="#__codelineno-25-31"></a>2024-03-12 19:00:04.115146: W tensorflow/core/common_runtime/gpu/gpu_device.cc:1956] Cannot dlopen some GPU libraries. Please make sure the missing libraries mentioned above are installed properly if you would like to use GPU. Follow the guide at https://www.tensorflow.org/install/gpu for how to download and setup the required libraries for your platform.
+<a id="__codelineno-25-32" name="__codelineno-25-32" href="#__codelineno-25-32"></a>Skipping registering GPU devices...
+<a id="__codelineno-25-33" name="__codelineno-25-33" href="#__codelineno-25-33"></a>Model: &quot;sequential&quot;
+<a id="__codelineno-25-34" name="__codelineno-25-34" href="#__codelineno-25-34"></a>_________________________________________________________________
+<a id="__codelineno-25-35" name="__codelineno-25-35" href="#__codelineno-25-35"></a> Layer (type)                Output Shape              Param #   
+<a id="__codelineno-25-36" name="__codelineno-25-36" href="#__codelineno-25-36"></a>=================================================================
+<a id="__codelineno-25-37" name="__codelineno-25-37" href="#__codelineno-25-37"></a> conv2d (Conv2D)             (None, 30, 30, 32)        896       
+<a id="__codelineno-25-38" name="__codelineno-25-38" href="#__codelineno-25-38"></a>
+<a id="__codelineno-25-39" name="__codelineno-25-39" href="#__codelineno-25-39"></a> max_pooling2d (MaxPooling2D  (None, 15, 15, 32)       0         
+<a id="__codelineno-25-40" name="__codelineno-25-40" href="#__codelineno-25-40"></a> )                                                               
+<a id="__codelineno-25-41" name="__codelineno-25-41" href="#__codelineno-25-41"></a>
+<a id="__codelineno-25-42" name="__codelineno-25-42" href="#__codelineno-25-42"></a> conv2d_1 (Conv2D)           (None, 13, 13, 64)        18496     
+<a id="__codelineno-25-43" name="__codelineno-25-43" href="#__codelineno-25-43"></a>
+<a id="__codelineno-25-44" name="__codelineno-25-44" href="#__codelineno-25-44"></a> max_pooling2d_1 (MaxPooling  (None, 6, 6, 64)         0         
+<a id="__codelineno-25-45" name="__codelineno-25-45" href="#__codelineno-25-45"></a> 2D)                                                             
+<a id="__codelineno-25-46" name="__codelineno-25-46" href="#__codelineno-25-46"></a>
+<a id="__codelineno-25-47" name="__codelineno-25-47" href="#__codelineno-25-47"></a> conv2d_2 (Conv2D)           (None, 4, 4, 64)          36928     
+<a id="__codelineno-25-48" name="__codelineno-25-48" href="#__codelineno-25-48"></a>
+<a id="__codelineno-25-49" name="__codelineno-25-49" href="#__codelineno-25-49"></a> flatten (Flatten)           (None, 1024)              0         
+<a id="__codelineno-25-50" name="__codelineno-25-50" href="#__codelineno-25-50"></a>
+<a id="__codelineno-25-51" name="__codelineno-25-51" href="#__codelineno-25-51"></a> dense (Dense)               (None, 64)                65600     
+<a id="__codelineno-25-52" name="__codelineno-25-52" href="#__codelineno-25-52"></a>
+<a id="__codelineno-25-53" name="__codelineno-25-53" href="#__codelineno-25-53"></a> dense_1 (Dense)             (None, 10)                650       
+<a id="__codelineno-25-54" name="__codelineno-25-54" href="#__codelineno-25-54"></a>
+<a id="__codelineno-25-55" name="__codelineno-25-55" href="#__codelineno-25-55"></a>=================================================================
+<a id="__codelineno-25-56" name="__codelineno-25-56" href="#__codelineno-25-56"></a>Total params: 122,570
+<a id="__codelineno-25-57" name="__codelineno-25-57" href="#__codelineno-25-57"></a>Trainable params: 122,570
+<a id="__codelineno-25-58" name="__codelineno-25-58" href="#__codelineno-25-58"></a>Non-trainable params: 0
+<a id="__codelineno-25-59" name="__codelineno-25-59" href="#__codelineno-25-59"></a>_________________________________________________________________
+<a id="__codelineno-25-60" name="__codelineno-25-60" href="#__codelineno-25-60"></a>None
+<a id="__codelineno-25-61" name="__codelineno-25-61" href="#__codelineno-25-61"></a>Epoch 1/5
+<a id="__codelineno-25-62" name="__codelineno-25-62" href="#__codelineno-25-62"></a>1563/1563 [==============================] - 37s 23ms/step - loss: 1.5266 - accuracy: 0.4439 - val_loss: 1.3006 - val_accuracy: 0.5370
+<a id="__codelineno-25-63" name="__codelineno-25-63" href="#__codelineno-25-63"></a>Epoch 2/5
+<a id="__codelineno-25-64" name="__codelineno-25-64" href="#__codelineno-25-64"></a>1563/1563 [==============================] - 35s 22ms/step - loss: 1.1699 - accuracy: 0.5855 - val_loss: 1.0767 - val_accuracy: 0.6192
+<a id="__codelineno-25-65" name="__codelineno-25-65" href="#__codelineno-25-65"></a>Epoch 3/5
+<a id="__codelineno-25-66" name="__codelineno-25-66" href="#__codelineno-25-66"></a>1563/1563 [==============================] - 35s 22ms/step - loss: 1.0244 - accuracy: 0.6394 - val_loss: 0.9981 - val_accuracy: 0.6482
+<a id="__codelineno-25-67" name="__codelineno-25-67" href="#__codelineno-25-67"></a>Epoch 4/5
+<a id="__codelineno-25-68" name="__codelineno-25-68" href="#__codelineno-25-68"></a>1563/1563 [==============================] - 35s 22ms/step - loss: 0.9237 - accuracy: 0.6775 - val_loss: 0.9513 - val_accuracy: 0.6672
+<a id="__codelineno-25-69" name="__codelineno-25-69" href="#__codelineno-25-69"></a>Epoch 5/5
+<a id="__codelineno-25-70" name="__codelineno-25-70" href="#__codelineno-25-70"></a>1563/1563 [==============================] - 35s 22ms/step - loss: 0.8549 - accuracy: 0.7008 - val_loss: 0.9288 - val_accuracy: 0.6801
+<a id="__codelineno-25-71" name="__codelineno-25-71" href="#__codelineno-25-71"></a>313/313 - 2s - loss: 0.9288 - accuracy: 0.6801 - 2s/epoch - 6ms/step
+<a id="__codelineno-25-72" name="__codelineno-25-72" href="#__codelineno-25-72"></a>WARNING:absl:Found untraced functions such as _jit_compiled_convolution_op, _jit_compiled_convolution_op, _jit_compiled_convolution_op, _update_step_xla while saving (showing 4 of 4). These functions will not be directly callable after loading.
+<a id="__codelineno-25-73" name="__codelineno-25-73" href="#__codelineno-25-73"></a>test accuracy: 0.6801000237464905
+</code></pre></div>
+</details>
+<p>Let&rsquo;s have a closer look at the messages 🔎.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a>2024-03-12 19:00:01.855127: I tensorflow/tsl/cuda/cudart_stub.cc:28] Could not find cuda drivers on your machine, GPU will not be used.
+</code></pre></div>
+<p>Oh, that&rsquo;s not good!
+TensorFlow could not find CUDA and therefore failed to use the GPU.</p>
+<p>To fix it, we need to load the CUDA (and cuDNN) module and tell TensorFlow where to find it.
+Edit the <code>train_model_conda.sl</code> script to insert these lines before running <code>train_model.py</code>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a>module<span class="w"> </span>load<span class="w"> </span>cuDNN/8.6.0.163-CUDA-11.8.0
+<a id="__codelineno-27-2" name="__codelineno-27-2" href="#__codelineno-27-2"></a><span class="nb">export</span><span class="w"> </span><span class="nv">XLA_FLAGS</span><span class="o">=</span>--xla_gpu_cuda_data_dir<span class="o">=</span><span class="nv">$CUDA_PATH</span>
+</code></pre></div>
+<details class="example">
+<summary>train_model_conda.sl (fixed)</summary>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-28-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-28-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-28-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-28-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-28-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-28-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-28-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-28-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-28-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-28-10">10</a></span>
+<span class="normal"><a href="#__codelineno-28-11">11</a></span>
+<span class="normal"><a href="#__codelineno-28-12">12</a></span>
+<span class="normal"><a href="#__codelineno-28-13">13</a></span>
+<span class="normal"><a href="#__codelineno-28-14">14</a></span>
+<span class="normal"><a href="#__codelineno-28-15">15</a></span>
+<span class="normal"><a href="#__codelineno-28-16">16</a></span>
+<span class="normal"><a href="#__codelineno-28-17">17</a></span>
+<span class="normal"><a href="#__codelineno-28-18">18</a></span>
+<span class="normal"><a href="#__codelineno-28-19">19</a></span>
+<span class="normal"><a href="#__codelineno-28-20">20</a></span>
+<span class="normal"><a href="#__codelineno-28-21">21</a></span>
+<span class="normal"><a href="#__codelineno-28-22">22</a></span>
+<span class="normal"><a href="#__codelineno-28-23">23</a></span>
+<span class="normal"><a href="#__codelineno-28-24">24</a></span>
+<span class="normal"><a href="#__codelineno-28-25">25</a></span>
+<span class="normal"><a href="#__codelineno-28-26">26</a></span>
+<span class="normal"><a href="#__codelineno-28-27">27</a></span>
+<span class="normal"><a href="#__codelineno-28-28">28</a></span>
+<span class="normal"><a href="#__codelineno-28-29">29</a></span>
+<span class="normal"><a href="#__codelineno-28-30">30</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-28-1" name="__codelineno-28-1"></a><span class="ch">#!/usr/bin/env bash</span>
+<a id="__codelineno-28-2" name="__codelineno-28-2"></a><span class="c1">#SBATCH --account=nesi99991</span>
+<a id="__codelineno-28-3" name="__codelineno-28-3"></a><span class="c1">#SBATCH --time=00:10:00</span>
+<a id="__codelineno-28-4" name="__codelineno-28-4"></a><span class="c1">#SBATCH --cpus-per-task=2</span>
+<a id="__codelineno-28-5" name="__codelineno-28-5"></a><span class="c1">#SBATCH --mem=8GB</span>
+<a id="__codelineno-28-6" name="__codelineno-28-6"></a><span class="c1">#SBATCH --partition=hgx</span>
+<a id="__codelineno-28-7" name="__codelineno-28-7"></a><span class="c1">#SBATCH --gpus-per-node=A100:1</span>
+<a id="__codelineno-28-8" name="__codelineno-28-8"></a>
+<a id="__codelineno-28-9" name="__codelineno-28-9"></a><span class="c1"># display information about the available GPUs</span>
+<a id="__codelineno-28-10" name="__codelineno-28-10"></a>nvidia-smi
+<a id="__codelineno-28-11" name="__codelineno-28-11"></a>
+<a id="__codelineno-28-12" name="__codelineno-28-12"></a><span class="c1"># check the value of the CUDA_VISIBLE_DEVICES variable</span>
+<a id="__codelineno-28-13" name="__codelineno-28-13"></a><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;CUDA_VISIBLE_DEVICES=</span><span class="si">${</span><span class="nv">CUDA_VISIBLE_DEVICES</span><span class="si">}</span><span class="s2">&quot;</span>
+<a id="__codelineno-28-14" name="__codelineno-28-14"></a>
+<a id="__codelineno-28-15" name="__codelineno-28-15"></a><span class="c1"># load required environment modules</span>
+<a id="__codelineno-28-16" name="__codelineno-28-16"></a>module<span class="w"> </span>purge
+<a id="__codelineno-28-17" name="__codelineno-28-17"></a>module<span class="w"> </span>load<span class="w"> </span>Miniconda3/22.11.1-1
+<a id="__codelineno-28-18" name="__codelineno-28-18"></a>module<span class="w"> </span>load<span class="w"> </span>cuDNN/8.6.0.163-CUDA-11.8.0
+<a id="__codelineno-28-19" name="__codelineno-28-19"></a>
+<a id="__codelineno-28-20" name="__codelineno-28-20"></a><span class="c1"># ensures XLA can find CUDA libraries</span>
+<a id="__codelineno-28-21" name="__codelineno-28-21"></a><span class="nb">export</span><span class="w"> </span><span class="nv">XLA_FLAGS</span><span class="o">=</span>--xla_gpu_cuda_data_dir<span class="o">=</span><span class="nv">$CUDA_PATH</span>
+<a id="__codelineno-28-22" name="__codelineno-28-22"></a>
+<a id="__codelineno-28-23" name="__codelineno-28-23"></a><span class="c1"># activate the conda environment</span>
+<a id="__codelineno-28-24" name="__codelineno-28-24"></a><span class="nb">source</span><span class="w"> </span><span class="k">$(</span>conda<span class="w"> </span>info<span class="w"> </span>--base<span class="k">)</span>/etc/profile.d/conda.sh
+<a id="__codelineno-28-25" name="__codelineno-28-25"></a><span class="nb">export</span><span class="w"> </span><span class="nv">PYTHONNOUSERSITE</span><span class="o">=</span><span class="m">1</span>
+<a id="__codelineno-28-26" name="__codelineno-28-26"></a>conda<span class="w"> </span>deactivate
+<a id="__codelineno-28-27" name="__codelineno-28-27"></a>conda<span class="w"> </span>activate<span class="w"> </span>/nesi/nobackup/nesi99991/introhpc2403/<span class="nv">$USER</span>/venv
+<a id="__codelineno-28-28" name="__codelineno-28-28"></a>
+<a id="__codelineno-28-29" name="__codelineno-28-29"></a><span class="c1"># execute the script</span>
+<a id="__codelineno-28-30" name="__codelineno-28-30"></a>python<span class="w"> </span>train_model.py<span class="w"> </span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">SLURM_JOB_ID</span><span class="si">}</span><span class="s2">_</span><span class="si">${</span><span class="nv">SLURM_JOB_NAME</span><span class="si">}</span><span class="s2">&quot;</span>
+</code></pre></div></td></tr></table></div>
+</details>
+<p>We can now resubmit the job:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a>sbatch<span class="w"> </span>train_model_conda.sl<span class="w"> </span>
+</code></pre></div>
+<details class="output">
+<summary>success</summary>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a>Submitted batch job 44349128
+</code></pre></div>
+</details>
+<p>And examine the log file to confirm that now the GPU is used by TensorFlow (replace <code>44349128</code> with your job ID):</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a>cat<span class="w"> </span>slurm-44349128.out
+</code></pre></div>
+<details class="success">
+<summary>output</summary>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a>Tue Mar 12 19:07:00 2024       
+<a id="__codelineno-32-2" name="__codelineno-32-2" href="#__codelineno-32-2"></a>+-----------------------------------------------------------------------------+
+<a id="__codelineno-32-3" name="__codelineno-32-3" href="#__codelineno-32-3"></a>| NVIDIA-SMI 525.85.12    Driver Version: 525.85.12    CUDA Version: 12.0     |
+<a id="__codelineno-32-4" name="__codelineno-32-4" href="#__codelineno-32-4"></a>|-------------------------------+----------------------+----------------------+
+<a id="__codelineno-32-5" name="__codelineno-32-5" href="#__codelineno-32-5"></a>| GPU  Name        Persistence-M| Bus-Id        Disp.A | Volatile Uncorr. ECC |
+<a id="__codelineno-32-6" name="__codelineno-32-6" href="#__codelineno-32-6"></a>| Fan  Temp  Perf  Pwr:Usage/Cap|         Memory-Usage | GPU-Util  Compute M. |
+<a id="__codelineno-32-7" name="__codelineno-32-7" href="#__codelineno-32-7"></a>|                               |                      |               MIG M. |
+<a id="__codelineno-32-8" name="__codelineno-32-8" href="#__codelineno-32-8"></a>|===============================+======================+======================|
+<a id="__codelineno-32-9" name="__codelineno-32-9" href="#__codelineno-32-9"></a>|   0  NVIDIA A100-SXM...  On   | 00000000:46:00.0 Off |                    0 |
+<a id="__codelineno-32-10" name="__codelineno-32-10" href="#__codelineno-32-10"></a>| N/A   30C    P0    63W / 400W |      0MiB / 81920MiB |      0%      Default |
+<a id="__codelineno-32-11" name="__codelineno-32-11" href="#__codelineno-32-11"></a>|                               |                      |             Disabled |
+<a id="__codelineno-32-12" name="__codelineno-32-12" href="#__codelineno-32-12"></a>+-------------------------------+----------------------+----------------------+
+<a id="__codelineno-32-13" name="__codelineno-32-13" href="#__codelineno-32-13"></a>
+<a id="__codelineno-32-14" name="__codelineno-32-14" href="#__codelineno-32-14"></a>+-----------------------------------------------------------------------------+
+<a id="__codelineno-32-15" name="__codelineno-32-15" href="#__codelineno-32-15"></a>| Processes:                                                                  |
+<a id="__codelineno-32-16" name="__codelineno-32-16" href="#__codelineno-32-16"></a>|  GPU   GI   CI        PID   Type   Process name                  GPU Memory |
+<a id="__codelineno-32-17" name="__codelineno-32-17" href="#__codelineno-32-17"></a>|        ID   ID                                                   Usage      |
+<a id="__codelineno-32-18" name="__codelineno-32-18" href="#__codelineno-32-18"></a>|=============================================================================|
+<a id="__codelineno-32-19" name="__codelineno-32-19" href="#__codelineno-32-19"></a>|  No running processes found                                                 |
+<a id="__codelineno-32-20" name="__codelineno-32-20" href="#__codelineno-32-20"></a>+-----------------------------------------------------------------------------+
+<a id="__codelineno-32-21" name="__codelineno-32-21" href="#__codelineno-32-21"></a>CUDA_VISIBLE_DEVICES=0
+<a id="__codelineno-32-22" name="__codelineno-32-22" href="#__codelineno-32-22"></a>The following modules were not unloaded:
+<a id="__codelineno-32-23" name="__codelineno-32-23" href="#__codelineno-32-23"></a>  (Use &quot;module --force purge&quot; to unload all):
+<a id="__codelineno-32-24" name="__codelineno-32-24" href="#__codelineno-32-24"></a>
+<a id="__codelineno-32-25" name="__codelineno-32-25" href="#__codelineno-32-25"></a>  1) XALT/minimal   2) slurm   3) NeSI
+<a id="__codelineno-32-26" name="__codelineno-32-26" href="#__codelineno-32-26"></a>2024-03-12 19:07:02.339469: I tensorflow/core/platform/cpu_feature_guard.cc:182] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+<a id="__codelineno-32-27" name="__codelineno-32-27" href="#__codelineno-32-27"></a>To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+<a id="__codelineno-32-28" name="__codelineno-32-28" href="#__codelineno-32-28"></a>2024-03-12 19:07:03.048716: W tensorflow/compiler/tf2tensorrt/utils/py_utils.cc:38] TF-TRT Warning: Could not find TensorRT
+<a id="__codelineno-32-29" name="__codelineno-32-29" href="#__codelineno-32-29"></a>2024-03-12 19:07:07.037005: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1635] Created device /job:localhost/replica:0/task:0/device:GPU:0 with 78915 MB memory:  -&gt; device: 0, name: NVIDIA A100-SXM4-80GB, pci bus id: 0000:46:00.0, compute capability: 8.0
+<a id="__codelineno-32-30" name="__codelineno-32-30" href="#__codelineno-32-30"></a>Model: &quot;sequential&quot;
+<a id="__codelineno-32-31" name="__codelineno-32-31" href="#__codelineno-32-31"></a>_________________________________________________________________
+<a id="__codelineno-32-32" name="__codelineno-32-32" href="#__codelineno-32-32"></a> Layer (type)                Output Shape              Param #   
+<a id="__codelineno-32-33" name="__codelineno-32-33" href="#__codelineno-32-33"></a>=================================================================
+<a id="__codelineno-32-34" name="__codelineno-32-34" href="#__codelineno-32-34"></a> conv2d (Conv2D)             (None, 30, 30, 32)        896       
+<a id="__codelineno-32-35" name="__codelineno-32-35" href="#__codelineno-32-35"></a>
+<a id="__codelineno-32-36" name="__codelineno-32-36" href="#__codelineno-32-36"></a> max_pooling2d (MaxPooling2D  (None, 15, 15, 32)       0         
+<a id="__codelineno-32-37" name="__codelineno-32-37" href="#__codelineno-32-37"></a> )                                                               
+<a id="__codelineno-32-38" name="__codelineno-32-38" href="#__codelineno-32-38"></a>
+<a id="__codelineno-32-39" name="__codelineno-32-39" href="#__codelineno-32-39"></a> conv2d_1 (Conv2D)           (None, 13, 13, 64)        18496     
+<a id="__codelineno-32-40" name="__codelineno-32-40" href="#__codelineno-32-40"></a>
+<a id="__codelineno-32-41" name="__codelineno-32-41" href="#__codelineno-32-41"></a> max_pooling2d_1 (MaxPooling  (None, 6, 6, 64)         0         
+<a id="__codelineno-32-42" name="__codelineno-32-42" href="#__codelineno-32-42"></a> 2D)                                                             
+<a id="__codelineno-32-43" name="__codelineno-32-43" href="#__codelineno-32-43"></a>
+<a id="__codelineno-32-44" name="__codelineno-32-44" href="#__codelineno-32-44"></a> conv2d_2 (Conv2D)           (None, 4, 4, 64)          36928     
+<a id="__codelineno-32-45" name="__codelineno-32-45" href="#__codelineno-32-45"></a>
+<a id="__codelineno-32-46" name="__codelineno-32-46" href="#__codelineno-32-46"></a> flatten (Flatten)           (None, 1024)              0         
+<a id="__codelineno-32-47" name="__codelineno-32-47" href="#__codelineno-32-47"></a>
+<a id="__codelineno-32-48" name="__codelineno-32-48" href="#__codelineno-32-48"></a> dense (Dense)               (None, 64)                65600     
+<a id="__codelineno-32-49" name="__codelineno-32-49" href="#__codelineno-32-49"></a>
+<a id="__codelineno-32-50" name="__codelineno-32-50" href="#__codelineno-32-50"></a> dense_1 (Dense)             (None, 10)                650       
+<a id="__codelineno-32-51" name="__codelineno-32-51" href="#__codelineno-32-51"></a>
+<a id="__codelineno-32-52" name="__codelineno-32-52" href="#__codelineno-32-52"></a>=================================================================
+<a id="__codelineno-32-53" name="__codelineno-32-53" href="#__codelineno-32-53"></a>Total params: 122,570
+<a id="__codelineno-32-54" name="__codelineno-32-54" href="#__codelineno-32-54"></a>Trainable params: 122,570
+<a id="__codelineno-32-55" name="__codelineno-32-55" href="#__codelineno-32-55"></a>Non-trainable params: 0
+<a id="__codelineno-32-56" name="__codelineno-32-56" href="#__codelineno-32-56"></a>_________________________________________________________________
+<a id="__codelineno-32-57" name="__codelineno-32-57" href="#__codelineno-32-57"></a>None
+<a id="__codelineno-32-58" name="__codelineno-32-58" href="#__codelineno-32-58"></a>Epoch 1/5
+<a id="__codelineno-32-59" name="__codelineno-32-59" href="#__codelineno-32-59"></a>2024-03-12 19:07:10.016715: I tensorflow/compiler/xla/stream_executor/cuda/cuda_dnn.cc:424] Loaded cuDNN version 8600
+<a id="__codelineno-32-60" name="__codelineno-32-60" href="#__codelineno-32-60"></a>2024-03-12 19:07:10.526440: I tensorflow/compiler/xla/stream_executor/cuda/cuda_blas.cc:637] TensorFloat-32 will be used for the matrix multiplication. This will only be logged once.
+<a id="__codelineno-32-61" name="__codelineno-32-61" href="#__codelineno-32-61"></a>2024-03-12 19:07:10.778501: I tensorflow/compiler/xla/service/service.cc:169] XLA service 0x555575f88670 initialized for platform CUDA (this does not guarantee that XLA will be used). Devices:
+<a id="__codelineno-32-62" name="__codelineno-32-62" href="#__codelineno-32-62"></a>2024-03-12 19:07:10.778540: I tensorflow/compiler/xla/service/service.cc:177]   StreamExecutor device (0): NVIDIA A100-SXM4-80GB, Compute Capability 8.0
+<a id="__codelineno-32-63" name="__codelineno-32-63" href="#__codelineno-32-63"></a>2024-03-12 19:07:10.783568: I tensorflow/compiler/mlir/tensorflow/utils/dump_mlir_util.cc:269] disabling MLIR crash reproducer, set env var `MLIR_CRASH_REPRODUCER_DIRECTORY` to enable.
+<a id="__codelineno-32-64" name="__codelineno-32-64" href="#__codelineno-32-64"></a>2024-03-12 19:07:10.916067: I ./tensorflow/compiler/jit/device_compiler.h:180] Compiled cluster using XLA!  This line is logged at most once for the lifetime of the process.
+<a id="__codelineno-32-65" name="__codelineno-32-65" href="#__codelineno-32-65"></a>1563/1563 [==============================] - 8s 3ms/step - loss: 1.5133 - accuracy: 0.4475 - val_loss: 1.2346 - val_accuracy: 0.5525
+<a id="__codelineno-32-66" name="__codelineno-32-66" href="#__codelineno-32-66"></a>Epoch 2/5
+<a id="__codelineno-32-67" name="__codelineno-32-67" href="#__codelineno-32-67"></a>1563/1563 [==============================] - 4s 2ms/step - loss: 1.1527 - accuracy: 0.5927 - val_loss: 1.0675 - val_accuracy: 0.6208
+<a id="__codelineno-32-68" name="__codelineno-32-68" href="#__codelineno-32-68"></a>Epoch 3/5
+<a id="__codelineno-32-69" name="__codelineno-32-69" href="#__codelineno-32-69"></a>1563/1563 [==============================] - 4s 2ms/step - loss: 0.9922 - accuracy: 0.6524 - val_loss: 1.0370 - val_accuracy: 0.6448
+<a id="__codelineno-32-70" name="__codelineno-32-70" href="#__codelineno-32-70"></a>Epoch 4/5
+<a id="__codelineno-32-71" name="__codelineno-32-71" href="#__codelineno-32-71"></a>1563/1563 [==============================] - 4s 2ms/step - loss: 0.8910 - accuracy: 0.6887 - val_loss: 0.9684 - val_accuracy: 0.6682
+<a id="__codelineno-32-72" name="__codelineno-32-72" href="#__codelineno-32-72"></a>Epoch 5/5
+<a id="__codelineno-32-73" name="__codelineno-32-73" href="#__codelineno-32-73"></a>1563/1563 [==============================] - 4s 3ms/step - loss: 0.8165 - accuracy: 0.7137 - val_loss: 0.9052 - val_accuracy: 0.6897
+<a id="__codelineno-32-74" name="__codelineno-32-74" href="#__codelineno-32-74"></a>313/313 - 0s - loss: 0.9052 - accuracy: 0.6897 - 361ms/epoch - 1ms/step
+<a id="__codelineno-32-75" name="__codelineno-32-75" href="#__codelineno-32-75"></a>WARNING:absl:Found untraced functions such as _jit_compiled_convolution_op, _jit_compiled_convolution_op, _jit_compiled_convolution_op while saving (showing 3 of 3). These functions will not be directly callable after loading.
+<a id="__codelineno-32-76" name="__codelineno-32-76" href="#__codelineno-32-76"></a>test accuracy: 0.6897000074386597
+</code></pre></div>
+</details>
+<p>Success! Now TensorFlow uses the GPU:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-33-1" name="__codelineno-33-1" href="#__codelineno-33-1"></a>2024-03-12 19:07:10.778540: I tensorflow/compiler/xla/service/service.cc:177]   StreamExecutor device (0): NVIDIA A100-SXM4-80GB, Compute Capability 8.0
+</code></pre></div>
+<p>and each epoch takes 4s instead of 35s:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-34-1" name="__codelineno-34-1" href="#__codelineno-34-1"></a>Epoch 4/5
+<a id="__codelineno-34-2" name="__codelineno-34-2" href="#__codelineno-34-2"></a>1563/1563 [==============================] - 4s 2ms/step - loss: 0.8910 - accuracy: 0.6887 - val_loss: 0.9684 - val_accuracy: 0.6682
+</code></pre></div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Depending on the version of TensorFlow installed, you will need to load different version of CUDA and cuDNN.
+Check the <a href="https://www.tensorflow.org/install/source?hl=fr#gpu">TensorFlow compatibility matrix</a> to find which version you need.</p>
+<p>If the corresponding environment modules do not exist on NeSI, please contact your friendly NeSI support team at <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#117;&#112;&#112;&#111;&#114;&#116;&#64;&#110;&#101;&#115;&#105;&#46;&#111;&#114;&#103;&#46;&#110;&#122;">&#115;&#117;&#112;&#112;&#111;&#114;&#116;&#64;&#110;&#101;&#115;&#105;&#46;&#111;&#114;&#103;&#46;&#110;&#122;</a> to request it to be installed.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>For other packages, like PyTorch or Jax, you <em>may</em> need to load CUDA and/or cuDNN.
+It depends if the CUDA (and cuDNN) toolkit gets installed by <code>conda</code> or <code>pip</code> as dependency, or not.</p>
+<p>You can check this by looking at the list of packages installed in your conda environment using <code>conda export</code>.
+Here is an example with the conda environment created for this workshop:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-35-1" name="__codelineno-35-1" href="#__codelineno-35-1"></a>module<span class="w"> </span>load<span class="w"> </span>Miniconda3/23.10.0-1
+<a id="__codelineno-35-2" name="__codelineno-35-2" href="#__codelineno-35-2"></a>conda<span class="w"> </span>env<span class="w"> </span><span class="nb">export</span><span class="w"> </span>-p<span class="w"> </span>/nesi/nobackup/nesi99991/introhpc2403/<span class="nv">$USER</span>/venv
+</code></pre></div>
+</div>
+<h3 id="apptainer-container">Apptainer container<a class="headerlink" href="#apptainer-container" title="Permanent link">&para;</a></h3>
+<p>Finally, let&rsquo;s try with the container approach.</p>
+<p>To run our python script using the container, we need to:</p>
+<ul>
+<li>load the corresponding environment module
+  <div class="highlight"><pre><span></span><code><a id="__codelineno-36-1" name="__codelineno-36-1" href="#__codelineno-36-1"></a>module<span class="w"> </span>purge
+<a id="__codelineno-36-2" name="__codelineno-36-2" href="#__codelineno-36-2"></a>module<span class="w"> </span>load<span class="w"> </span>Apptainer/1.2.2
+</code></pre></div></li>
+<li>use the <code>apptainer exec</code> command to execute the local script using the interpreter and packages <em>inside</em> the container
+  <div class="highlight"><pre><span></span><code><a id="__codelineno-37-1" name="__codelineno-37-1" href="#__codelineno-37-1"></a>apptainer<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>--nv<span class="w"> </span>/nesi/project/nesi99991/introhpc2403/tensorflow-24.02.sif<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-37-2" name="__codelineno-37-2" href="#__codelineno-37-2"></a><span class="w">  </span>python<span class="w"> </span>train_model.py<span class="w"> </span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">SLURM_JOB_ID</span><span class="si">}</span><span class="s2">_</span><span class="si">${</span><span class="nv">SLURM_JOB_NAME</span><span class="si">}</span><span class="s2">&quot;</span>
+</code></pre></div></li>
+</ul>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<ul>
+<li>The <code>--nv</code> option is needed to expose the GPU inside the container.</li>
+<li>Containers are expected to have their own copy of the CUDA toolkit inside, therefore we don&rsquo;t need to the load the CUDA (or cuDNN) environment module.</li>
+</ul>
+</div>
+<p>Let&rsquo;s create another job submission script (and don&rsquo;t forget to increase memory to 8GB):</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-38-1" name="__codelineno-38-1" href="#__codelineno-38-1"></a>cp<span class="w"> </span>gpujob.sl<span class="w"> </span>train_model_apptainer.sl
+<a id="__codelineno-38-2" name="__codelineno-38-2" href="#__codelineno-38-2"></a>nano<span class="w"> </span>train_model_apptainer.sl
+</code></pre></div>
+<details class="example">
+<summary>train_model_apptainer.sl</summary>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-39-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-39-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-39-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-39-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-39-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-39-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-39-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-39-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-39-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-39-10">10</a></span>
+<span class="normal"><a href="#__codelineno-39-11">11</a></span>
+<span class="normal"><a href="#__codelineno-39-12">12</a></span>
+<span class="normal"><a href="#__codelineno-39-13">13</a></span>
+<span class="normal"><a href="#__codelineno-39-14">14</a></span>
+<span class="normal"><a href="#__codelineno-39-15">15</a></span>
+<span class="normal"><a href="#__codelineno-39-16">16</a></span>
+<span class="normal"><a href="#__codelineno-39-17">17</a></span>
+<span class="normal"><a href="#__codelineno-39-18">18</a></span>
+<span class="normal"><a href="#__codelineno-39-19">19</a></span>
+<span class="normal"><a href="#__codelineno-39-20">20</a></span>
+<span class="normal"><a href="#__codelineno-39-21">21</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-39-1" name="__codelineno-39-1"></a><span class="ch">#!/usr/bin/env bash</span>
+<a id="__codelineno-39-2" name="__codelineno-39-2"></a><span class="c1">#SBATCH --account=nesi99991</span>
+<a id="__codelineno-39-3" name="__codelineno-39-3"></a><span class="c1">#SBATCH --time=00:10:00</span>
+<a id="__codelineno-39-4" name="__codelineno-39-4"></a><span class="c1">#SBATCH --cpus-per-task=2</span>
+<a id="__codelineno-39-5" name="__codelineno-39-5"></a><span class="c1">#SBATCH --mem=8GB</span>
+<a id="__codelineno-39-6" name="__codelineno-39-6"></a><span class="c1">#SBATCH --partition=hgx</span>
+<a id="__codelineno-39-7" name="__codelineno-39-7"></a><span class="c1">#SBATCH --gpus-per-node=A100:1</span>
+<a id="__codelineno-39-8" name="__codelineno-39-8"></a>
+<a id="__codelineno-39-9" name="__codelineno-39-9"></a><span class="c1"># display information about the available GPUs</span>
+<a id="__codelineno-39-10" name="__codelineno-39-10"></a>nvidia-smi
+<a id="__codelineno-39-11" name="__codelineno-39-11"></a>
+<a id="__codelineno-39-12" name="__codelineno-39-12"></a><span class="c1"># check the value of the CUDA_VISIBLE_DEVICES variable</span>
+<a id="__codelineno-39-13" name="__codelineno-39-13"></a><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;CUDA_VISIBLE_DEVICES=</span><span class="si">${</span><span class="nv">CUDA_VISIBLE_DEVICES</span><span class="si">}</span><span class="s2">&quot;</span>
+<a id="__codelineno-39-14" name="__codelineno-39-14"></a>
+<a id="__codelineno-39-15" name="__codelineno-39-15"></a><span class="c1"># load required environment modules</span>
+<a id="__codelineno-39-16" name="__codelineno-39-16"></a>module<span class="w"> </span>purge
+<a id="__codelineno-39-17" name="__codelineno-39-17"></a>module<span class="w"> </span>load<span class="w"> </span>Apptainer/1.2.2
+<a id="__codelineno-39-18" name="__codelineno-39-18"></a>
+<a id="__codelineno-39-19" name="__codelineno-39-19"></a><span class="c1"># execute the script</span>
+<a id="__codelineno-39-20" name="__codelineno-39-20"></a>apptainer<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>--nv<span class="w"> </span>/nesi/project/nesi99991/introhpc2403/tensorflow-24.02.sif<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-39-21" name="__codelineno-39-21"></a><span class="w">    </span>python<span class="w"> </span>train_model.py<span class="w"> </span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">SLURM_JOB_ID</span><span class="si">}</span><span class="s2">_</span><span class="si">${</span><span class="nv">SLURM_JOB_NAME</span><span class="si">}</span><span class="s2">&quot;</span>
+</code></pre></div></td></tr></table></div>
+</details>
+<p>Let&rsquo;s submit the job:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-40-1" name="__codelineno-40-1" href="#__codelineno-40-1"></a>sbatch<span class="w"> </span>train_model_apptainer.sl
+</code></pre></div>
+<details class="success">
+<summary>output</summary>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-41-1" name="__codelineno-41-1" href="#__codelineno-41-1"></a>Submitted batch job 44349268
+</code></pre></div>
+</details>
+<p>And look at the log file once the job has completed (replace <code>44349268</code> with your job ID):</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-42-1" name="__codelineno-42-1" href="#__codelineno-42-1"></a>cat<span class="w"> </span>slurm-44349268.out
+</code></pre></div>
+<details class="success">
+<summary>output</summary>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-43-1" name="__codelineno-43-1" href="#__codelineno-43-1"></a>Tue Mar 12 19:33:00 2024       
+<a id="__codelineno-43-2" name="__codelineno-43-2" href="#__codelineno-43-2"></a>+-----------------------------------------------------------------------------+
+<a id="__codelineno-43-3" name="__codelineno-43-3" href="#__codelineno-43-3"></a>| NVIDIA-SMI 525.85.12    Driver Version: 525.85.12    CUDA Version: 12.0     |
+<a id="__codelineno-43-4" name="__codelineno-43-4" href="#__codelineno-43-4"></a>|-------------------------------+----------------------+----------------------+
+<a id="__codelineno-43-5" name="__codelineno-43-5" href="#__codelineno-43-5"></a>| GPU  Name        Persistence-M| Bus-Id        Disp.A | Volatile Uncorr. ECC |
+<a id="__codelineno-43-6" name="__codelineno-43-6" href="#__codelineno-43-6"></a>| Fan  Temp  Perf  Pwr:Usage/Cap|         Memory-Usage | GPU-Util  Compute M. |
+<a id="__codelineno-43-7" name="__codelineno-43-7" href="#__codelineno-43-7"></a>|                               |                      |               MIG M. |
+<a id="__codelineno-43-8" name="__codelineno-43-8" href="#__codelineno-43-8"></a>|===============================+======================+======================|
+<a id="__codelineno-43-9" name="__codelineno-43-9" href="#__codelineno-43-9"></a>|   0  NVIDIA A100-SXM...  On   | 00000000:46:00.0 Off |                    0 |
+<a id="__codelineno-43-10" name="__codelineno-43-10" href="#__codelineno-43-10"></a>| N/A   30C    P0    63W / 400W |      0MiB / 81920MiB |      0%      Default |
+<a id="__codelineno-43-11" name="__codelineno-43-11" href="#__codelineno-43-11"></a>|                               |                      |             Disabled |
+<a id="__codelineno-43-12" name="__codelineno-43-12" href="#__codelineno-43-12"></a>+-------------------------------+----------------------+----------------------+
+<a id="__codelineno-43-13" name="__codelineno-43-13" href="#__codelineno-43-13"></a>
+<a id="__codelineno-43-14" name="__codelineno-43-14" href="#__codelineno-43-14"></a>+-----------------------------------------------------------------------------+
+<a id="__codelineno-43-15" name="__codelineno-43-15" href="#__codelineno-43-15"></a>| Processes:                                                                  |
+<a id="__codelineno-43-16" name="__codelineno-43-16" href="#__codelineno-43-16"></a>|  GPU   GI   CI        PID   Type   Process name                  GPU Memory |
+<a id="__codelineno-43-17" name="__codelineno-43-17" href="#__codelineno-43-17"></a>|        ID   ID                                                   Usage      |
+<a id="__codelineno-43-18" name="__codelineno-43-18" href="#__codelineno-43-18"></a>|=============================================================================|
+<a id="__codelineno-43-19" name="__codelineno-43-19" href="#__codelineno-43-19"></a>|  No running processes found                                                 |
+<a id="__codelineno-43-20" name="__codelineno-43-20" href="#__codelineno-43-20"></a>+-----------------------------------------------------------------------------+
+<a id="__codelineno-43-21" name="__codelineno-43-21" href="#__codelineno-43-21"></a>CUDA_VISIBLE_DEVICES=0
+<a id="__codelineno-43-22" name="__codelineno-43-22" href="#__codelineno-43-22"></a>The following modules were not unloaded:
+<a id="__codelineno-43-23" name="__codelineno-43-23" href="#__codelineno-43-23"></a>  (Use &quot;module --force purge&quot; to unload all):
+<a id="__codelineno-43-24" name="__codelineno-43-24" href="#__codelineno-43-24"></a>
+<a id="__codelineno-43-25" name="__codelineno-43-25" href="#__codelineno-43-25"></a>  1) XALT/minimal   2) slurm   3) NeSI
+<a id="__codelineno-43-26" name="__codelineno-43-26" href="#__codelineno-43-26"></a>WARNING: SINGULARITY_TMPDIR and APPTAINER_TMPDIR have different values, using the latter
+<a id="__codelineno-43-27" name="__codelineno-43-27" href="#__codelineno-43-27"></a>13:4: not a valid test operator: (
+<a id="__codelineno-43-28" name="__codelineno-43-28" href="#__codelineno-43-28"></a>13:4: not a valid test operator: 525.85.12
+<a id="__codelineno-43-29" name="__codelineno-43-29" href="#__codelineno-43-29"></a>2024-03-12 19:33:13.535779: E external/local_xla/xla/stream_executor/cuda/cuda_dnn.cc:9373] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+<a id="__codelineno-43-30" name="__codelineno-43-30" href="#__codelineno-43-30"></a>2024-03-12 19:33:13.535849: E external/local_xla/xla/stream_executor/cuda/cuda_fft.cc:607] Unable to register cuFFT factory: Attempting to register factory for plugin cuFFT when one has already been registered
+<a id="__codelineno-43-31" name="__codelineno-43-31" href="#__codelineno-43-31"></a>2024-03-12 19:33:13.686115: E external/local_xla/xla/stream_executor/cuda/cuda_blas.cc:1534] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+<a id="__codelineno-43-32" name="__codelineno-43-32" href="#__codelineno-43-32"></a>2024-03-12 19:33:13.823985: I tensorflow/core/platform/cpu_feature_guard.cc:183] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+<a id="__codelineno-43-33" name="__codelineno-43-33" href="#__codelineno-43-33"></a>To enable the following instructions: SSE3 SSE4.1 SSE4.2 AVX, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+<a id="__codelineno-43-34" name="__codelineno-43-34" href="#__codelineno-43-34"></a>2024-03-12 19:33:22.353297: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1926] Created device /job:localhost/replica:0/task:0/device:GPU:0 with 78867 MB memory:  -&gt; device: 0, name: NVIDIA A100-SXM4-80GB, pci bus id: 0000:46:00.0, compute capability: 8.0
+<a id="__codelineno-43-35" name="__codelineno-43-35" href="#__codelineno-43-35"></a>Model: &quot;sequential&quot;
+<a id="__codelineno-43-36" name="__codelineno-43-36" href="#__codelineno-43-36"></a>_________________________________________________________________
+<a id="__codelineno-43-37" name="__codelineno-43-37" href="#__codelineno-43-37"></a> Layer (type)                Output Shape              Param #   
+<a id="__codelineno-43-38" name="__codelineno-43-38" href="#__codelineno-43-38"></a>=================================================================
+<a id="__codelineno-43-39" name="__codelineno-43-39" href="#__codelineno-43-39"></a> conv2d (Conv2D)             (None, 30, 30, 32)        896       
+<a id="__codelineno-43-40" name="__codelineno-43-40" href="#__codelineno-43-40"></a>
+<a id="__codelineno-43-41" name="__codelineno-43-41" href="#__codelineno-43-41"></a> max_pooling2d (MaxPooling2  (None, 15, 15, 32)        0         
+<a id="__codelineno-43-42" name="__codelineno-43-42" href="#__codelineno-43-42"></a> D)                                                              
+<a id="__codelineno-43-43" name="__codelineno-43-43" href="#__codelineno-43-43"></a>
+<a id="__codelineno-43-44" name="__codelineno-43-44" href="#__codelineno-43-44"></a> conv2d_1 (Conv2D)           (None, 13, 13, 64)        18496     
+<a id="__codelineno-43-45" name="__codelineno-43-45" href="#__codelineno-43-45"></a>
+<a id="__codelineno-43-46" name="__codelineno-43-46" href="#__codelineno-43-46"></a> max_pooling2d_1 (MaxPoolin  (None, 6, 6, 64)          0         
+<a id="__codelineno-43-47" name="__codelineno-43-47" href="#__codelineno-43-47"></a> g2D)                                                            
+<a id="__codelineno-43-48" name="__codelineno-43-48" href="#__codelineno-43-48"></a>
+<a id="__codelineno-43-49" name="__codelineno-43-49" href="#__codelineno-43-49"></a> conv2d_2 (Conv2D)           (None, 4, 4, 64)          36928     
+<a id="__codelineno-43-50" name="__codelineno-43-50" href="#__codelineno-43-50"></a>
+<a id="__codelineno-43-51" name="__codelineno-43-51" href="#__codelineno-43-51"></a> flatten (Flatten)           (None, 1024)              0         
+<a id="__codelineno-43-52" name="__codelineno-43-52" href="#__codelineno-43-52"></a>
+<a id="__codelineno-43-53" name="__codelineno-43-53" href="#__codelineno-43-53"></a> dense (Dense)               (None, 64)                65600     
+<a id="__codelineno-43-54" name="__codelineno-43-54" href="#__codelineno-43-54"></a>
+<a id="__codelineno-43-55" name="__codelineno-43-55" href="#__codelineno-43-55"></a> dense_1 (Dense)             (None, 10)                650       
+<a id="__codelineno-43-56" name="__codelineno-43-56" href="#__codelineno-43-56"></a>
+<a id="__codelineno-43-57" name="__codelineno-43-57" href="#__codelineno-43-57"></a>=================================================================
+<a id="__codelineno-43-58" name="__codelineno-43-58" href="#__codelineno-43-58"></a>Total params: 122570 (478.79 KB)
+<a id="__codelineno-43-59" name="__codelineno-43-59" href="#__codelineno-43-59"></a>Trainable params: 122570 (478.79 KB)
+<a id="__codelineno-43-60" name="__codelineno-43-60" href="#__codelineno-43-60"></a>Non-trainable params: 0 (0.00 Byte)
+<a id="__codelineno-43-61" name="__codelineno-43-61" href="#__codelineno-43-61"></a>_________________________________________________________________
+<a id="__codelineno-43-62" name="__codelineno-43-62" href="#__codelineno-43-62"></a>None
+<a id="__codelineno-43-63" name="__codelineno-43-63" href="#__codelineno-43-63"></a>Epoch 1/5
+<a id="__codelineno-43-64" name="__codelineno-43-64" href="#__codelineno-43-64"></a>2024-03-12 19:33:25.035720: I external/local_xla/xla/stream_executor/cuda/cuda_dnn.cc:467] Loaded cuDNN version 90000
+<a id="__codelineno-43-65" name="__codelineno-43-65" href="#__codelineno-43-65"></a>2024-03-12 19:33:28.759273: I external/local_xla/xla/service/service.cc:168] XLA service 0x55555bf92310 initialized for platform CUDA (this does not guarantee that XLA will be used). Devices:
+<a id="__codelineno-43-66" name="__codelineno-43-66" href="#__codelineno-43-66"></a>2024-03-12 19:33:28.760801: I external/local_xla/xla/service/service.cc:176]   StreamExecutor device (0): NVIDIA A100-SXM4-80GB, Compute Capability 8.0
+<a id="__codelineno-43-67" name="__codelineno-43-67" href="#__codelineno-43-67"></a>2024-03-12 19:33:28.764827: I tensorflow/compiler/mlir/tensorflow/utils/dump_mlir_util.cc:269] disabling MLIR crash reproducer, set env var `MLIR_CRASH_REPRODUCER_DIRECTORY` to enable.
+<a id="__codelineno-43-68" name="__codelineno-43-68" href="#__codelineno-43-68"></a>WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+<a id="__codelineno-43-69" name="__codelineno-43-69" href="#__codelineno-43-69"></a>I0000 00:00:1710272008.857828 2346162 device_compiler.h:186] Compiled cluster using XLA!  This line is logged at most once for the lifetime of the process.
+<a id="__codelineno-43-70" name="__codelineno-43-70" href="#__codelineno-43-70"></a>1563/1563 [==============================] - 12s 3ms/step - loss: 1.5514 - accuracy: 0.4331 - val_loss: 1.2823 - val_accuracy: 0.5290
+<a id="__codelineno-43-71" name="__codelineno-43-71" href="#__codelineno-43-71"></a>Epoch 2/5
+<a id="__codelineno-43-72" name="__codelineno-43-72" href="#__codelineno-43-72"></a>1563/1563 [==============================] - 4s 3ms/step - loss: 1.1781 - accuracy: 0.5816 - val_loss: 1.1526 - val_accuracy: 0.5874
+<a id="__codelineno-43-73" name="__codelineno-43-73" href="#__codelineno-43-73"></a>Epoch 3/5
+<a id="__codelineno-43-74" name="__codelineno-43-74" href="#__codelineno-43-74"></a>1563/1563 [==============================] - 4s 3ms/step - loss: 1.0207 - accuracy: 0.6384 - val_loss: 1.0523 - val_accuracy: 0.6281
+<a id="__codelineno-43-75" name="__codelineno-43-75" href="#__codelineno-43-75"></a>Epoch 4/5
+<a id="__codelineno-43-76" name="__codelineno-43-76" href="#__codelineno-43-76"></a>1563/1563 [==============================] - 4s 3ms/step - loss: 0.9263 - accuracy: 0.6742 - val_loss: 0.9380 - val_accuracy: 0.6695
+<a id="__codelineno-43-77" name="__codelineno-43-77" href="#__codelineno-43-77"></a>Epoch 5/5
+<a id="__codelineno-43-78" name="__codelineno-43-78" href="#__codelineno-43-78"></a>1563/1563 [==============================] - 4s 3ms/step - loss: 0.8484 - accuracy: 0.7035 - val_loss: 0.9007 - val_accuracy: 0.6905
+<a id="__codelineno-43-79" name="__codelineno-43-79" href="#__codelineno-43-79"></a>313/313 - 0s - loss: 0.9007 - accuracy: 0.6905 - 403ms/epoch - 1ms/step
+<a id="__codelineno-43-80" name="__codelineno-43-80" href="#__codelineno-43-80"></a>test accuracy: 0.690500020980835
+</code></pre></div>
+</details>
+<p>Good news, it seems to have worked well 😎, finding the GPU and using it (4s per epoch):</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-44-1" name="__codelineno-44-1" href="#__codelineno-44-1"></a>2024-03-12 19:33:28.760801: I external/local_xla/xla/service/service.cc:176]   StreamExecutor device (0): NVIDIA A100-SXM4-80GB, Compute Capability 8.0
+<a id="__codelineno-44-2" name="__codelineno-44-2" href="#__codelineno-44-2"></a>...
+<a id="__codelineno-44-3" name="__codelineno-44-3" href="#__codelineno-44-3"></a>1563/1563 [==============================] - 4s 3ms/step - loss: 0.9263 - accuracy: 0.6742 - val_loss: 0.9380 - val_accuracy: 0.6695
+</code></pre></div>
+<hr />
+<p>In the <a href="../monitor/">next section</a>, we will have a look at how to monitor the jobs and the model training process.</p>
+<div class="footnote">
+<hr />
+<ol>
+<li id="fn:1">
+<p>Recent cards from NVIDIA have even more dedicated processing units, <em><a href="https://www.nvidia.com/en-us/data-center/tensor-cores/">Tensor Cores</a></em>, that massively accelerate lower-precision matrix-matrix multiplications.&#160;<a class="footnote-backref" href="#fnref:1" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+</li>
+</ol>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "..", "features": ["content.code.copy"], "search": "../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.c8d2eff1.min.js"></script>
+      
+    
+  </body>
+</html>

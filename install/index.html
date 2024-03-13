@@ -1,0 +1,1034 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Introduction to running deep learning code on NeSI">
+      
+      
+        <meta name="author" content="NeSI">
+      
+      
+        <link rel="canonical" href="https://nesi.github.io/hpc-intro-dl/install/">
+      
+      
+        <link rel="prev" href="../setup/">
+      
+      
+        <link rel="next" href="../submit/">
+      
+      
+      <link rel="icon" href="../imgs/nesi_logo.png">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.13">
+    
+    
+      
+        <title>Software Installation - Intro to HPC (Deep Learning)</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.7e359304.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../custom.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#software-installation" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Intro to HPC (Deep Learning)" class="md-header__button md-logo" aria-label="Intro to HPC (Deep Learning)" data-md-component="logo">
+      
+  <img src="../imgs/nesi_logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Intro to HPC (Deep Learning)
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Software Installation
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var media,input,key,value,palette=__md_get("__palette");if(palette&&palette.color){"(prefers-color-scheme)"===palette.color.media&&(media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']"),palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent"));for([key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/nesi/hpc-intro-dl" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    nesi/hpc-intro-dl
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Intro to HPC (Deep Learning)" class="md-nav__button md-logo" aria-label="Intro to HPC (Deep Learning)" data-md-component="logo">
+      
+  <img src="../imgs/nesi_logo.png" alt="logo">
+
+    </a>
+    Intro to HPC (Deep Learning)
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/nesi/hpc-intro-dl" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    nesi/hpc-intro-dl
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Introduction
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../setup/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Workshop Setup
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Software Installation
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Software Installation
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#environment-modules" class="md-nav__link">
+    <span class="md-ellipsis">
+      Environment Modules
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conda-environment" class="md-nav__link">
+    <span class="md-ellipsis">
+      Conda Environment
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#apptainer-container" class="md-nav__link">
+    <span class="md-ellipsis">
+      Apptainer Container
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../submit/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Submit Batch Jobs
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../monitor/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Monitoring
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../references/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    References
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#environment-modules" class="md-nav__link">
+    <span class="md-ellipsis">
+      Environment Modules
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conda-environment" class="md-nav__link">
+    <span class="md-ellipsis">
+      Conda Environment
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#apptainer-container" class="md-nav__link">
+    <span class="md-ellipsis">
+      Apptainer Container
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+  
+
+
+<h1 id="software-installation">Software Installation<a class="headerlink" href="#software-installation" title="Permanent link">&para;</a></h1>
+<p>In this section, we will explore multiple ways to install Deep Learning packages on the NeSI platform.
+We will focus on Python packages although many advice apply to other languages.</p>
+<h2 id="environment-modules">Environment Modules<a class="headerlink" href="#environment-modules" title="Permanent link">&para;</a></h2>
+<p>The first method to install software is&hellip; to not install them but use those preinstalled 😁.</p>
+<p>On NeSI&rsquo;s platform, we use <em>Environment Modules</em> to provide software in a flexible way, allowing users to load specific versions and their dependencies.</p>
+<p>Here we will use TensorFlow as an example.
+So let&rsquo;s first assert that this package is not available in the default environment:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>python3<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;import tensorflow; print(tensorflow.__version__)&quot;</span>
+</code></pre></div>
+<details class="success">
+<summary>output</summary>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>Traceback (most recent call last):
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>File &quot;&lt;string&gt;&quot;, line 1, in &lt;module&gt;
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>ModuleNotFoundError: No module named &#39;tensorflow&#39;
+</code></pre></div>
+</details>
+<p>Next, let&rsquo;s check if there is a TensorFlow envionment module on the platform, using the search command <code>module spider</code>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>module<span class="w"> </span>spider<span class="w"> </span>TensorFlow
+</code></pre></div>
+<details class="success">
+<summary>output</summary>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>-------------------------------------------------------------------------------------------
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>  TensorFlow:
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>-------------------------------------------------------------------------------------------
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>    Description:
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>      An open-source software library for Machine Intelligence
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>
+<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>     Versions:
+<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>        TensorFlow/2.0.1-gimkl-2018b-Python-3.8.1
+<a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a>        TensorFlow/2.2.0-gimkl-2018b-Python-3.8.1
+<a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a>        TensorFlow/2.2.2-gimkl-2018b-Python-3.8.1
+<a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a>        TensorFlow/2.2.3-gimkl-2018b-Python-3.8.1
+<a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a>        TensorFlow/2.3.1-gimkl-2020a-Python-3.8.2
+<a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a>        TensorFlow/2.4.1-gimkl-2020a-Python-3.8.2
+<a id="__codelineno-3-14" name="__codelineno-3-14" href="#__codelineno-3-14"></a>        TensorFlow/2.8.2-gimkl-2022a-Python-3.10.5
+<a id="__codelineno-3-15" name="__codelineno-3-15" href="#__codelineno-3-15"></a>        TensorFlow/2.13.0-gimkl-2022a-Python-3.11.3
+<a id="__codelineno-3-16" name="__codelineno-3-16" href="#__codelineno-3-16"></a>
+<a id="__codelineno-3-17" name="__codelineno-3-17" href="#__codelineno-3-17"></a>     Other possible modules matches:
+<a id="__codelineno-3-18" name="__codelineno-3-18" href="#__codelineno-3-18"></a>        tensorflow
+<a id="__codelineno-3-19" name="__codelineno-3-19" href="#__codelineno-3-19"></a>
+<a id="__codelineno-3-20" name="__codelineno-3-20" href="#__codelineno-3-20"></a>-------------------------------------------------------------------------------------------
+<a id="__codelineno-3-21" name="__codelineno-3-21" href="#__codelineno-3-21"></a>  To find other possible module matches do:
+<a id="__codelineno-3-22" name="__codelineno-3-22" href="#__codelineno-3-22"></a>      module -r spider &#39;.*TensorFlow.*&#39;
+<a id="__codelineno-3-23" name="__codelineno-3-23" href="#__codelineno-3-23"></a>
+<a id="__codelineno-3-24" name="__codelineno-3-24" href="#__codelineno-3-24"></a>-------------------------------------------------------------------------------------------
+<a id="__codelineno-3-25" name="__codelineno-3-25" href="#__codelineno-3-25"></a>  For detailed information about a specific &quot;TensorFlow&quot; module (including how to load the modules) use the module&#39;s full name.
+<a id="__codelineno-3-26" name="__codelineno-3-26" href="#__codelineno-3-26"></a>  For example:
+<a id="__codelineno-3-27" name="__codelineno-3-27" href="#__codelineno-3-27"></a>
+<a id="__codelineno-3-28" name="__codelineno-3-28" href="#__codelineno-3-28"></a>     $ module spider TensorFlow/2.8.2-gimkl-2022a-Python-3.10.5
+<a id="__codelineno-3-29" name="__codelineno-3-29" href="#__codelineno-3-29"></a>-------------------------------------------------------------------------------------------
+</code></pre></div>
+</details>
+<p>Success! There are a couple of versions, let&rsquo;s load version 2.13.0.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>module<span class="w"> </span>purge
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>module<span class="w"> </span>load<span class="w"> </span>TensorFlow/2.13.0-gimkl-2022a-Python-3.11.3
+</code></pre></div>
+<div class="admonition tip">
+<p class="admonition-title">Tips</p>
+<p>The <code>module purge</code> command ensures that we start from a clean state.</p>
+<p>Always specify the version of a module, this will save you &ndash; and people helping you &ndash; a lot of time when debugging installation issues 😉.</p>
+</div>
+<p>We can now check that TensorFlow is available from a Python interpreter:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>python3<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;import tensorflow; print(tensorflow.__version__)&quot;</span>
+</code></pre></div>
+<details class="success">
+<summary>output</summary>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>2024-03-11 12:29:51.145566: I tensorflow/core/platform/cpu_feature_guard.cc:182] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>2.13.0
+</code></pre></div>
+</details>
+<p>It is also interesting to list all the modules loaded as dependencies from TensorFlow:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>module<span class="w"> </span>list
+</code></pre></div>
+<details class="success">
+<summary>output</summary>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>Currently Loaded Modules:
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>  1) XALT/minimal
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>  2) slurm
+<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>  3) NeSI                                                   (S)
+<a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>  4) GCCcore/11.3.0
+<a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a>  5) zlib/1.2.11-GCCcore-11.3.0
+<a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a>  6) binutils/2.38-GCCcore-11.3.0
+<a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a>  7) GCC/11.3.0
+<a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a>  8) libpmi/2-slurm
+<a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a>  9) numactl/2.0.14-GCC-11.3.0
+<a id="__codelineno-8-11" name="__codelineno-8-11" href="#__codelineno-8-11"></a> 10) UCX/1.12.1-GCC-11.3.0
+<a id="__codelineno-8-12" name="__codelineno-8-12" href="#__codelineno-8-12"></a> 11) impi/2021.5.1-GCC-11.3.0
+<a id="__codelineno-8-13" name="__codelineno-8-13" href="#__codelineno-8-13"></a> 12) AlwaysIntelMKL/1.0
+<a id="__codelineno-8-14" name="__codelineno-8-14" href="#__codelineno-8-14"></a> 13) imkl/2022.0.2
+<a id="__codelineno-8-15" name="__codelineno-8-15" href="#__codelineno-8-15"></a> 14) gimpi/2022a
+<a id="__codelineno-8-16" name="__codelineno-8-16" href="#__codelineno-8-16"></a> 15) imkl-FFTW/2022.0.2-gimpi-2022a
+<a id="__codelineno-8-17" name="__codelineno-8-17" href="#__codelineno-8-17"></a> 16) gimkl/2022a
+<a id="__codelineno-8-18" name="__codelineno-8-18" href="#__codelineno-8-18"></a> 17) bzip2/1.0.8-GCCcore-11.3.0
+<a id="__codelineno-8-19" name="__codelineno-8-19" href="#__codelineno-8-19"></a> 18) XZ/5.2.5-GCCcore-11.3.0
+<a id="__codelineno-8-20" name="__codelineno-8-20" href="#__codelineno-8-20"></a> 19) libpng/1.6.37-GCCcore-11.3.0
+<a id="__codelineno-8-21" name="__codelineno-8-21" href="#__codelineno-8-21"></a> 20) freetype/2.11.1-GCCcore-11.3.0
+<a id="__codelineno-8-22" name="__codelineno-8-22" href="#__codelineno-8-22"></a> 21) Szip/2.1.1-GCCcore-11.3.0
+<a id="__codelineno-8-23" name="__codelineno-8-23" href="#__codelineno-8-23"></a> 22) HDF5/1.12.2-gimpi-2022a
+<a id="__codelineno-8-24" name="__codelineno-8-24" href="#__codelineno-8-24"></a> 23) libjpeg-turbo/2.1.3-GCCcore-11.3.0
+<a id="__codelineno-8-25" name="__codelineno-8-25" href="#__codelineno-8-25"></a> 24) ncurses/6.2-GCCcore-11.3.0
+<a id="__codelineno-8-26" name="__codelineno-8-26" href="#__codelineno-8-26"></a> 25) libreadline/8.1-GCCcore-11.3.0
+<a id="__codelineno-8-27" name="__codelineno-8-27" href="#__codelineno-8-27"></a> 26) libxml2/2.9.10-GCCcore-11.3.0
+<a id="__codelineno-8-28" name="__codelineno-8-28" href="#__codelineno-8-28"></a> 27) libxslt/1.1.34-GCCcore-11.3.0
+<a id="__codelineno-8-29" name="__codelineno-8-29" href="#__codelineno-8-29"></a> 28) cURL/7.83.1-GCCcore-11.3.0
+<a id="__codelineno-8-30" name="__codelineno-8-30" href="#__codelineno-8-30"></a> 29) netCDF/4.8.1-gimpi-2022a
+<a id="__codelineno-8-31" name="__codelineno-8-31" href="#__codelineno-8-31"></a> 30) SQLite/3.36.0-GCCcore-11.3.0
+<a id="__codelineno-8-32" name="__codelineno-8-32" href="#__codelineno-8-32"></a> 31) METIS/5.1.0-GCC-11.3.0
+<a id="__codelineno-8-33" name="__codelineno-8-33" href="#__codelineno-8-33"></a> 32) GMP/6.2.1-GCCcore-11.3.0
+<a id="__codelineno-8-34" name="__codelineno-8-34" href="#__codelineno-8-34"></a> 33) MPFR/4.1.0-GCC-11.3.0
+<a id="__codelineno-8-35" name="__codelineno-8-35" href="#__codelineno-8-35"></a> 34) SuiteSparse/5.13.0-gimkl-2022a
+<a id="__codelineno-8-36" name="__codelineno-8-36" href="#__codelineno-8-36"></a> 35) Tcl/8.6.10-GCCcore-11.3.0
+<a id="__codelineno-8-37" name="__codelineno-8-37" href="#__codelineno-8-37"></a> 36) Tk/8.6.10-GCCcore-11.3.0
+<a id="__codelineno-8-38" name="__codelineno-8-38" href="#__codelineno-8-38"></a> 37) ZeroMQ/4.3.4-GCCcore-11.3.0
+<a id="__codelineno-8-39" name="__codelineno-8-39" href="#__codelineno-8-39"></a> 38) OpenSSL/1.1.1k-GCCcore-11.3.0
+<a id="__codelineno-8-40" name="__codelineno-8-40" href="#__codelineno-8-40"></a> 39) Python/3.11.3-gimkl-2022a
+<a id="__codelineno-8-41" name="__codelineno-8-41" href="#__codelineno-8-41"></a> 40) CUDA/11.8.0
+<a id="__codelineno-8-42" name="__codelineno-8-42" href="#__codelineno-8-42"></a> 41) cuDNN/8.6.0.163-CUDA-11.8.0
+<a id="__codelineno-8-43" name="__codelineno-8-43" href="#__codelineno-8-43"></a> 42) TensorRT/8.6.1.6-gimkl-2022a-Python-3.11.3-CUDA-11.8.0
+<a id="__codelineno-8-44" name="__codelineno-8-44" href="#__codelineno-8-44"></a> 43) NCCL/2.16.5-CUDA-11.8.0
+<a id="__codelineno-8-45" name="__codelineno-8-45" href="#__codelineno-8-45"></a> 44) TensorFlow/2.13.0-gimkl-2022a-Python-3.11.3
+</code></pre></div>
+</details>
+<p>You will note that CUDA and cuDNN are loaded, and the right version to make it just works.</p>
+<p>Modules are prepared with ❤️ by NeSI&rsquo;s Research Support Team.
+If you need a package or a version that is not available, do not hesitate to contact us at <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#117;&#112;&#112;&#111;&#114;&#116;&#64;&#110;&#101;&#115;&#105;&#46;&#111;&#114;&#103;&#46;&#110;&#122;">&#115;&#117;&#112;&#112;&#111;&#114;&#116;&#64;&#110;&#101;&#115;&#105;&#46;&#111;&#114;&#103;&#46;&#110;&#122;</a> to get it installed for you.</p>
+<div class="admonition info">
+<p class="admonition-title">See also</p>
+<p>The <a href="https://support.nesi.org.nz/hc/en-gb/articles/360000990436-TensorFlow-on-GPUs#use_nesi_modules">TensorFlow support page</a> also hightlights how to use Python virtual environments, with and without reusing system packages provided by an environment module.</p>
+</div>
+<h2 id="conda-environment">Conda Environment<a class="headerlink" href="#conda-environment" title="Permanent link">&para;</a></h2>
+<p>If you want to be fully in control of you software stack, there are handful of solutions.
+One of them is to use the <a href="https://docs.conda.io/projects/conda">Conda package manager</a>.
+Conda lets you create &ldquo;conda environments&rdquo;, which allow you to install a set of packages in isolation.</p>
+<p>Before using <code>conda</code>, we need to load the corresponding environment module:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>module<span class="w"> </span>purge
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>module<span class="w"> </span>load<span class="w"> </span>Miniconda3/23.10.0-1
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>conda<span class="w"> </span>-V
+</code></pre></div>
+<details class="success">
+<summary>output</summary>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>conda 23.10.0
+</code></pre></div>
+</details>
+<p>Because deep learning frameworks tend to be&hellip; fairly large 😅, we need to be careful how we install these packages to avoid wasting storage space and locking our home storage (20GB maximum).
+We will set a default folder to store the package cache in <code>nobackup</code> storage:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>conda<span class="w"> </span>config<span class="w"> </span>--add<span class="w"> </span>pkgs_dirs<span class="w"> </span>/nesi/nobackup/nesi99991/conda_pkgs/<span class="nv">$USER</span>
+</code></pre></div>
+<p>You only need to do this once.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Using <code>nobackup</code> storage will ensure that downloaded packages will be automatically removed after 120 days.
+This won&rsquo;t affect the conda environments where these packages are installed.</p>
+</div>
+<p>Next, let&rsquo;s create a conda environment from a given definition file <code>environment.yml</code>, which includes an installation of TensorFlow:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="nb">export</span><span class="w"> </span><span class="nv">PIP_NO_CACHE_DIR</span><span class="o">=</span><span class="m">1</span>
+<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="nb">export</span><span class="w"> </span><span class="nv">PYTHONNOUSERSITE</span><span class="o">=</span><span class="m">1</span>
+<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>conda<span class="w"> </span>env<span class="w"> </span>create<span class="w"> </span>-f<span class="w"> </span>/nesi/project/nesi99991/introhpc2403/environment.yml<span class="w"> </span>-p<span class="w"> </span>/nesi/nobackup/nesi99991/introhpc2403/<span class="nv">$USER</span>/venv
+</code></pre></div>
+<details class="success">
+<summary>output</summary>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>Channels:
+<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a> - conda-forge
+<a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a> - defaults
+<a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a>Platform: linux-64
+<a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a>Collecting package metadata (repodata.json): done
+<a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a>Solving environment: done
+<a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a>
+<a id="__codelineno-13-8" name="__codelineno-13-8" href="#__codelineno-13-8"></a>Downloading and Extracting Packages:
+<a id="__codelineno-13-9" name="__codelineno-13-9" href="#__codelineno-13-9"></a>
+<a id="__codelineno-13-10" name="__codelineno-13-10" href="#__codelineno-13-10"></a>Preparing transaction: done
+<a id="__codelineno-13-11" name="__codelineno-13-11" href="#__codelineno-13-11"></a>Verifying transaction: done
+<a id="__codelineno-13-12" name="__codelineno-13-12" href="#__codelineno-13-12"></a>Executing transaction: done
+<a id="__codelineno-13-13" name="__codelineno-13-13" href="#__codelineno-13-13"></a>Installing pip dependencies: - Ran pip subprocess with arguments:
+<a id="__codelineno-13-14" name="__codelineno-13-14" href="#__codelineno-13-14"></a>[&#39;/nesi/nobackup/nesi99991/introhpc2403/riom/venv/bin/python&#39;, &#39;-m&#39;, &#39;pip&#39;, &#39;install&#39;, &#39;-U&#39;, &#39;-r&#39;, &#39;/nesi/project/nesi99991/introhpc2403/condaenv.gvo4091q.requirements.txt&#39;, &#39;--exists-action=b&#39;]
+<a id="__codelineno-13-15" name="__codelineno-13-15" href="#__codelineno-13-15"></a>Pip subprocess output:
+<a id="__codelineno-13-16" name="__codelineno-13-16" href="#__codelineno-13-16"></a>Collecting tensorflow==2.12.0 (from -r /nesi/project/nesi99991/introhpc2403/condaenv.gvo4091q.requirements.txt (line 1))
+<a id="__codelineno-13-17" name="__codelineno-13-17" href="#__codelineno-13-17"></a>  Downloading tensorflow-2.12.0-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (3.4 kB)
+<a id="__codelineno-13-18" name="__codelineno-13-18" href="#__codelineno-13-18"></a>Collecting tensorflow-datasets (from -r /nesi/project/nesi99991/introhpc2403/condaenv.gvo4091q.requirements.txt (line 2))
+<a id="__codelineno-13-19" name="__codelineno-13-19" href="#__codelineno-13-19"></a>  Downloading tensorflow_datasets-4.9.4-py3-none-any.whl.metadata (9.2 kB)
+<a id="__codelineno-13-20" name="__codelineno-13-20" href="#__codelineno-13-20"></a>Collecting absl-py&gt;=1.0.0 (from tensorflow==2.12.0-&gt;-r /nesi/project/nesi99991/introhpc2403/condaenv.gvo4091q.requirements.txt (line 1))
+<a id="__codelineno-13-21" name="__codelineno-13-21" href="#__codelineno-13-21"></a>  Downloading absl_py-2.1.0-py3-none-any.whl.metadata (2.3 kB)
+<a id="__codelineno-13-22" name="__codelineno-13-22" href="#__codelineno-13-22"></a>Collecting astunparse&gt;=1.6.0 (from tensorflow==2.12.0-&gt;-r /nesi/project/nesi99991/introhpc2403/condaenv.gvo4091q.requirements.txt (line 1))
+<a id="__codelineno-13-23" name="__codelineno-13-23" href="#__codelineno-13-23"></a>  Downloading astunparse-1.6.3-py2.py3-none-any.whl.metadata (4.4 kB)
+<a id="__codelineno-13-24" name="__codelineno-13-24" href="#__codelineno-13-24"></a>Collecting flatbuffers&gt;=2.0 (from tensorflow==2.12.0-&gt;-r /nesi/project/nesi99991/introhpc2403/condaenv.gvo4091q.requirements.txt (line 1))
+<a id="__codelineno-13-25" name="__codelineno-13-25" href="#__codelineno-13-25"></a>  Downloading flatbuffers-24.3.7-py2.py3-none-any.whl.metadata (849 bytes)
+<a id="__codelineno-13-26" name="__codelineno-13-26" href="#__codelineno-13-26"></a>Collecting gast&lt;=0.4.0,&gt;=0.2.1 (from tensorflow==2.12.0-&gt;-r /nesi/project/nesi99991/introhpc2403/condaenv.gvo4091q.requirements.txt (line 1))
+<a id="__codelineno-13-27" name="__codelineno-13-27" href="#__codelineno-13-27"></a>  Downloading gast-0.4.0-py3-none-any.whl.metadata (1.1 kB)
+<a id="__codelineno-13-28" name="__codelineno-13-28" href="#__codelineno-13-28"></a>Collecting google-pasta&gt;=0.1.1 (from tensorflow==2.12.0-&gt;-r /nesi/project/nesi99991/introhpc2403/condaenv.gvo4091q.requirements.txt (line 1))
+<a id="__codelineno-13-29" name="__codelineno-13-29" href="#__codelineno-13-29"></a>  Downloading google_pasta-0.2.0-py3-none-any.whl.metadata (814 bytes)
+<a id="__codelineno-13-30" name="__codelineno-13-30" href="#__codelineno-13-30"></a>Collecting grpcio&lt;2.0,&gt;=1.24.3 (from tensorflow==2.12.0-&gt;-r /nesi/project/nesi99991/introhpc2403/condaenv.gvo4091q.requirements.txt (line 1))
+<a id="__codelineno-13-31" name="__codelineno-13-31" href="#__codelineno-13-31"></a>  Downloading grpcio-1.62.1-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (4.0 kB)
+<a id="__codelineno-13-32" name="__codelineno-13-32" href="#__codelineno-13-32"></a>Collecting h5py&gt;=2.9.0 (from tensorflow==2.12.0-&gt;-r /nesi/project/nesi99991/introhpc2403/condaenv.gvo4091q.requirements.txt (line 1))
+<a id="__codelineno-13-33" name="__codelineno-13-33" href="#__codelineno-13-33"></a>  Downloading h5py-3.10.0-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (2.5 kB)
+<a id="__codelineno-13-34" name="__codelineno-13-34" href="#__codelineno-13-34"></a>Collecting jax&gt;=0.3.15 (from tensorflow==2.12.0-&gt;-r /nesi/project/nesi99991/introhpc2403/condaenv.gvo4091q.requirements.txt (line 1))
+<a id="__codelineno-13-35" name="__codelineno-13-35" href="#__codelineno-13-35"></a>  Downloading jax-0.4.25-py3-none-any.whl.metadata (24 kB)
+<a id="__codelineno-13-36" name="__codelineno-13-36" href="#__codelineno-13-36"></a>Collecting keras&lt;2.13,&gt;=2.12.0 (from tensorflow==2.12.0-&gt;-r /nesi/project/nesi99991/introhpc2403/condaenv.gvo4091q.requirements.txt (line 1))
+<a id="__codelineno-13-37" name="__codelineno-13-37" href="#__codelineno-13-37"></a>  Downloading keras-2.12.0-py2.py3-none-any.whl.metadata (1.4 kB)
+<a id="__codelineno-13-38" name="__codelineno-13-38" href="#__codelineno-13-38"></a>Collecting libclang&gt;=13.0.0 (from tensorflow==2.12.0-&gt;-r /nesi/project/nesi99991/introhpc2403/condaenv.gvo4091q.requirements.txt (line 1))
+<a id="__codelineno-13-39" name="__codelineno-13-39" href="#__codelineno-13-39"></a>  Downloading libclang-16.0.6-py2.py3-none-manylinux2010_x86_64.whl.metadata (5.2 kB)
+<a id="__codelineno-13-40" name="__codelineno-13-40" href="#__codelineno-13-40"></a>Collecting numpy&lt;1.24,&gt;=1.22 (from tensorflow==2.12.0-&gt;-r /nesi/project/nesi99991/introhpc2403/condaenv.gvo4091q.requirements.txt (line 1))
+<a id="__codelineno-13-41" name="__codelineno-13-41" href="#__codelineno-13-41"></a>  Downloading numpy-1.23.5-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (2.3 kB)
+<a id="__codelineno-13-42" name="__codelineno-13-42" href="#__codelineno-13-42"></a>Collecting opt-einsum&gt;=2.3.2 (from tensorflow==2.12.0-&gt;-r /nesi/project/nesi99991/introhpc2403/condaenv.gvo4091q.requirements.txt (line 1))
+<a id="__codelineno-13-43" name="__codelineno-13-43" href="#__codelineno-13-43"></a>  Downloading opt_einsum-3.3.0-py3-none-any.whl.metadata (6.5 kB)
+<a id="__codelineno-13-44" name="__codelineno-13-44" href="#__codelineno-13-44"></a>Collecting packaging (from tensorflow==2.12.0-&gt;-r /nesi/project/nesi99991/introhpc2403/condaenv.gvo4091q.requirements.txt (line 1))
+<a id="__codelineno-13-45" name="__codelineno-13-45" href="#__codelineno-13-45"></a>  Downloading packaging-24.0-py3-none-any.whl.metadata (3.2 kB)
+<a id="__codelineno-13-46" name="__codelineno-13-46" href="#__codelineno-13-46"></a>Collecting protobuf!=4.21.0,!=4.21.1,!=4.21.2,!=4.21.3,!=4.21.4,!=4.21.5,&lt;5.0.0dev,&gt;=3.20.3 (from tensorflow==2.12.0-&gt;-r /nesi/project/nesi99991/introhpc2403/condaenv.gvo4091q.requirements.txt (line 1))
+<a id="__codelineno-13-47" name="__codelineno-13-47" href="#__codelineno-13-47"></a>  Downloading protobuf-4.25.3-cp37-abi3-manylinux2014_x86_64.whl.metadata (541 bytes)
+<a id="__codelineno-13-48" name="__codelineno-13-48" href="#__codelineno-13-48"></a>Requirement already satisfied: setuptools in /scale_wlg_nobackup/filesets/nobackup/nesi99991/introhpc2403/riom/venv/lib/python3.10/site-packages (from tensorflow==2.12.0-&gt;-r /nesi/project/nesi99991/introhpc2403/condaenv.gvo4091q.requirements.txt (line 1)) (69.1.1)
+<a id="__codelineno-13-49" name="__codelineno-13-49" href="#__codelineno-13-49"></a>Collecting six&gt;=1.12.0 (from tensorflow==2.12.0-&gt;-r /nesi/project/nesi99991/introhpc2403/condaenv.gvo4091q.requirements.txt (line 1))
+<a id="__codelineno-13-50" name="__codelineno-13-50" href="#__codelineno-13-50"></a>  Downloading six-1.16.0-py2.py3-none-any.whl.metadata (1.8 kB)
+<a id="__codelineno-13-51" name="__codelineno-13-51" href="#__codelineno-13-51"></a>Collecting tensorboard&lt;2.13,&gt;=2.12 (from tensorflow==2.12.0-&gt;-r /nesi/project/nesi99991/introhpc2403/condaenv.gvo4091q.requirements.txt (line 1))
+<a id="__codelineno-13-52" name="__codelineno-13-52" href="#__codelineno-13-52"></a>  Downloading tensorboard-2.12.3-py3-none-any.whl.metadata (1.8 kB)
+<a id="__codelineno-13-53" name="__codelineno-13-53" href="#__codelineno-13-53"></a>Collecting tensorflow-estimator&lt;2.13,&gt;=2.12.0 (from tensorflow==2.12.0-&gt;-r /nesi/project/nesi99991/introhpc2403/condaenv.gvo4091q.requirements.txt (line 1))
+<a id="__codelineno-13-54" name="__codelineno-13-54" href="#__codelineno-13-54"></a>  Downloading tensorflow_estimator-2.12.0-py2.py3-none-any.whl.metadata (1.3 kB)
+<a id="__codelineno-13-55" name="__codelineno-13-55" href="#__codelineno-13-55"></a>Collecting termcolor&gt;=1.1.0 (from tensorflow==2.12.0-&gt;-r /nesi/project/nesi99991/introhpc2403/condaenv.gvo4091q.requirements.txt (line 1))
+<a id="__codelineno-13-56" name="__codelineno-13-56" href="#__codelineno-13-56"></a>  Downloading termcolor-2.4.0-py3-none-any.whl.metadata (6.1 kB)
+<a id="__codelineno-13-57" name="__codelineno-13-57" href="#__codelineno-13-57"></a>Collecting typing-extensions&gt;=3.6.6 (from tensorflow==2.12.0-&gt;-r /nesi/project/nesi99991/introhpc2403/condaenv.gvo4091q.requirements.txt (line 1))
+<a id="__codelineno-13-58" name="__codelineno-13-58" href="#__codelineno-13-58"></a>  Downloading typing_extensions-4.10.0-py3-none-any.whl.metadata (3.0 kB)
+<a id="__codelineno-13-59" name="__codelineno-13-59" href="#__codelineno-13-59"></a>Collecting wrapt&lt;1.15,&gt;=1.11.0 (from tensorflow==2.12.0-&gt;-r /nesi/project/nesi99991/introhpc2403/condaenv.gvo4091q.requirements.txt (line 1))
+<a id="__codelineno-13-60" name="__codelineno-13-60" href="#__codelineno-13-60"></a>  Downloading wrapt-1.14.1-cp310-cp310-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (6.7 kB)
+<a id="__codelineno-13-61" name="__codelineno-13-61" href="#__codelineno-13-61"></a>Collecting tensorflow-io-gcs-filesystem&gt;=0.23.1 (from tensorflow==2.12.0-&gt;-r /nesi/project/nesi99991/introhpc2403/condaenv.gvo4091q.requirements.txt (line 1))
+<a id="__codelineno-13-62" name="__codelineno-13-62" href="#__codelineno-13-62"></a>  Downloading tensorflow_io_gcs_filesystem-0.36.0-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (14 kB)
+<a id="__codelineno-13-63" name="__codelineno-13-63" href="#__codelineno-13-63"></a>Collecting click (from tensorflow-datasets-&gt;-r /nesi/project/nesi99991/introhpc2403/condaenv.gvo4091q.requirements.txt (line 2))
+<a id="__codelineno-13-64" name="__codelineno-13-64" href="#__codelineno-13-64"></a>  Downloading click-8.1.7-py3-none-any.whl.metadata (3.0 kB)
+<a id="__codelineno-13-65" name="__codelineno-13-65" href="#__codelineno-13-65"></a>Collecting dm-tree (from tensorflow-datasets-&gt;-r /nesi/project/nesi99991/introhpc2403/condaenv.gvo4091q.requirements.txt (line 2))
+<a id="__codelineno-13-66" name="__codelineno-13-66" href="#__codelineno-13-66"></a>  Downloading dm_tree-0.1.8-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (1.9 kB)
+<a id="__codelineno-13-67" name="__codelineno-13-67" href="#__codelineno-13-67"></a>Collecting etils&gt;=0.9.0 (from etils[enp,epath,etree]&gt;=0.9.0-&gt;tensorflow-datasets-&gt;-r /nesi/project/nesi99991/introhpc2403/condaenv.gvo4091q.requirements.txt (line 2))
+<a id="__codelineno-13-68" name="__codelineno-13-68" href="#__codelineno-13-68"></a>  Downloading etils-1.7.0-py3-none-any.whl.metadata (6.4 kB)
+<a id="__codelineno-13-69" name="__codelineno-13-69" href="#__codelineno-13-69"></a>Collecting promise (from tensorflow-datasets-&gt;-r /nesi/project/nesi99991/introhpc2403/condaenv.gvo4091q.requirements.txt (line 2))
+<a id="__codelineno-13-70" name="__codelineno-13-70" href="#__codelineno-13-70"></a>  Downloading promise-2.3.tar.gz (19 kB)
+<a id="__codelineno-13-71" name="__codelineno-13-71" href="#__codelineno-13-71"></a>  Preparing metadata (setup.py): started
+<a id="__codelineno-13-72" name="__codelineno-13-72" href="#__codelineno-13-72"></a>  Preparing metadata (setup.py): finished with status &#39;done&#39;
+<a id="__codelineno-13-73" name="__codelineno-13-73" href="#__codelineno-13-73"></a>Collecting psutil (from tensorflow-datasets-&gt;-r /nesi/project/nesi99991/introhpc2403/condaenv.gvo4091q.requirements.txt (line 2))
+<a id="__codelineno-13-74" name="__codelineno-13-74" href="#__codelineno-13-74"></a>  Downloading psutil-5.9.8-cp36-abi3-manylinux_2_12_x86_64.manylinux2010_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (21 kB)
+<a id="__codelineno-13-75" name="__codelineno-13-75" href="#__codelineno-13-75"></a>Collecting requests&gt;=2.19.0 (from tensorflow-datasets-&gt;-r /nesi/project/nesi99991/introhpc2403/condaenv.gvo4091q.requirements.txt (line 2))
+<a id="__codelineno-13-76" name="__codelineno-13-76" href="#__codelineno-13-76"></a>  Downloading requests-2.31.0-py3-none-any.whl.metadata (4.6 kB)
+<a id="__codelineno-13-77" name="__codelineno-13-77" href="#__codelineno-13-77"></a>Collecting tensorflow-metadata (from tensorflow-datasets-&gt;-r /nesi/project/nesi99991/introhpc2403/condaenv.gvo4091q.requirements.txt (line 2))
+<a id="__codelineno-13-78" name="__codelineno-13-78" href="#__codelineno-13-78"></a>  Downloading tensorflow_metadata-1.14.0-py3-none-any.whl.metadata (2.1 kB)
+<a id="__codelineno-13-79" name="__codelineno-13-79" href="#__codelineno-13-79"></a>Collecting toml (from tensorflow-datasets-&gt;-r /nesi/project/nesi99991/introhpc2403/condaenv.gvo4091q.requirements.txt (line 2))
+<a id="__codelineno-13-80" name="__codelineno-13-80" href="#__codelineno-13-80"></a>  Downloading toml-0.10.2-py2.py3-none-any.whl.metadata (7.1 kB)
+<a id="__codelineno-13-81" name="__codelineno-13-81" href="#__codelineno-13-81"></a>Collecting tqdm (from tensorflow-datasets-&gt;-r /nesi/project/nesi99991/introhpc2403/condaenv.gvo4091q.requirements.txt (line 2))
+<a id="__codelineno-13-82" name="__codelineno-13-82" href="#__codelineno-13-82"></a>  Downloading tqdm-4.66.2-py3-none-any.whl.metadata (57 kB)
+<a id="__codelineno-13-83" name="__codelineno-13-83" href="#__codelineno-13-83"></a>     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 57.6/57.6 kB 244.9 MB/s eta 0:00:00
+<a id="__codelineno-13-84" name="__codelineno-13-84" href="#__codelineno-13-84"></a>Collecting array-record&gt;=0.5.0 (from tensorflow-datasets-&gt;-r /nesi/project/nesi99991/introhpc2403/condaenv.gvo4091q.requirements.txt (line 2))
+<a id="__codelineno-13-85" name="__codelineno-13-85" href="#__codelineno-13-85"></a>  Downloading array_record-0.5.0-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (503 bytes)
+<a id="__codelineno-13-86" name="__codelineno-13-86" href="#__codelineno-13-86"></a>Requirement already satisfied: wheel&lt;1.0,&gt;=0.23.0 in /scale_wlg_nobackup/filesets/nobackup/nesi99991/introhpc2403/riom/venv/lib/python3.10/site-packages (from astunparse&gt;=1.6.0-&gt;tensorflow==2.12.0-&gt;-r /nesi/project/nesi99991/introhpc2403/condaenv.gvo4091q.requirements.txt (line 1)) (0.42.0)
+<a id="__codelineno-13-87" name="__codelineno-13-87" href="#__codelineno-13-87"></a>Collecting fsspec (from etils[enp,epath,etree]&gt;=0.9.0-&gt;tensorflow-datasets-&gt;-r /nesi/project/nesi99991/introhpc2403/condaenv.gvo4091q.requirements.txt (line 2))
+<a id="__codelineno-13-88" name="__codelineno-13-88" href="#__codelineno-13-88"></a>  Downloading fsspec-2024.2.0-py3-none-any.whl.metadata (6.8 kB)
+<a id="__codelineno-13-89" name="__codelineno-13-89" href="#__codelineno-13-89"></a>Collecting importlib_resources (from etils[enp,epath,etree]&gt;=0.9.0-&gt;tensorflow-datasets-&gt;-r /nesi/project/nesi99991/introhpc2403/condaenv.gvo4091q.requirements.txt (line 2))
+<a id="__codelineno-13-90" name="__codelineno-13-90" href="#__codelineno-13-90"></a>  Downloading importlib_resources-6.1.3-py3-none-any.whl.metadata (3.9 kB)
+<a id="__codelineno-13-91" name="__codelineno-13-91" href="#__codelineno-13-91"></a>Collecting zipp (from etils[enp,epath,etree]&gt;=0.9.0-&gt;tensorflow-datasets-&gt;-r /nesi/project/nesi99991/introhpc2403/condaenv.gvo4091q.requirements.txt (line 2))
+<a id="__codelineno-13-92" name="__codelineno-13-92" href="#__codelineno-13-92"></a>  Downloading zipp-3.17.0-py3-none-any.whl.metadata (3.7 kB)
+<a id="__codelineno-13-93" name="__codelineno-13-93" href="#__codelineno-13-93"></a>Collecting ml-dtypes&gt;=0.2.0 (from jax&gt;=0.3.15-&gt;tensorflow==2.12.0-&gt;-r /nesi/project/nesi99991/introhpc2403/condaenv.gvo4091q.requirements.txt (line 1))
+<a id="__codelineno-13-94" name="__codelineno-13-94" href="#__codelineno-13-94"></a>  Downloading ml_dtypes-0.3.2-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (20 kB)
+<a id="__codelineno-13-95" name="__codelineno-13-95" href="#__codelineno-13-95"></a>Collecting scipy&gt;=1.9 (from jax&gt;=0.3.15-&gt;tensorflow==2.12.0-&gt;-r /nesi/project/nesi99991/introhpc2403/condaenv.gvo4091q.requirements.txt (line 1))
+<a id="__codelineno-13-96" name="__codelineno-13-96" href="#__codelineno-13-96"></a>  Downloading scipy-1.12.0-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (60 kB)
+<a id="__codelineno-13-97" name="__codelineno-13-97" href="#__codelineno-13-97"></a>     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 60.4/60.4 kB 274.1 MB/s eta 0:00:00
+<a id="__codelineno-13-98" name="__codelineno-13-98" href="#__codelineno-13-98"></a>Collecting charset-normalizer&lt;4,&gt;=2 (from requests&gt;=2.19.0-&gt;tensorflow-datasets-&gt;-r /nesi/project/nesi99991/introhpc2403/condaenv.gvo4091q.requirements.txt (line 2))
+<a id="__codelineno-13-99" name="__codelineno-13-99" href="#__codelineno-13-99"></a>  Downloading charset_normalizer-3.3.2-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (33 kB)
+<a id="__codelineno-13-100" name="__codelineno-13-100" href="#__codelineno-13-100"></a>Collecting idna&lt;4,&gt;=2.5 (from requests&gt;=2.19.0-&gt;tensorflow-datasets-&gt;-r /nesi/project/nesi99991/introhpc2403/condaenv.gvo4091q.requirements.txt (line 2))
+<a id="__codelineno-13-101" name="__codelineno-13-101" href="#__codelineno-13-101"></a>  Downloading idna-3.6-py3-none-any.whl.metadata (9.9 kB)
+<a id="__codelineno-13-102" name="__codelineno-13-102" href="#__codelineno-13-102"></a>Collecting urllib3&lt;3,&gt;=1.21.1 (from requests&gt;=2.19.0-&gt;tensorflow-datasets-&gt;-r /nesi/project/nesi99991/introhpc2403/condaenv.gvo4091q.requirements.txt (line 2))
+<a id="__codelineno-13-103" name="__codelineno-13-103" href="#__codelineno-13-103"></a>  Downloading urllib3-2.2.1-py3-none-any.whl.metadata (6.4 kB)
+<a id="__codelineno-13-104" name="__codelineno-13-104" href="#__codelineno-13-104"></a>Collecting certifi&gt;=2017.4.17 (from requests&gt;=2.19.0-&gt;tensorflow-datasets-&gt;-r /nesi/project/nesi99991/introhpc2403/condaenv.gvo4091q.requirements.txt (line 2))
+<a id="__codelineno-13-105" name="__codelineno-13-105" href="#__codelineno-13-105"></a>  Downloading certifi-2024.2.2-py3-none-any.whl.metadata (2.2 kB)
+<a id="__codelineno-13-106" name="__codelineno-13-106" href="#__codelineno-13-106"></a>Collecting google-auth&lt;3,&gt;=1.6.3 (from tensorboard&lt;2.13,&gt;=2.12-&gt;tensorflow==2.12.0-&gt;-r /nesi/project/nesi99991/introhpc2403/condaenv.gvo4091q.requirements.txt (line 1))
+<a id="__codelineno-13-107" name="__codelineno-13-107" href="#__codelineno-13-107"></a>  Downloading google_auth-2.28.2-py2.py3-none-any.whl.metadata (4.7 kB)
+<a id="__codelineno-13-108" name="__codelineno-13-108" href="#__codelineno-13-108"></a>Collecting google-auth-oauthlib&lt;1.1,&gt;=0.5 (from tensorboard&lt;2.13,&gt;=2.12-&gt;tensorflow==2.12.0-&gt;-r /nesi/project/nesi99991/introhpc2403/condaenv.gvo4091q.requirements.txt (line 1))
+<a id="__codelineno-13-109" name="__codelineno-13-109" href="#__codelineno-13-109"></a>  Downloading google_auth_oauthlib-1.0.0-py2.py3-none-any.whl.metadata (2.7 kB)
+<a id="__codelineno-13-110" name="__codelineno-13-110" href="#__codelineno-13-110"></a>Collecting markdown&gt;=2.6.8 (from tensorboard&lt;2.13,&gt;=2.12-&gt;tensorflow==2.12.0-&gt;-r /nesi/project/nesi99991/introhpc2403/condaenv.gvo4091q.requirements.txt (line 1))
+<a id="__codelineno-13-111" name="__codelineno-13-111" href="#__codelineno-13-111"></a>  Downloading Markdown-3.5.2-py3-none-any.whl.metadata (7.0 kB)
+<a id="__codelineno-13-112" name="__codelineno-13-112" href="#__codelineno-13-112"></a>Collecting tensorboard-data-server&lt;0.8.0,&gt;=0.7.0 (from tensorboard&lt;2.13,&gt;=2.12-&gt;tensorflow==2.12.0-&gt;-r /nesi/project/nesi99991/introhpc2403/condaenv.gvo4091q.requirements.txt (line 1))
+<a id="__codelineno-13-113" name="__codelineno-13-113" href="#__codelineno-13-113"></a>  Downloading tensorboard_data_server-0.7.2-py3-none-any.whl.metadata (1.1 kB)
+<a id="__codelineno-13-114" name="__codelineno-13-114" href="#__codelineno-13-114"></a>Collecting werkzeug&gt;=1.0.1 (from tensorboard&lt;2.13,&gt;=2.12-&gt;tensorflow==2.12.0-&gt;-r /nesi/project/nesi99991/introhpc2403/condaenv.gvo4091q.requirements.txt (line 1))
+<a id="__codelineno-13-115" name="__codelineno-13-115" href="#__codelineno-13-115"></a>  Downloading werkzeug-3.0.1-py3-none-any.whl.metadata (4.1 kB)
+<a id="__codelineno-13-116" name="__codelineno-13-116" href="#__codelineno-13-116"></a>Collecting absl-py&gt;=1.0.0 (from tensorflow==2.12.0-&gt;-r /nesi/project/nesi99991/introhpc2403/condaenv.gvo4091q.requirements.txt (line 1))
+<a id="__codelineno-13-117" name="__codelineno-13-117" href="#__codelineno-13-117"></a>  Downloading absl_py-1.4.0-py3-none-any.whl.metadata (2.3 kB)
+<a id="__codelineno-13-118" name="__codelineno-13-118" href="#__codelineno-13-118"></a>Collecting googleapis-common-protos&lt;2,&gt;=1.52.0 (from tensorflow-metadata-&gt;tensorflow-datasets-&gt;-r /nesi/project/nesi99991/introhpc2403/condaenv.gvo4091q.requirements.txt (line 2))
+<a id="__codelineno-13-119" name="__codelineno-13-119" href="#__codelineno-13-119"></a>  Downloading googleapis_common_protos-1.63.0-py2.py3-none-any.whl.metadata (1.5 kB)
+<a id="__codelineno-13-120" name="__codelineno-13-120" href="#__codelineno-13-120"></a>Collecting protobuf!=4.21.0,!=4.21.1,!=4.21.2,!=4.21.3,!=4.21.4,!=4.21.5,&lt;5.0.0dev,&gt;=3.20.3 (from tensorflow==2.12.0-&gt;-r /nesi/project/nesi99991/introhpc2403/condaenv.gvo4091q.requirements.txt (line 1))
+<a id="__codelineno-13-121" name="__codelineno-13-121" href="#__codelineno-13-121"></a>  Downloading protobuf-3.20.3-cp310-cp310-manylinux_2_12_x86_64.manylinux2010_x86_64.whl.metadata (679 bytes)
+<a id="__codelineno-13-122" name="__codelineno-13-122" href="#__codelineno-13-122"></a>Collecting cachetools&lt;6.0,&gt;=2.0.0 (from google-auth&lt;3,&gt;=1.6.3-&gt;tensorboard&lt;2.13,&gt;=2.12-&gt;tensorflow==2.12.0-&gt;-r /nesi/project/nesi99991/introhpc2403/condaenv.gvo4091q.requirements.txt (line 1))
+<a id="__codelineno-13-123" name="__codelineno-13-123" href="#__codelineno-13-123"></a>  Downloading cachetools-5.3.3-py3-none-any.whl.metadata (5.3 kB)
+<a id="__codelineno-13-124" name="__codelineno-13-124" href="#__codelineno-13-124"></a>Collecting pyasn1-modules&gt;=0.2.1 (from google-auth&lt;3,&gt;=1.6.3-&gt;tensorboard&lt;2.13,&gt;=2.12-&gt;tensorflow==2.12.0-&gt;-r /nesi/project/nesi99991/introhpc2403/condaenv.gvo4091q.requirements.txt (line 1))
+<a id="__codelineno-13-125" name="__codelineno-13-125" href="#__codelineno-13-125"></a>  Downloading pyasn1_modules-0.3.0-py2.py3-none-any.whl.metadata (3.6 kB)
+<a id="__codelineno-13-126" name="__codelineno-13-126" href="#__codelineno-13-126"></a>Collecting rsa&lt;5,&gt;=3.1.4 (from google-auth&lt;3,&gt;=1.6.3-&gt;tensorboard&lt;2.13,&gt;=2.12-&gt;tensorflow==2.12.0-&gt;-r /nesi/project/nesi99991/introhpc2403/condaenv.gvo4091q.requirements.txt (line 1))
+<a id="__codelineno-13-127" name="__codelineno-13-127" href="#__codelineno-13-127"></a>  Downloading rsa-4.9-py3-none-any.whl.metadata (4.2 kB)
+<a id="__codelineno-13-128" name="__codelineno-13-128" href="#__codelineno-13-128"></a>Collecting requests-oauthlib&gt;=0.7.0 (from google-auth-oauthlib&lt;1.1,&gt;=0.5-&gt;tensorboard&lt;2.13,&gt;=2.12-&gt;tensorflow==2.12.0-&gt;-r /nesi/project/nesi99991/introhpc2403/condaenv.gvo4091q.requirements.txt (line 1))
+<a id="__codelineno-13-129" name="__codelineno-13-129" href="#__codelineno-13-129"></a>  Downloading requests_oauthlib-1.4.0-py2.py3-none-any.whl.metadata (11 kB)
+<a id="__codelineno-13-130" name="__codelineno-13-130" href="#__codelineno-13-130"></a>Collecting MarkupSafe&gt;=2.1.1 (from werkzeug&gt;=1.0.1-&gt;tensorboard&lt;2.13,&gt;=2.12-&gt;tensorflow==2.12.0-&gt;-r /nesi/project/nesi99991/introhpc2403/condaenv.gvo4091q.requirements.txt (line 1))
+<a id="__codelineno-13-131" name="__codelineno-13-131" href="#__codelineno-13-131"></a>  Downloading MarkupSafe-2.1.5-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (3.0 kB)
+<a id="__codelineno-13-132" name="__codelineno-13-132" href="#__codelineno-13-132"></a>Collecting pyasn1&lt;0.6.0,&gt;=0.4.6 (from pyasn1-modules&gt;=0.2.1-&gt;google-auth&lt;3,&gt;=1.6.3-&gt;tensorboard&lt;2.13,&gt;=2.12-&gt;tensorflow==2.12.0-&gt;-r /nesi/project/nesi99991/introhpc2403/condaenv.gvo4091q.requirements.txt (line 1))
+<a id="__codelineno-13-133" name="__codelineno-13-133" href="#__codelineno-13-133"></a>  Downloading pyasn1-0.5.1-py2.py3-none-any.whl.metadata (8.6 kB)
+<a id="__codelineno-13-134" name="__codelineno-13-134" href="#__codelineno-13-134"></a>Collecting oauthlib&gt;=3.0.0 (from requests-oauthlib&gt;=0.7.0-&gt;google-auth-oauthlib&lt;1.1,&gt;=0.5-&gt;tensorboard&lt;2.13,&gt;=2.12-&gt;tensorflow==2.12.0-&gt;-r /nesi/project/nesi99991/introhpc2403/condaenv.gvo4091q.requirements.txt (line 1))
+<a id="__codelineno-13-135" name="__codelineno-13-135" href="#__codelineno-13-135"></a>  Downloading oauthlib-3.2.2-py3-none-any.whl.metadata (7.5 kB)
+<a id="__codelineno-13-136" name="__codelineno-13-136" href="#__codelineno-13-136"></a>Downloading tensorflow-2.12.0-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (585.9 MB)
+<a id="__codelineno-13-137" name="__codelineno-13-137" href="#__codelineno-13-137"></a>   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 585.9/585.9 MB 15.4 MB/s eta 0:00:00
+<a id="__codelineno-13-138" name="__codelineno-13-138" href="#__codelineno-13-138"></a>Downloading tensorflow_datasets-4.9.4-py3-none-any.whl (5.1 MB)
+<a id="__codelineno-13-139" name="__codelineno-13-139" href="#__codelineno-13-139"></a>   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 5.1/5.1 MB 11.0 MB/s eta 0:00:00
+<a id="__codelineno-13-140" name="__codelineno-13-140" href="#__codelineno-13-140"></a>Downloading array_record-0.5.0-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (3.0 MB)
+<a id="__codelineno-13-141" name="__codelineno-13-141" href="#__codelineno-13-141"></a>   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 3.0/3.0 MB 248.0 MB/s eta 0:00:00
+<a id="__codelineno-13-142" name="__codelineno-13-142" href="#__codelineno-13-142"></a>Downloading astunparse-1.6.3-py2.py3-none-any.whl (12 kB)
+<a id="__codelineno-13-143" name="__codelineno-13-143" href="#__codelineno-13-143"></a>Downloading etils-1.7.0-py3-none-any.whl (152 kB)
+<a id="__codelineno-13-144" name="__codelineno-13-144" href="#__codelineno-13-144"></a>   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 152.4/152.4 kB 240.3 MB/s eta 0:00:00
+<a id="__codelineno-13-145" name="__codelineno-13-145" href="#__codelineno-13-145"></a>Downloading flatbuffers-24.3.7-py2.py3-none-any.whl (26 kB)
+<a id="__codelineno-13-146" name="__codelineno-13-146" href="#__codelineno-13-146"></a>Downloading gast-0.4.0-py3-none-any.whl (9.8 kB)
+<a id="__codelineno-13-147" name="__codelineno-13-147" href="#__codelineno-13-147"></a>Downloading google_pasta-0.2.0-py3-none-any.whl (57 kB)
+<a id="__codelineno-13-148" name="__codelineno-13-148" href="#__codelineno-13-148"></a>   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 57.5/57.5 kB 219.7 MB/s eta 0:00:00
+<a id="__codelineno-13-149" name="__codelineno-13-149" href="#__codelineno-13-149"></a>Downloading grpcio-1.62.1-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (5.5 MB)
+<a id="__codelineno-13-150" name="__codelineno-13-150" href="#__codelineno-13-150"></a>   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 5.5/5.5 MB 249.4 MB/s eta 0:00:00
+<a id="__codelineno-13-151" name="__codelineno-13-151" href="#__codelineno-13-151"></a>Downloading h5py-3.10.0-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (4.8 MB)
+<a id="__codelineno-13-152" name="__codelineno-13-152" href="#__codelineno-13-152"></a>   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 4.8/4.8 MB 294.5 MB/s eta 0:00:00
+<a id="__codelineno-13-153" name="__codelineno-13-153" href="#__codelineno-13-153"></a>Downloading jax-0.4.25-py3-none-any.whl (1.8 MB)
+<a id="__codelineno-13-154" name="__codelineno-13-154" href="#__codelineno-13-154"></a>   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.8/1.8 MB 315.6 MB/s eta 0:00:00
+<a id="__codelineno-13-155" name="__codelineno-13-155" href="#__codelineno-13-155"></a>Downloading keras-2.12.0-py2.py3-none-any.whl (1.7 MB)
+<a id="__codelineno-13-156" name="__codelineno-13-156" href="#__codelineno-13-156"></a>   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.7/1.7 MB 301.3 MB/s eta 0:00:00
+<a id="__codelineno-13-157" name="__codelineno-13-157" href="#__codelineno-13-157"></a>Downloading libclang-16.0.6-py2.py3-none-manylinux2010_x86_64.whl (22.9 MB)
+<a id="__codelineno-13-158" name="__codelineno-13-158" href="#__codelineno-13-158"></a>   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 22.9/22.9 MB 21.8 MB/s eta 0:00:00
+<a id="__codelineno-13-159" name="__codelineno-13-159" href="#__codelineno-13-159"></a>Downloading numpy-1.23.5-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (17.1 MB)
+<a id="__codelineno-13-160" name="__codelineno-13-160" href="#__codelineno-13-160"></a>   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 17.1/17.1 MB 9.6 MB/s eta 0:00:00
+<a id="__codelineno-13-161" name="__codelineno-13-161" href="#__codelineno-13-161"></a>Downloading opt_einsum-3.3.0-py3-none-any.whl (65 kB)
+<a id="__codelineno-13-162" name="__codelineno-13-162" href="#__codelineno-13-162"></a>   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 65.5/65.5 kB 204.2 MB/s eta 0:00:00
+<a id="__codelineno-13-163" name="__codelineno-13-163" href="#__codelineno-13-163"></a>Downloading requests-2.31.0-py3-none-any.whl (62 kB)
+<a id="__codelineno-13-164" name="__codelineno-13-164" href="#__codelineno-13-164"></a>   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 62.6/62.6 kB 171.2 MB/s eta 0:00:00
+<a id="__codelineno-13-165" name="__codelineno-13-165" href="#__codelineno-13-165"></a>Downloading six-1.16.0-py2.py3-none-any.whl (11 kB)
+<a id="__codelineno-13-166" name="__codelineno-13-166" href="#__codelineno-13-166"></a>Downloading tensorboard-2.12.3-py3-none-any.whl (5.6 MB)
+<a id="__codelineno-13-167" name="__codelineno-13-167" href="#__codelineno-13-167"></a>   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 5.6/5.6 MB 23.6 MB/s eta 0:00:00
+<a id="__codelineno-13-168" name="__codelineno-13-168" href="#__codelineno-13-168"></a>Downloading tensorflow_estimator-2.12.0-py2.py3-none-any.whl (440 kB)
+<a id="__codelineno-13-169" name="__codelineno-13-169" href="#__codelineno-13-169"></a>   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 440.7/440.7 kB 216.5 MB/s eta 0:00:00
+<a id="__codelineno-13-170" name="__codelineno-13-170" href="#__codelineno-13-170"></a>Downloading tensorflow_io_gcs_filesystem-0.36.0-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (5.1 MB)
+<a id="__codelineno-13-171" name="__codelineno-13-171" href="#__codelineno-13-171"></a>   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 5.1/5.1 MB 149.0 MB/s eta 0:00:00
+<a id="__codelineno-13-172" name="__codelineno-13-172" href="#__codelineno-13-172"></a>Downloading termcolor-2.4.0-py3-none-any.whl (7.7 kB)
+<a id="__codelineno-13-173" name="__codelineno-13-173" href="#__codelineno-13-173"></a>Downloading typing_extensions-4.10.0-py3-none-any.whl (33 kB)
+<a id="__codelineno-13-174" name="__codelineno-13-174" href="#__codelineno-13-174"></a>Downloading wrapt-1.14.1-cp310-cp310-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl (77 kB)
+<a id="__codelineno-13-175" name="__codelineno-13-175" href="#__codelineno-13-175"></a>   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 77.9/77.9 kB 189.5 MB/s eta 0:00:00
+<a id="__codelineno-13-176" name="__codelineno-13-176" href="#__codelineno-13-176"></a>Downloading click-8.1.7-py3-none-any.whl (97 kB)
+<a id="__codelineno-13-177" name="__codelineno-13-177" href="#__codelineno-13-177"></a>   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 97.9/97.9 kB 193.6 MB/s eta 0:00:00
+<a id="__codelineno-13-178" name="__codelineno-13-178" href="#__codelineno-13-178"></a>Downloading dm_tree-0.1.8-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (152 kB)
+<a id="__codelineno-13-179" name="__codelineno-13-179" href="#__codelineno-13-179"></a>   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 152.8/152.8 kB 203.6 MB/s eta 0:00:00
+<a id="__codelineno-13-180" name="__codelineno-13-180" href="#__codelineno-13-180"></a>Downloading packaging-24.0-py3-none-any.whl (53 kB)
+<a id="__codelineno-13-181" name="__codelineno-13-181" href="#__codelineno-13-181"></a>   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 53.5/53.5 kB 186.3 MB/s eta 0:00:00
+<a id="__codelineno-13-182" name="__codelineno-13-182" href="#__codelineno-13-182"></a>Downloading psutil-5.9.8-cp36-abi3-manylinux_2_12_x86_64.manylinux2010_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl (288 kB)
+<a id="__codelineno-13-183" name="__codelineno-13-183" href="#__codelineno-13-183"></a>   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 288.2/288.2 kB 230.6 MB/s eta 0:00:00
+<a id="__codelineno-13-184" name="__codelineno-13-184" href="#__codelineno-13-184"></a>Downloading tensorflow_metadata-1.14.0-py3-none-any.whl (28 kB)
+<a id="__codelineno-13-185" name="__codelineno-13-185" href="#__codelineno-13-185"></a>Downloading absl_py-1.4.0-py3-none-any.whl (126 kB)
+<a id="__codelineno-13-186" name="__codelineno-13-186" href="#__codelineno-13-186"></a>   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 126.5/126.5 kB 203.7 MB/s eta 0:00:00
+<a id="__codelineno-13-187" name="__codelineno-13-187" href="#__codelineno-13-187"></a>Downloading protobuf-3.20.3-cp310-cp310-manylinux_2_12_x86_64.manylinux2010_x86_64.whl (1.1 MB)
+<a id="__codelineno-13-188" name="__codelineno-13-188" href="#__codelineno-13-188"></a>   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.1/1.1 MB 233.4 MB/s eta 0:00:00
+<a id="__codelineno-13-189" name="__codelineno-13-189" href="#__codelineno-13-189"></a>Downloading toml-0.10.2-py2.py3-none-any.whl (16 kB)
+<a id="__codelineno-13-190" name="__codelineno-13-190" href="#__codelineno-13-190"></a>Downloading tqdm-4.66.2-py3-none-any.whl (78 kB)
+<a id="__codelineno-13-191" name="__codelineno-13-191" href="#__codelineno-13-191"></a>   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 78.3/78.3 kB 206.3 MB/s eta 0:00:00
+<a id="__codelineno-13-192" name="__codelineno-13-192" href="#__codelineno-13-192"></a>Downloading certifi-2024.2.2-py3-none-any.whl (163 kB)
+<a id="__codelineno-13-193" name="__codelineno-13-193" href="#__codelineno-13-193"></a>   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 163.8/163.8 kB 206.6 MB/s eta 0:00:00
+<a id="__codelineno-13-194" name="__codelineno-13-194" href="#__codelineno-13-194"></a>Downloading charset_normalizer-3.3.2-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (142 kB)
+<a id="__codelineno-13-195" name="__codelineno-13-195" href="#__codelineno-13-195"></a>   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 142.1/142.1 kB 138.8 MB/s eta 0:00:00
+<a id="__codelineno-13-196" name="__codelineno-13-196" href="#__codelineno-13-196"></a>Downloading google_auth-2.28.2-py2.py3-none-any.whl (186 kB)
+<a id="__codelineno-13-197" name="__codelineno-13-197" href="#__codelineno-13-197"></a>   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 186.9/186.9 kB 197.5 MB/s eta 0:00:00
+<a id="__codelineno-13-198" name="__codelineno-13-198" href="#__codelineno-13-198"></a>Downloading google_auth_oauthlib-1.0.0-py2.py3-none-any.whl (18 kB)
+<a id="__codelineno-13-199" name="__codelineno-13-199" href="#__codelineno-13-199"></a>Downloading googleapis_common_protos-1.63.0-py2.py3-none-any.whl (229 kB)
+<a id="__codelineno-13-200" name="__codelineno-13-200" href="#__codelineno-13-200"></a>   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 229.1/229.1 kB 212.7 MB/s eta 0:00:00
+<a id="__codelineno-13-201" name="__codelineno-13-201" href="#__codelineno-13-201"></a>Downloading idna-3.6-py3-none-any.whl (61 kB)
+<a id="__codelineno-13-202" name="__codelineno-13-202" href="#__codelineno-13-202"></a>   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 61.6/61.6 kB 190.2 MB/s eta 0:00:00
+<a id="__codelineno-13-203" name="__codelineno-13-203" href="#__codelineno-13-203"></a>Downloading Markdown-3.5.2-py3-none-any.whl (103 kB)
+<a id="__codelineno-13-204" name="__codelineno-13-204" href="#__codelineno-13-204"></a>   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 103.9/103.9 kB 198.9 MB/s eta 0:00:00
+<a id="__codelineno-13-205" name="__codelineno-13-205" href="#__codelineno-13-205"></a>Downloading ml_dtypes-0.3.2-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (2.2 MB)
+<a id="__codelineno-13-206" name="__codelineno-13-206" href="#__codelineno-13-206"></a>   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 2.2/2.2 MB 242.3 MB/s eta 0:00:00
+<a id="__codelineno-13-207" name="__codelineno-13-207" href="#__codelineno-13-207"></a>Downloading scipy-1.12.0-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (38.4 MB)
+<a id="__codelineno-13-208" name="__codelineno-13-208" href="#__codelineno-13-208"></a>   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 38.4/38.4 MB 232.2 MB/s eta 0:00:00
+<a id="__codelineno-13-209" name="__codelineno-13-209" href="#__codelineno-13-209"></a>Downloading tensorboard_data_server-0.7.2-py3-none-any.whl (2.4 kB)
+<a id="__codelineno-13-210" name="__codelineno-13-210" href="#__codelineno-13-210"></a>Downloading urllib3-2.2.1-py3-none-any.whl (121 kB)
+<a id="__codelineno-13-211" name="__codelineno-13-211" href="#__codelineno-13-211"></a>   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 121.1/121.1 kB 243.5 MB/s eta 0:00:00
+<a id="__codelineno-13-212" name="__codelineno-13-212" href="#__codelineno-13-212"></a>Downloading werkzeug-3.0.1-py3-none-any.whl (226 kB)
+<a id="__codelineno-13-213" name="__codelineno-13-213" href="#__codelineno-13-213"></a>   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 226.7/226.7 kB 267.2 MB/s eta 0:00:00
+<a id="__codelineno-13-214" name="__codelineno-13-214" href="#__codelineno-13-214"></a>Downloading fsspec-2024.2.0-py3-none-any.whl (170 kB)
+<a id="__codelineno-13-215" name="__codelineno-13-215" href="#__codelineno-13-215"></a>   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 170.9/170.9 kB 274.0 MB/s eta 0:00:00
+<a id="__codelineno-13-216" name="__codelineno-13-216" href="#__codelineno-13-216"></a>Downloading importlib_resources-6.1.3-py3-none-any.whl (34 kB)
+<a id="__codelineno-13-217" name="__codelineno-13-217" href="#__codelineno-13-217"></a>Downloading zipp-3.17.0-py3-none-any.whl (7.4 kB)
+<a id="__codelineno-13-218" name="__codelineno-13-218" href="#__codelineno-13-218"></a>Downloading cachetools-5.3.3-py3-none-any.whl (9.3 kB)
+<a id="__codelineno-13-219" name="__codelineno-13-219" href="#__codelineno-13-219"></a>Downloading MarkupSafe-2.1.5-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (25 kB)
+<a id="__codelineno-13-220" name="__codelineno-13-220" href="#__codelineno-13-220"></a>Downloading pyasn1_modules-0.3.0-py2.py3-none-any.whl (181 kB)
+<a id="__codelineno-13-221" name="__codelineno-13-221" href="#__codelineno-13-221"></a>   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 181.3/181.3 kB 287.5 MB/s eta 0:00:00
+<a id="__codelineno-13-222" name="__codelineno-13-222" href="#__codelineno-13-222"></a>Downloading requests_oauthlib-1.4.0-py2.py3-none-any.whl (24 kB)
+<a id="__codelineno-13-223" name="__codelineno-13-223" href="#__codelineno-13-223"></a>Downloading rsa-4.9-py3-none-any.whl (34 kB)
+<a id="__codelineno-13-224" name="__codelineno-13-224" href="#__codelineno-13-224"></a>Downloading oauthlib-3.2.2-py3-none-any.whl (151 kB)
+<a id="__codelineno-13-225" name="__codelineno-13-225" href="#__codelineno-13-225"></a>   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 151.7/151.7 kB 276.9 MB/s eta 0:00:00
+<a id="__codelineno-13-226" name="__codelineno-13-226" href="#__codelineno-13-226"></a>Downloading pyasn1-0.5.1-py2.py3-none-any.whl (84 kB)
+<a id="__codelineno-13-227" name="__codelineno-13-227" href="#__codelineno-13-227"></a>   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 84.9/84.9 kB 271.3 MB/s eta 0:00:00
+<a id="__codelineno-13-228" name="__codelineno-13-228" href="#__codelineno-13-228"></a>Building wheels for collected packages: promise
+<a id="__codelineno-13-229" name="__codelineno-13-229" href="#__codelineno-13-229"></a>  Building wheel for promise (setup.py): started
+<a id="__codelineno-13-230" name="__codelineno-13-230" href="#__codelineno-13-230"></a>  Building wheel for promise (setup.py): finished with status &#39;done&#39;
+<a id="__codelineno-13-231" name="__codelineno-13-231" href="#__codelineno-13-231"></a>  Created wheel for promise: filename=promise-2.3-py3-none-any.whl size=21483 sha256=bd49a38bd62d2431128bcb8637d955e7fa693744446508c70e8e87281f613a8d
+<a id="__codelineno-13-232" name="__codelineno-13-232" href="#__codelineno-13-232"></a>  Stored in directory: /dev/shm/jobs/44320689/pip-ephem-wheel-cache-_lijtdvo/wheels/54/4e/28/3ed0e1c8a752867445bab994d2340724928aa3ab059c57c8db
+<a id="__codelineno-13-233" name="__codelineno-13-233" href="#__codelineno-13-233"></a>Successfully built promise
+<a id="__codelineno-13-234" name="__codelineno-13-234" href="#__codelineno-13-234"></a>Installing collected packages: libclang, flatbuffers, dm-tree, zipp, wrapt, urllib3, typing-extensions, tqdm, toml, termcolor, tensorflow-io-gcs-filesystem, tensorflow-estimator, tensorboard-data-server, six, pyasn1, psutil, protobuf, packaging, oauthlib, numpy, MarkupSafe, markdown, keras, importlib_resources, idna, grpcio, gast, fsspec, etils, click, charset-normalizer, certifi, cachetools, absl-py, werkzeug, scipy, rsa, requests, pyasn1-modules, promise, opt-einsum, ml-dtypes, h5py, googleapis-common-protos, google-pasta, astunparse, tensorflow-metadata, requests-oauthlib, jax, google-auth, google-auth-oauthlib, array-record, tensorboard, tensorflow-datasets, tensorflow
+<a id="__codelineno-13-235" name="__codelineno-13-235" href="#__codelineno-13-235"></a>Successfully installed MarkupSafe-2.1.5 absl-py-1.4.0 array-record-0.5.0 astunparse-1.6.3 cachetools-5.3.3 certifi-2024.2.2 charset-normalizer-3.3.2 click-8.1.7 dm-tree-0.1.8 etils-1.7.0 flatbuffers-24.3.7 fsspec-2024.2.0 gast-0.4.0 google-auth-2.28.2 google-auth-oauthlib-1.0.0 google-pasta-0.2.0 googleapis-common-protos-1.63.0 grpcio-1.62.1 h5py-3.10.0 idna-3.6 importlib_resources-6.1.3 jax-0.4.25 keras-2.12.0 libclang-16.0.6 markdown-3.5.2 ml-dtypes-0.3.2 numpy-1.23.5 oauthlib-3.2.2 opt-einsum-3.3.0 packaging-24.0 promise-2.3 protobuf-3.20.3 psutil-5.9.8 pyasn1-0.5.1 pyasn1-modules-0.3.0 requests-2.31.0 requests-oauthlib-1.4.0 rsa-4.9 scipy-1.12.0 six-1.16.0 tensorboard-2.12.3 tensorboard-data-server-0.7.2 tensorflow-2.12.0 tensorflow-datasets-4.9.4 tensorflow-estimator-2.12.0 tensorflow-io-gcs-filesystem-0.36.0 tensorflow-metadata-1.14.0 termcolor-2.4.0 toml-0.10.2 tqdm-4.66.2 typing-extensions-4.10.0 urllib3-2.2.1 werkzeug-3.0.1 wrapt-1.14.1 zipp-3.17.0
+<a id="__codelineno-13-236" name="__codelineno-13-236" href="#__codelineno-13-236"></a>
+<a id="__codelineno-13-237" name="__codelineno-13-237" href="#__codelineno-13-237"></a>done
+<a id="__codelineno-13-238" name="__codelineno-13-238" href="#__codelineno-13-238"></a>#
+<a id="__codelineno-13-239" name="__codelineno-13-239" href="#__codelineno-13-239"></a># To activate this environment, use
+<a id="__codelineno-13-240" name="__codelineno-13-240" href="#__codelineno-13-240"></a>#
+<a id="__codelineno-13-241" name="__codelineno-13-241" href="#__codelineno-13-241"></a>#     $ conda activate /nesi/nobackup/nesi99991/introhpc2403/riom/venv
+<a id="__codelineno-13-242" name="__codelineno-13-242" href="#__codelineno-13-242"></a>#
+<a id="__codelineno-13-243" name="__codelineno-13-243" href="#__codelineno-13-243"></a># To deactivate an active environment, use
+<a id="__codelineno-13-244" name="__codelineno-13-244" href="#__codelineno-13-244"></a>#
+<a id="__codelineno-13-245" name="__codelineno-13-245" href="#__codelineno-13-245"></a>#     $ conda deactivate
+</code></pre></div>
+</details>
+<p>This will take a bit of time, so it could be a good time for a 🍵 break.</p>
+<p>Note that we used the <code>-p</code> option to specify the location of our conda environment and avoid installing it in our home folder (what <code>-n</code> would normally do).</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Setting the variable <code>PIP_NO_CACHE_DIR=1</code> ensures that <code>pip</code> doesn&rsquo;t cache packages in your home folder.</p>
+<p>Setting the variable <code>PYTHONNOUSERSITE=1</code> is necessary to ensure that <code>pip</code> doesn&rsquo;t look into user&rsquo;s home folder for locally installed Python packages (using <code>pip install --user</code>).
+This will ensure that the conda environment is really isolated from the system and more reproducible.</p>
+</div>
+<p>At last, we have our conda environment ready, let&rsquo;s activate it to see if TensorFlow is properly installed:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>conda<span class="w"> </span>activate<span class="w"> </span>/nesi/nobackup/nesi99991/introhpc2403/<span class="nv">$USER</span>/venv
+</code></pre></div>
+<details class="failure">
+<summary>output</summary>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>usage: conda [-h] [-v] [--no-plugins] [-V] COMMAND ...
+<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>conda: error: argument COMMAND: invalid choice: &#39;activate&#39; (choose from &#39;clean&#39;, &#39;compare&#39;, &#39;config&#39;, &#39;create&#39;, &#39;info&#39;, &#39;init&#39;, &#39;install&#39;, &#39;list&#39;, &#39;notices&#39;, &#39;package&#39;, &#39;remove&#39;, &#39;uninstall&#39;, &#39;rename&#39;, &#39;run&#39;, &#39;search&#39;, &#39;update&#39;, &#39;upgrade&#39;, &#39;content-trust&#39;, &#39;doctor&#39;, &#39;repoquery&#39;, &#39;env&#39;)
+</code></pre></div>
+</details>
+<p>Oh no! we cannot activate the environment 😨.</p>
+<p>The reason is that we need to one extra step to fully configure conda in addition to loading the environment module:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="nb">source</span><span class="w"> </span><span class="k">$(</span>conda<span class="w"> </span>info<span class="w"> </span>--base<span class="k">)</span>/etc/profile.d/conda.sh
+</code></pre></div>
+<details class="danger">
+<summary><code>conda init</code>, aka our nightmare</summary>
+<p>You might be tempted to use <code>conda init</code> here.
+<strong>Do not.</strong>
+Seriously.
+Please 🙏.
+This will insert a small piece of code in your <code>~/.bashrc</code> file that is fine on an individual computer but interacts poorly with the environment module system on the HPC platform.</p>
+<p>If you have used this command, you can edit <code>~/.bashrc</code> using a terminal based editor like <code>nano</code> and remove the offending piece of code:
+<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>nano<span class="w"> </span>~/.bashrc
+</code></pre></div>
+and start a new terminal.</p>
+</details>
+<p>Ok, now we can finally test our installation:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>conda<span class="w"> </span>activate<span class="w"> </span>/nesi/nobackup/nesi99991/introhpc2403/<span class="nv">$USER</span>/venv
+<a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a>python3<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;import tensorflow; print(tensorflow.__version__)&quot;</span>
+</code></pre></div>
+<details class="success">
+<summary>output</summary>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>2024-03-12 00:10:16.189564: I tensorflow/tsl/cuda/cudart_stub.cc:28] Could not find cuda drivers on your machine, GPU will not be used.
+<a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a>2024-03-12 00:10:17.419378: I tensorflow/tsl/cuda/cudart_stub.cc:28] Could not find cuda drivers on your machine, GPU will not be used.
+<a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a>2024-03-12 00:10:17.420215: I tensorflow/core/platform/cpu_feature_guard.cc:182] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+<a id="__codelineno-19-4" name="__codelineno-19-4" href="#__codelineno-19-4"></a>To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+<a id="__codelineno-19-5" name="__codelineno-19-5" href="#__codelineno-19-5"></a>2024-03-12 00:10:23.738598: W tensorflow/compiler/tf2tensorrt/utils/py_utils.cc:38] TF-TRT Warning: Could not find TensorRT
+<a id="__codelineno-19-6" name="__codelineno-19-6" href="#__codelineno-19-6"></a>2.12.0
+</code></pre></div>
+</details>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Using Conda on the HPC has numerous traps, we tried to highlight most of them here.
+In case of doubt, please check our <a href="https://support.nesi.org.nz/hc/en-gb/articles/360001580415-Miniconda3">dedicated support page</a>.</p>
+</div>
+<h2 id="apptainer-container">Apptainer Container<a class="headerlink" href="#apptainer-container" title="Permanent link">&para;</a></h2>
+<p>The last option we will explore in this section is <em>containers</em>.
+Containers provide a very lightweight way to run a complete Linux virtual machine isolated from the host environment,
+with little performance impact.</p>
+<p><em>Docker</em> is the most well known container runtime but many others exist.
+For historical and security reasons, alternative runtimes have been developed in the HPC world, as we can&rsquo;t give administrator rights to users.
+On NeSI, we use <em>Singularity</em> and <em>Apptainer</em>, which are compatible with Docker containers.</p>
+<p>First, we need to load the corresponding environment module:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>module<span class="w"> </span>purge
+<a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a>module<span class="w"> </span>load<span class="w"> </span>Apptainer/1.2.2
+</code></pre></div>
+<p>Next, we will fetch a TensorFlow container from <a href="https://catalog.ngc.nvidia.com/containers">NVIDIA NGC Catalog</a>.
+Here is how one would convert the Docker container as an Apptainer container while downloading it:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>apptainer<span class="w"> </span>pull<span class="w"> </span>tensorflow-24.02.sif<span class="w"> </span>docker://nvcr.io/nvidia/tensorflow:24.02-tf2-py3
+</code></pre></div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Please do not run this <code>apptainer pull</code> command, it will create a 7GB file and take quite a lot of time.</p>
+<p>We have already pulled the container for you as <code>/nesi/project/nesi99991/introhpc2403/tensorflow-24.02.sif</code>.</p>
+</div>
+<p>There are multiple ways to interact with a container.
+Here we will execute a command in the container using the <code>apptainer exec</code> command:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a>apptainer<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>/nesi/project/nesi99991/introhpc2403/tensorflow-24.02.sif<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a><span class="w">    </span>python3<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;import tensorflow; print(tensorflow.__version__)&quot;</span>
+</code></pre></div>
+<details class="success">
+<summary>output</summary>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>13:4: not a valid test operator: (
+<a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a>13:4: not a valid test operator: 
+<a id="__codelineno-23-3" name="__codelineno-23-3" href="#__codelineno-23-3"></a>2024-03-12 02:00:43.405327: E external/local_xla/xla/stream_executor/cuda/cuda_dnn.cc:9373] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+<a id="__codelineno-23-4" name="__codelineno-23-4" href="#__codelineno-23-4"></a>2024-03-12 02:00:43.407144: E external/local_xla/xla/stream_executor/cuda/cuda_fft.cc:607] Unable to register cuFFT factory: Attempting to register factory for plugin cuFFT when one has already been registered
+<a id="__codelineno-23-5" name="__codelineno-23-5" href="#__codelineno-23-5"></a>2024-03-12 02:00:43.572380: E external/local_xla/xla/stream_executor/cuda/cuda_blas.cc:1534] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+<a id="__codelineno-23-6" name="__codelineno-23-6" href="#__codelineno-23-6"></a>2024-03-12 02:00:43.847914: I tensorflow/core/platform/cpu_feature_guard.cc:183] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+<a id="__codelineno-23-7" name="__codelineno-23-7" href="#__codelineno-23-7"></a>To enable the following instructions: SSE3 SSE4.1 SSE4.2 AVX, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+<a id="__codelineno-23-8" name="__codelineno-23-8" href="#__codelineno-23-8"></a>2.15.0
+</code></pre></div>
+</details>
+<div class="admonition info">
+<p class="admonition-title">See also</p>
+<p>Here we looked very briefly at containers.
+If you want to know more about this topic, please check our <a href="https://support.nesi.org.nz/hc/en-gb/articles/360001107916-Singularity">support page about Singularity</a>, which is also applicable to Apptainer.
+We also have a specific page on <a href="https://support.nesi.org.nz/hc/en-gb/articles/6008779241999-Build-an-Apptainer-container-on-a-Milan-compute-node">how to build a container on NeSI</a>, which is a more advanced topic.</p>
+</div>
+<hr />
+<p>In the <a href="../submit/">next section</a>, we will see how to submit jobs to train a deep learning model using a GPU.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "..", "features": ["content.code.copy"], "search": "../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.c8d2eff1.min.js"></script>
+      
+    
+  </body>
+</html>
