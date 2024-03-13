@@ -186,6 +186,14 @@ To enable live update in the web interface, click on the cogwheel icon (top righ
 
 ![](imgs/tensorboard.png)
 
+!!! info
+
+    Make sure to edit your copy of `train_model.py` to decrease the number of epochs back to 5.
+
+    ```bash
+    nano /nesi/project/nesi99991/introhpc2403/$USER/train_model.py
+    ```
+
 ## GPU usage
 
 Another aspect which is import to monitor is how well the GPU is used while running the training code.
