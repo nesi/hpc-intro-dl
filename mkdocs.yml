@@ -13,6 +13,7 @@ exclude_docs: |
 
 theme:
   name: material
+  logo: imgs/nesi_logo.png
 
 extra_css:
   - custom.css
