@@ -7,7 +7,7 @@ In this section, we will explore multiple ways to monitor the activity of a job 
 So far, we looked at the content of the log file at the end using the `cat` command.
 Wouldn't it be great if we could see in "real time" the content of this file?
 
-To achieve, we will use the `tail` command with a little twist 🪄.
+To achieve this, we will use the `tail` command with a little twist 🪄.
 
 The `tail` command prints by default the last lines of a file.
 Let's try this on one of our log files, for example (replace `44349268` with any of your jobs ID):
@@ -260,7 +260,7 @@ cat gpustats-44409149.csv
 
 This is a nice pile of number, wouldn't be nicer to turn it into a plot 😉?
 
-Let's do this using a little bit of Python.
+Let's do this using a little bit of Python code.
 Open a new *Console*[^1] in JupyterLab and use the following commands (replace the file path with your .csv file):
 
 [^1]: In the *File* menu, under *New*, click on *Console* and then select the kernel `Python 3.10.5 (gimkl-2022a)`.
